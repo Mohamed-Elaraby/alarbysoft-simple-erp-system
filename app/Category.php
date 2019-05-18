@@ -11,6 +11,10 @@ class Category extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $fillable = [
+        'name', 'description', 'type', 'user_id',
+    ];
+
     public function user ()
     {
         return $this->belongsTo(User::class);

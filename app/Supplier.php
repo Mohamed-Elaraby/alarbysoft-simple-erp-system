@@ -11,6 +11,10 @@ class Supplier extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $fillable = [
+        'name', 'address', 'phones', 'user_id',
+    ];
+
     public function user ()
     {
         return $this->belongsTo(User::class);

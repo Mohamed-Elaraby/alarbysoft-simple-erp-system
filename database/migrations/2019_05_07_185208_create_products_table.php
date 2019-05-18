@@ -16,9 +16,10 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('purchasing_price');
-            $table->string('dealer_price');
-            $table->string('selling_price');
+            $table->double('purchasing_price');
+            $table->double('dealer_price');
+            $table->double('selling_price');
+            $table->string('quantity');
             $table->string('serialNumber');
             $table->integer('user_id')->unsigned();
             $table->integer('category_id')->unsigned();

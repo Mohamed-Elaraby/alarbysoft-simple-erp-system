@@ -51,13 +51,36 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::delete('category/destroy','AdminController@destroyCategory')->name('destroyCategory');
 
     /* Admin Products*/
-    Route::get('productsDataTable','AdminController@productsDataTable')->name('productsDataTable');
     Route::get('products','AdminController@products')->name('products');
     Route::get('createProduct','AdminController@createProduct')->name('createProduct');
     Route::post('storeProduct','AdminController@storeProduct')->name('storeProduct');
     Route::get('product/{id}/edit','AdminController@editProduct')->name('editProduct');
     Route::post('product/{id}/update','AdminController@updateProduct')->name('updateProduct');
     Route::delete('product/destroy','AdminController@destroyProduct')->name('destroyProduct');
+
+    /* Admin Stores*/
+    Route::get('stores','AdminController@stores')->name('stores');
+    Route::get('createStore','AdminController@createStore')->name('createStore');
+    Route::post('storeStore','AdminController@storeStore')->name('storeStore');
+    Route::get('store/{id}/edit','AdminController@editStore')->name('editStore');
+    Route::post('store/{id}/update','AdminController@updateStore')->name('updateStore');
+    Route::delete('store/destroy','AdminController@destroyStore')->name('destroyStore');
+
+    /* Admin Suppliers*/
+    Route::get('suppliers','AdminController@suppliers')->name('suppliers');
+    Route::get('createSupplier','AdminController@createSupplier')->name('createSupplier');
+    Route::post('storeSupplier','AdminController@storeSupplier')->name('storeSupplier');
+    Route::get('supplier/{id}/edit','AdminController@editSupplier')->name('editSupplier');
+    Route::post('supplier/{id}/update','AdminController@updateSupplier')->name('updateSupplier');
+    Route::delete('supplier/destroy','AdminController@destroySupplier')->name('destroySupplier');
+
+    /* Admin Clients*/
+    Route::get('clients','AdminController@clients')->name('clients');
+    Route::get('createClient','AdminController@createClient')->name('createClient');
+    Route::post('storeClient','AdminController@storeClient')->name('storeClient');
+    Route::get('client/{id}/edit','AdminController@editClient')->name('editClient');
+    Route::post('client/{id}/update','AdminController@updateClient')->name('updateClient');
+    Route::delete('client/destroy','AdminController@destroyClient')->name('destroyClient');
 
     /* Admin Users*/
     Route::get('users','AdminController@users')->name('users');
