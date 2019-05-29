@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Client;
 use App\Product;
+use App\PurchaseInvoice;
+use App\Purchases;
 use App\Store;
 use App\Supplier;
 use App\User;
+use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -298,6 +301,103 @@ class AdminController extends Controller
         }
     }
 
+    /* CURD Purchases*/
+    public function purchases ()
+    {
+        $purchases = PurchaseInvoice::orderBy('updated_at','desc')->paginate(5);
+        return view('admin.purchases.purchases', compact('purchases'));
+    }
+
+    public function createPurchases ()
+    {
+        $products = Product::all();
+        $suppliers = Supplier::all();
+        return view('admin.purchases.createPurchases', compact('suppliers', 'products'));
+    }
+
+    public function storePurchases(Request $request, PurchaseInvoice $purchases)
+    {
+        $purchaseInvoice = PurchaseInvoice::create($request->all() + ['user_id' => Auth::user()->id]);
+        $products_info = $request->data;
+        foreach($products_info as $item){
+            $purchaseInvoice->purchaseInvoiceProducts()->create([
+                'name' => $item['product_name'],
+                'price' => $item['price'],
+                'quantity' => $item['quantity'],
+                'total' => $item['total'],
+            ]);
+
+            $productExists = Product::where('name', $item['product_name'])->first();
+            if ($productExists == true){
+                $productExists->purchase_price = $item['price'];
+                $productExists->quantity = $item['quantity'] + $productExists->quantity ;
+                $productExists->save();
+            }else{
+                $purchaseInvoice->products()->create([
+                    'name' => $item['product_name'],
+                    'purchase_price' => $item['price'],
+                    'quantity' => $item['quantity'],
+                    'user_id' => Auth::user()->id,
+                ]);
+//                $product = new Product;
+//                $product->name = $item['product_name'];
+//                $product->price = $item['price'];
+//                $product->quantity = $item['quantity'];
+//                $product->invoice_id = $request->invoice_id;
+//                $product->save();
+            }
+        }
+
+        return redirect()->route('admin.purchases')->with('success', 'PurchasesInvoice Added Successfully');
+
+//            if isset data add to database
+
+
+
+
+
+
+
+
+//        $purchases->discount = $request->discount;
+//        $purchases->paid = $request->paid;
+//        $purchases->stay = $request->stay;
+//        $purchases->total = $request->total;
+
+//        $purchases->store_id = 1;
+
+
+    }
+
+    public function editPurchases($id)
+    {
+        $purchases = PurchaseInvoice::findOrFail($id);
+        return view('admin.purchases.editPurchases', compact('purchases'));
+    }
+
+    public function updatePurchases($id, Request $request)
+    {
+        $purchases = PurchaseInvoice::findOrFail($id);
+        $purchases->name = $request->name;
+        $purchases->address = $request->address;
+        $purchases->phones = $request->phones;
+        $purchases->user_id = Auth::user()->id;
+        $purchases->save();
+        return redirect()->route('admin.purchases')->with('success', 'Purchases Edit Successfully');
+    }
+
+    public function destroyPurchases(Request $request)
+    {
+        if (isset($request->id)){
+            $purchases_id = $request->id;
+            PurchaseInvoice::destroy($purchases_id);
+            return redirect()->route('admin.purchases')->with('delete', 'Purchases Delete Successfully');
+        }else {
+            return redirect()->back();
+        }
+    }
+
+
     /* CURD Users*/
     public function users ()
     {
@@ -327,5 +427,24 @@ class AdminController extends Controller
     public function destroyUser(Request $request)
     {
         //
+    }
+
+    public function get_quantity_Available ()
+    {
+        $id = $_GET['productId'];
+        $quantity_Available = Product::where('id', $id)->first();
+        echo $quantity_Available->quantity;
+    }
+
+    public function get_total ()
+    {
+        $unitPrice = $_GET['unitPrice'];
+        $productQuantity = $_GET['productQuantity'];
+        $discount = $_GET['discount'];
+        $total = $unitPrice * $productQuantity - $discount;
+        echo $total;
+////         dd($total);
+//        echo '<label for="total">Total</label>';
+//        echo '<input name="total" type="text" class="form-control" value="'.$total.'">';
     }
 }

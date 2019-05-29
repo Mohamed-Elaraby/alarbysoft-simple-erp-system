@@ -36,24 +36,27 @@
 
 {{--=========================================================--}}
 
-            {{-- User Area --}}
-            <li class="header">User</li>
+            @if(Auth::user()->seller == true)
+                {{-- User Area --}}
+                <li class="header">Seller</li>
                 <li class="{{ Route::currentRouteName() == 'user.dashboard' ? 'active': '' }}">
                     <a href="{{ route('user.dashboard') }}">
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
 
-            <li class="{{ Route::currentRouteName() == 'user.comments' ? 'active': '' }}">
-                <a href="{{ route('user.comments') }}">
-                    <i class="fa fa-comments"></i> <span>comments</span>
-                </a>
-            </li>
+                <li class="{{ Route::currentRouteName() == 'user.comments' ? 'active': '' }}">
+                    <a href="{{ route('user.comments') }}">
+                        <i class="fa fa-comments"></i> <span>comments</span>
+                    </a>
+                </li>
+            @endif
 
 {{--=========================================================--}}
 
+        @if(Auth::user()->moderator == true)
             {{-- Dealer Area --}}
-            <li class="header">Dealer Area</li>
+            <li class="header">Moderator Area</li>
 
             <li class="">
                 <a href="{{ route('dealer.dashboard') }}">
@@ -81,9 +84,10 @@
                     <li><a href="{{ route('dealer.products') }}"><i class="fa fa-eye"></i> Show All Products</a></li>
                 </ul>
             </li>
-
+        @endif
 {{--=========================================================--}}
 
+        @if(Auth::user()->admin == true)
             {{-- Admin Area --}}
             <li class="header">Admin</li>
 
@@ -165,7 +169,7 @@
             {{-- Clients link--}}
             <li class="treeview">
                 <a href="{{ route('admin.clients') }}" onclick="event.preventDefault();">
-                    <i class="fa fa-money"></i>
+                    <i class="fa fa-address-card-o"></i>
                     <span>Clients</span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
@@ -174,6 +178,36 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.createClient') }}"><i class="fa fa-plus"></i>Create Client</a></li>
                     <li><a href="{{ route('admin.clients') }}"><i class="fa fa-eye"></i> Show All Clients</a></li>
+                </ul>
+            </li>
+
+            {{-- Purchases link--}}
+            <li class="treeview">
+                <a href="{{ route('admin.purchases') }}" onclick="event.preventDefault();">
+                    <i class="fa fa-credit-card"></i>
+                    <span>Purchases</span>
+                    <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.createPurchases') }}"><i class="fa fa-plus"></i>Create Purchase Order</a></li>
+                    <li><a href="{{ route('admin.purchases') }}"><i class="fa fa-eye"></i> Show All Purchases</a></li>
+                </ul>
+            </li>
+
+            {{-- Sales link--}}
+            <li class="treeview">
+                <a href="{{ route('admin.sales') }}" onclick="event.preventDefault();">
+                    <i class="fa fa-money"></i>
+                    <span>Sales</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.createSales') }}"><i class="fa fa-plus"></i>Create Sales</a></li>
+                    <li><a href="{{ route('admin.sales') }}"><i class="fa fa-eye"></i> Show All Sales</a></li>
                 </ul>
             </li>
 
@@ -191,7 +225,7 @@
                         <li><a href="{{ route('admin.users') }}"><i class="fa fa-eye"></i> Show All Users</a></li>
                     </ul>
                 </li>
-
+            @endif
 
         </ul>
     </section>

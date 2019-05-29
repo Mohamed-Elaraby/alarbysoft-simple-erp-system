@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-offset-3 col-sm-6">
-            <h3 class="text-center"><i class="fa fa-edit"></i> Create Store</h3>
+            <h3 class="text-center"><i class="fa fa-edit"></i> Create Store <button id="button">New Row</button></h3>
             <form action="{{ route('admin.storeStore') }}" method="POST">
                 @csrf
                 <div class="form-group">
@@ -31,4 +31,5 @@
         </div>
     </div>
 </div>
+
 @endsection

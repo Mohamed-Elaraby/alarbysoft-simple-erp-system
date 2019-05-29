@@ -11,7 +11,9 @@ class Expenses extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['price', 'comment', 'user_id', 'store_id'];
+    protected $fillable = [
+        'price', 'comment', 'user_id', 'store_id'
+    ];
 
     public function user ()
     {

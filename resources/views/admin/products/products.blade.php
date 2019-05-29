@@ -29,7 +29,8 @@
                                 <th scope="col">purchasing_price</th>
                                 <th scope="col">dealer_price</th>
                                 <th scope="col">selling_price</th>
-                                <th scope="col">serialNumber</th>
+                                <th scope="col">profit_percent%</th>
+{{--                                <th scope="col">serialNumber</th>--}}
                                 <th scope="col">user</th>
                                 <th scope="col">category</th>
                                 <th scope="col">store</th>
@@ -49,7 +50,8 @@
                                     <td>{{ $product->purchasing_price }}</td>
                                     <td>{{ $product->dealer_price }}</td>
                                     <td>{{ $product->selling_price }}</td>
-                                    <td>{{ $product->serialNumber }}</td>
+                                    <td>{{ $product->profit_percent }} %</td>
+{{--                                    <td>{{ $product->serialNumber }}</td>--}}
                                     <td>{{ $product->user->name }}</td>
                                     <td>{{ $product->category->name }}</td>
                                     <td>{{ $product->store->name }}</td>

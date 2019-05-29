@@ -82,6 +82,27 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::post('client/{id}/update','AdminController@updateClient')->name('updateClient');
     Route::delete('client/destroy','AdminController@destroyClient')->name('destroyClient');
 
+    /* Admin Purchases*/
+    Route::get('purchases','AdminController@purchases')->name('purchases');
+    Route::get('createPurchases','AdminController@createPurchases')->name('createPurchases');
+    Route::post('storePurchases','AdminController@storePurchases')->name('storePurchases');
+    Route::get('Purchases/{id}/edit','AdminController@editPurchases')->name('editPurchases');
+    Route::post('Purchases/{id}/update','AdminController@updatePurchases')->name('updatePurchases');
+    Route::delete('Purchases/destroy','AdminController@destroyPurchases')->name('destroyPurchases');
+
+
+    Route::get('Purchases/search','AdminController@searchPurchases')->name('searchPurchases');
+    Route::get('quantity/available','AdminController@get_quantity_Available')->name('get_quantity_Available');
+    Route::get('total/amount','AdminController@get_total')->name('get_total');
+
+    /* Admin Sales*/
+    Route::get('sales','AdminController@sales')->name('sales');
+    Route::get('createSales','AdminController@createSales')->name('createSales');
+    Route::post('storeSales','AdminController@storeSales')->name('storeSales');
+    Route::get('Sales/{id}/edit','AdminController@editSales')->name('editSales');
+    Route::post('Sales/{id}/update','AdminController@updateSales')->name('updateSales');
+    Route::delete('Sales/destroy','AdminController@destroySales')->name('destroySales');
+
     /* Admin Users*/
     Route::get('users','AdminController@users')->name('users');
     Route::get('createUser','AdminController@createUser')->name('createUser');

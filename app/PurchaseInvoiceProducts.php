@@ -5,14 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Sales extends Model
+class PurchaseInvoiceProducts extends Model
 {
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'price', 'method', 'discount', 'user_id', 'store_id', 'client_id'
+        'name', 'price', 'quantity', 'total',
     ];
 
     public function user ()
@@ -20,5 +20,8 @@ class Sales extends Model
         return $this->belongsTo(User::class);
     }
 
-
+    public function purchaseInvoice ()
+    {
+        return $this->belongsTo(PurchaseInvoice::class);
+    }
 }

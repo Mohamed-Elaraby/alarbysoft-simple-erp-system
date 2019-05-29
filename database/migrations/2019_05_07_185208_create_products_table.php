@@ -16,15 +16,16 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->double('purchasing_price');
-            $table->double('dealer_price');
-            $table->double('selling_price');
+            $table->double('purchase_price');
+            $table->double('dealer_price')->nullable();
+            $table->double('selling_price')->nullable();
             $table->string('quantity');
-            $table->string('serialNumber');
-            $table->integer('user_id')->unsigned();
-            $table->integer('category_id')->unsigned();
-            $table->integer('store_id')->unsigned();
-            $table->integer('supplier_id')->unsigned();
+            $table->integer('invoiceNo')->unsigned();
+            $table->integer('purchase_invoice_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('category_id')->unsigned()->nullable();
+            $table->integer('store_id')->unsigned()->nullable();
+            $table->integer('supplier_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

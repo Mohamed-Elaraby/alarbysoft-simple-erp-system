@@ -25,7 +25,7 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Category</th>
-{{--                                <th scope="col">Description</th>--}}
+                                <th scope="col">Products Count</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Parent</th>
                                 <th scope="col">Created_by</th>
@@ -40,7 +40,7 @@
                                 <tr>
                                     <td>{{ $category->id }}</td>
                                     <td>{{ $category->name }}</td>
-{{--                                    <td>{{ $category->description }}</td>--}}
+                                    <td>{{ $category->products->count() }}</td>
                                     <td>{{ $category->type == 0 ? 'Main' : 'Sub'}}</td>
                                     <td>
                                         @if($category->type == 0)
