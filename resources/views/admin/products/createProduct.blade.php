@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-sm-offset-3 col-sm-6">
             <h3 class="text-center"><i class="fa fa-edit"></i> Create Product</h3>
-            <form action="{{ route('admin.storeProduct') }}" method="POST">
+            <form action="{{ route('admin.products.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="product">Product</label>
@@ -16,7 +16,7 @@
 
                 <div class="form-group">
                     <label for="purchasing_price">Purchasing_price</label>
-                    <input name="purchasing_price" type="text" class="form-control" id="purchasing_price" placeholder="10.0">
+                    <input name="purchase_price" type="text" class="form-control" id="purchasing_price" placeholder="10.0">
                 </div>
 
                 <div class="form-group">
@@ -32,11 +32,6 @@
                 <div class="form-group">
                     <label for="quantity">Quantity</label>
                     <input name="quantity" type="text" class="form-control" id="quantity" placeholder="Please Enter Product Quantity">
-                </div>
-
-                <div class="form-group">
-                    <label for="serialNumber">SerialNumber</label>
-                    <input name="serialNumber" type="text" class="form-control" id="serialNumber" placeholder="Please Enter Product SerialNumber">
                 </div>
 
                 <div class="form-group">

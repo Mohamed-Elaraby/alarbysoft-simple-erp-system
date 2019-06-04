@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-sm-offset-3 col-sm-6">
             <h3 class="text-center"><i class="fa fa-edit"></i> Create Category</h3>
-            <form action="{{ route('admin.storeCategory') }}" method="POST">
+            <form action="{{ route('admin.categories.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="product">Category</label>

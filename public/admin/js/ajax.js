@@ -97,7 +97,7 @@ function calculateTotal(){
 	$('#totalAftertax').val( total.toFixed(2) );
 	calculateAmountDue();
 }
-$('#amountPaid').val(0);
+
 $(document).on('change keyup blur','#amountPaid',function(){
 	calculateAmountDue();
 });
@@ -129,7 +129,7 @@ function IsNumeric(e) {
 //datepicker
 $(function () {
     // $('#invoiceDate').datepicker({});
-    $("#invoiceDate").datepicker().datepicker("setDate", new Date());
+    // $("#invoiceDate").datepicker().datepicker("setDate", new Date());
 
 });
 

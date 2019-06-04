@@ -59,7 +59,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ route('user.profile', Auth::user()->id) }}" class="btn btn-default btn-flat">Profile</a>
+{{--                                <a href="{{ route('user.profile', Auth::user()->id) }}" class="btn btn-default btn-flat">Profile</a>--}}
                             </div>
                             <div class="pull-right">
                                 <a onclick="event.preventDefault(); document.getElementById('logOutForm').submit();"

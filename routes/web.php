@@ -6,113 +6,80 @@ Route::get('/', function () {
 
 /* User Routes */
 
-Route::prefix('user')->name('user.')->group(function (){
-
-    /* User Profile*/
-    Route::get('profile/{id}','UserController@profile')->name('profile');
-
-    /* User Dashboard */
-    Route::get('dashboard','UserController@dashboard')->name('dashboard');
-
-    /* User Comments*/
-    Route::get('comments','UserController@comments')->name('comments');
-
-
-});
+//Route::prefix('user')->name('user.')->group(function (){
+//
+//    /* User Profile*/
+//    Route::get('profile/{id}','UserController@profile')->name('profile');
+//
+//    /* User Dashboard */
+//    Route::get('dashboard','UserController@dashboard')->name('dashboard');
+//
+//    /* User Comments*/
+//    Route::get('comments','UserController@comments')->name('comments');
+//
+//
+//});
 
 /* Dealer Routes */
 
-Route::prefix('dealer')->name('dealer.')->group(function (){
-    /* Dealer Dashboard */
-    Route::get('dashboard','DealerController@dashboard')->name('dashboard');
+//Route::prefix('dealer')->name('dealer.')->group(function (){
+//    /* Dealer Dashboard */
+//    Route::get('dashboard','DealerController@dashboard')->name('dashboard');
+//
+//    /* Dealer Comments*/
+//    Route::get('comments','DealerController@comments')->name('comments');
+//
+//    /* Dealer Products*/
+//    Route::get('products','DealerController@products')->name('products');
+//    Route::get('createProduct','DealerController@createProduct')->name('createProduct');
+//    Route::post('storeProduct','DealerController@storeProduct')->name('storeProduct');
+//
+//});
 
-    /* Dealer Comments*/
-    Route::get('comments','DealerController@comments')->name('comments');
+    /* Admin Routes */
+    Route::prefix('admin')->middleware(['auth', 'CheckRole:admin'])->namespace('Admin')->name('admin.')->group(function (){
 
-    /* Dealer Products*/
-    Route::get('products','DealerController@products')->name('products');
-    Route::get('createProduct','DealerController@createProduct')->name('createProduct');
-    Route::post('storeProduct','DealerController@storeProduct')->name('storeProduct');
+        /* Dashboard Routes */
+        Route::get('dashboard','DashboardController@index')->name('dashboard');
 
-});
+        /* Products Routes */
+        Route::resource('products', 'ProductController')->except(['destroy']);
+        Route::delete('products/destroy', 'ProductController@destroy')->name('products.destroy');
 
-/* Admin Routes */
+        /* Categories Routes */
+        Route::resource('categories', 'CategoryController')->except(['destroy']);
+        Route::delete('categories/destroy', 'CategoryController@destroy')->name('categories.destroy');
 
-Route::prefix('admin')->name('admin.')->group(function (){
-    /* Admin Dashboard */
-    Route::get('dashboard','AdminController@dashboard')->name('dashboard');
+        /* Stores Routes */
+        Route::resource('stores', 'StoreController')->except(['destroy']);
+        Route::delete('stores/destroy', 'StoreController@destroy')->name('stores.destroy');
 
-    /* Admin Categories*/
-    Route::get('categories','AdminController@categories')->name('categories');
-    Route::get('createCategory','AdminController@createCategory')->name('createCategory');
-    Route::post('storeCategory','AdminController@storeCategory')->name('storeCategory');
-    Route::get('category/{id}/edit','AdminController@editCategory')->name('editCategory');
-    Route::post('category/{id}/update','AdminController@updateCategory')->name('updateCategory');
-    Route::delete('category/destroy','AdminController@destroyCategory')->name('destroyCategory');
+        /* Suppliers Routes */
+        Route::resource('suppliers', 'SupplierController')->except(['destroy']);
+        Route::delete('suppliers/destroy', 'SupplierController@destroy')->name('suppliers.destroy');
 
-    /* Admin Products*/
-    Route::get('products','AdminController@products')->name('products');
-    Route::get('createProduct','AdminController@createProduct')->name('createProduct');
-    Route::post('storeProduct','AdminController@storeProduct')->name('storeProduct');
-    Route::get('product/{id}/edit','AdminController@editProduct')->name('editProduct');
-    Route::post('product/{id}/update','AdminController@updateProduct')->name('updateProduct');
-    Route::delete('product/destroy','AdminController@destroyProduct')->name('destroyProduct');
+        /* Clients Routes */
+        Route::resource('clients', 'ClientController')->except(['destroy']);
+        Route::delete('clients/destroy', 'ClientController@destroy')->name('clients.destroy');
 
-    /* Admin Stores*/
-    Route::get('stores','AdminController@stores')->name('stores');
-    Route::get('createStore','AdminController@createStore')->name('createStore');
-    Route::post('storeStore','AdminController@storeStore')->name('storeStore');
-    Route::get('store/{id}/edit','AdminController@editStore')->name('editStore');
-    Route::post('store/{id}/update','AdminController@updateStore')->name('updateStore');
-    Route::delete('store/destroy','AdminController@destroyStore')->name('destroyStore');
+        /* Purchases Routes */
+        Route::resource('purchases', 'PurchaseOrderController')->except(['destroy']);
+        Route::delete('purchases/destroy', 'PurchaseOrderController@destroy')->name('purchases.destroy');
 
-    /* Admin Suppliers*/
-    Route::get('suppliers','AdminController@suppliers')->name('suppliers');
-    Route::get('createSupplier','AdminController@createSupplier')->name('createSupplier');
-    Route::post('storeSupplier','AdminController@storeSupplier')->name('storeSupplier');
-    Route::get('supplier/{id}/edit','AdminController@editSupplier')->name('editSupplier');
-    Route::post('supplier/{id}/update','AdminController@updateSupplier')->name('updateSupplier');
-    Route::delete('supplier/destroy','AdminController@destroySupplier')->name('destroySupplier');
+        /* Sales Routes */
+        Route::resource('sales', 'SaleOrderController')->except(['destroy']);
+        Route::delete('sales/destroy', 'SaleOrderController@destroy')->name('sales.destroy');
 
-    /* Admin Clients*/
-    Route::get('clients','AdminController@clients')->name('clients');
-    Route::get('createClient','AdminController@createClient')->name('createClient');
-    Route::post('storeClient','AdminController@storeClient')->name('storeClient');
-    Route::get('client/{id}/edit','AdminController@editClient')->name('editClient');
-    Route::post('client/{id}/update','AdminController@updateClient')->name('updateClient');
-    Route::delete('client/destroy','AdminController@destroyClient')->name('destroyClient');
+        /* Expenses Routes */
+        Route::resource('expenses', 'ExpensesController')->except(['destroy']);
+        Route::delete('expenses/destroy', 'ExpensesController@destroy')->name('expenses.destroy');
 
-    /* Admin Purchases*/
-    Route::get('purchases','AdminController@purchases')->name('purchases');
-    Route::get('createPurchases','AdminController@createPurchases')->name('createPurchases');
-    Route::post('storePurchases','AdminController@storePurchases')->name('storePurchases');
-    Route::get('Purchases/{id}/edit','AdminController@editPurchases')->name('editPurchases');
-    Route::post('Purchases/{id}/update','AdminController@updatePurchases')->name('updatePurchases');
-    Route::delete('Purchases/destroy','AdminController@destroyPurchases')->name('destroyPurchases');
+        /* Expenses Types Routes */
+        Route::resource('expensesTypes', 'ExpensesTypeController')->except(['destroy']);
+        Route::delete('expensesTypes/destroy', 'ExpensesTypeController@destroy')->name('expensesTypes.destroy');
 
+    });
 
-    Route::get('Purchases/search','AdminController@searchPurchases')->name('searchPurchases');
-    Route::get('quantity/available','AdminController@get_quantity_Available')->name('get_quantity_Available');
-    Route::get('total/amount','AdminController@get_total')->name('get_total');
+    Auth::routes();
 
-    /* Admin Sales*/
-    Route::get('sales','AdminController@sales')->name('sales');
-    Route::get('createSales','AdminController@createSales')->name('createSales');
-    Route::post('storeSales','AdminController@storeSales')->name('storeSales');
-    Route::get('Sales/{id}/edit','AdminController@editSales')->name('editSales');
-    Route::post('Sales/{id}/update','AdminController@updateSales')->name('updateSales');
-    Route::delete('Sales/destroy','AdminController@destroySales')->name('destroySales');
-
-    /* Admin Users*/
-    Route::get('users','AdminController@users')->name('users');
-    Route::get('createUser','AdminController@createUser')->name('createUser');
-    Route::post('storeUser','AdminController@storeUser')->name('storeUser');
-    Route::get('user/{id}/edit','AdminController@editUser')->name('editUser');
-    Route::post('user/{id}/update','AdminController@updateUser')->name('updateUser');
-    Route::delete('user/destroy','AdminController@destroyUser')->name('destroyUser');
-
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');

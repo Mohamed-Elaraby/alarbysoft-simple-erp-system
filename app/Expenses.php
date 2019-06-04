@@ -12,11 +12,16 @@ class Expenses extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'price', 'comment', 'user_id', 'store_id'
+        'amount', 'comment', 'expenses_date', 'user_id', 'store_id', 'expenses_type_id'
     ];
 
     public function user ()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function expensesType ()
+    {
+        return $this->belongsTo(ExpensesType::class);
     }
 }

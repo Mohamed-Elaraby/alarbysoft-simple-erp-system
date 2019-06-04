@@ -17,69 +17,105 @@
                     </div>
                 @endif
                 <div class="products_table">
-                    <form action="{{ route('admin.destroyPurchases') }}" method="post">
+                    <form action="{{ route('admin.purchases.destroy') }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <table class="table table-dark" id="Purchasess_table">
-                            <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Invoice Number</th>
-                                <th scope="col">Product</th>
-                                <th scope="col">price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Method</th>
-                                <th scope="col">Discount</th>
-                                <th scope="col">Paid</th>
-                                <th scope="col">Stay</th>
-                                <th scope="col">Total</th>
-                                <th scope="col">Store</th>
-                                <th scope="col">Created_by</th>
-                                <th scope="col">Supplier</th>
-                                <th scope="col">created_at</th>
-                                <th scope="col">updated_at</th>
-                                <th scope="col">Action</th>
-                                <th scope="col">Select</th>
-                            </tr>
-                            </thead>
-{{--                            'name', 'price', 'method', 'discount', 'user_id', 'store_id', 'supplier_id', 'quantity', 'invoice', 'paid', 'stay', 'total',--}}
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Purchases Invoices</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="purchaseInvoices" class="table table-bordered table-hover table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Select</th>
+                                        <th scope="col">Action</th>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Invoice Number</th>
+                                        <th scope="col">Invoice Date</th>
+                                        <th scope="col">Products Count</th>
+                                        <th scope="col">Invoice Subtotal</th>
+                                        <th scope="col">Tax Percent</th>
+                                        <th scope="col">Tax</th>
+                                        <th scope="col">Invoice Total</th>
+                                        <th scope="col">Payment Method</th>
+                                        <th scope="col">Amount Paid</th>
+                                        <th scope="col">Amount Due</th>
+                                        <th scope="col">Notes</th>
+                                        <th scope="col">Agent</th>
+                                        <th scope="col">Supplier</th>
+                                        <th scope="col">Created At</th>
+                                        <th scope="col">Updated At</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($all_purchase_orders as $item)
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="id[]" value="{{ $item->id }}">
+                                            </td>
+                                            <td>
+                                            <a href="{{ route('admin.purchases.show', $item->id) }}" class="btn btn-sm btn-warning">Details</a>
+                                            <a href="{{ route('admin.purchases.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a></td>
+                                            <th scope="col">{{ $item->id }}</th>
+                                            <td class="bg-warning">{{ $item->invoiceNo }}</td>
+                                            <td>{{ $item->invoiceDate }}</td>
+                                            <td>{{ $item->purchaseOrderProducts->count() }}</td>
+                                            <td>{{ $item->invoice_subtotal }}</td>
+                                            <td>{{ $item->tax_percent == NULL ? 0 : $item->tax_percent }}</td>
+                                            <td>{{ $item->tax == NULL ? 0 : $item->tax}}</td>
+                                            <td class="bg-primary">{{ $item->invoice_total }}</td>
+                                            <td>{{ $item->payment_method == 0 ? 'Cash':'Due' }}</td>
+                                            <td>{{ $item->amount_paid }}</td>
+                                            <td>{{ $item->amount_due }}</td>
+                                            <td>{{ $item->notes }}</td>
+                                            <td>{{ $item->user->name }}</td>
+                                            <td>{{ $item->supplier->name }}</td>
+                                            <td>{{ $item->created_at }}</td>
+                                            <td>{{ $item->updated_at }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
 
-                            <tbody>
-                            @foreach($purchases as $item)
-                                <tr>
-                                    <th scope="col">{{ $item->id }}</th>
-                                    <td>{{ $item->invoice }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->price }}</td>
-                                    <td>{{ $item->quantity }}</td>
-                                    <td>{{ $item->method }}</td>
-                                    <td>{{ $item->discount }}</td>
-                                    <td>{{ $item->paid }}</td>
-                                    <td>{{ $item->stay }}</td>
-                                    <td>{{ $item->total }}</td>
-                                    <td>{{ $item->store }}</td>
-                                    <td>{{ $item->user->name }}</td>
-                                    <td>{{ $item->supplier->name }}</td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>{{ $item->updated_at }}</td>
-                                    <td><a href="{{ route('admin.editPurchases', $item->id) }}" class="btn btn-sm btn-primary">Edit</a></td>
-                                    <td>
-                                        <input type="checkbox" name="id[]" value="{{ $item->id }}">
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+
+                        {{--=====================================--}}
+
                         <input type="submit" value="DELETE" name="softDelete" class="btn btn-danger">
                     </form>
-                    <div id="show">
-
-                    </div>
-                    <div class="paginate col-md-offset-5">
-                        {{ $purchases->links() }}
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+@push('scripts')
+    <script>
+        $(function () {
+            $('#purchaseInvoices').DataTable({
+                dom: 'lBfrtip',// dom: 'B<"clear">lfrtip',
+                // buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                "buttons": [
+                    { "extend": 'copy', "text":'Copy',"className": 'btn btn-default btn-xs' },
+                    { "extend": 'csv', "text":'Csv',"className": 'btn btn-default btn-xs' },
+                    { "extend": 'excel', "text":'Excel',"className": 'btn btn-default btn-xs' },
+                    { "extend": 'pdf', "text":'Pdf',"className": 'btn btn-default btn-xs' },
+                    { "extend": 'print', "text":'Print',"className": 'btn btn-default btn-xs' },
+                ],
+                responsive: true,
+                scrollY:        "400vh",
+                scrollX:        true,
+                scrollCollapse: true,
+                paging:         true,
+                fixedColumns:   {
+                    heightMatch: 'none'
+                },
+                "ordering": true,
+                "order": [[ 16, "desc" ]],
+            })
+        })
+    </script>
+@endpush
 @endsection

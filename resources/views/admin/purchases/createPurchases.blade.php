@@ -7,7 +7,7 @@
     <div class="row">
         <div class=" col-sm-12">
             <h3 class="text-center"><i class="fa fa-edit"></i> Purchase Order</h3>
-            <form action="{{ route('admin.storePurchases') }}" method="POST" multiple="">
+            <form action="{{ route('admin.purchases.store') }}" method="POST">
                 @csrf
                 <div class='row no-margin'>
                     <div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
@@ -41,9 +41,6 @@
                             <label for="invoiceDate">Invoice Date</label>
                             <input type="text" class="form-control" name="invoiceDate" id="invoiceDate" data-date-format='yyyy-mm-dd'>
                         </div>
-{{--                        <input type="hidden" value="1" name="client_id">--}}
-{{--                        <input type="hidden" value="" name="id">--}}
-{{--                        <input type="hidden" value="1" name="uuid">--}}
                     </div>
 
                 </div>
@@ -158,70 +155,15 @@
                         </div>
                     </div>
                 </div>
-
-
-                    {{--<div class="form-row clearfix">
-                        <div class="form-group col-md-6">
-                            <label for="inv_no">Invoice Number</label>
-                            <input name="inv_no" type="text" class="form-control" id="inv_no">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="supplier">Supplier</label>
-                            <input list="supplier" name="supplier" class="form-control">
-                            <datalist id="supplier">
-                                <option value=""></option>
-                                @foreach($suppliers as $supplier)
-                                    <option value="{{ $supplier->id }}">{{ $supplier->name }}
-                                @endforeach
-                            </datalist>
-                        </div>
-                    </div>--}}
-
-                    {{--<div class="form-row clearfix" id="dynamic_form">
-                                <div class="form-group col-md-2">
-                                    <label for="name">Product</label>
-                                    <input list="products" name="name" class="form-control" id="product">
-                                    <datalist id="products">
-                                        <option value=""></option>
-                                        @foreach($products as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}
-                                        @endforeach
-                                    </datalist>
-
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <label for="quantity">Product Quantity</label>
-                                    <input name="quantity" type="text" class="form-control" id="quantity">
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <label for="price">Unit Price</label>
-                                    <input name="price" type="text" class="form-control" id="price">
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <label for="discount">Discount</label>
-                                    <input name="discount" type="text" class="form-control" id="discount" value="0">
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <label for="total">Total</label>
-                                    <input name="total" type="text" class="form-control" id="total">
-                                </div>
-
-                            </div>--}}
-
-
             </form>
         </div>
     </div>
 </div>
 @push('scripts')
     <script src="{{ asset('admin/js/ajax.js') }}"></script>
-    <!-- datepicker select current date -->
     <script>
-        // $('#invoiceDate').datepicker({ dateFormat: 'dd-mm-yy' });
+        $("#invoiceDate").datepicker().datepicker("setDate", new Date());
+        $('#amountPaid').val(0);
     </script>
 @endpush
 @endsection

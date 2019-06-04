@@ -16,11 +16,11 @@
                         {{ session('delete') }}
                     </div>
                 @endif
-                <div class="products_table">
-                    <form action="{{ route('admin.destroyClient') }}" method="post">
+                <div class="clients_table">
+                    <form action="{{ route('admin.clients.destroy') }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <table class="table table-dark" id="Clients_table">
+                        <table id="clients_table" class="table table-bordered table-hover table-striped">
                             <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -45,7 +45,7 @@
                                     <td>{{ $client->created_at }}</td>
                                     <td>{{ $client->updated_at }}</td>
                                     <td>
-                                        <a href="{{ route('admin.editClient', $client->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="{{ route('admin.clients.edit', $client->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                         <a href="#" class="btn btn-sm btn-warning">Details</a></td>
                                     </td>
                                     <td>
@@ -57,14 +57,35 @@
                         </table>
                         <input type="submit" value="DELETE" name="softDelete" class="btn btn-danger">
                     </form>
-                    <div id="show">
-
-                    </div>
-                    <div class="paginate col-md-offset-5">
-                        {{ $clients->links() }}
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            $(function () {
+                $('#clients_table').DataTable({
+                    dom: 'lBfrtip',// dom: 'B<"clear">lfrtip',
+                    // buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                    "buttons": [
+                        { "extend": 'copy', "text":'Copy',"className": 'btn btn-default btn-xs' },
+                        { "extend": 'csv', "text":'Csv',"className": 'btn btn-default btn-xs' },
+                        { "extend": 'excel', "text":'Excel',"className": 'btn btn-default btn-xs' },
+                        { "extend": 'pdf', "text":'Pdf',"className": 'btn btn-default btn-xs' },
+                        { "extend": 'print', "text":'Print',"className": 'btn btn-default btn-xs' },
+                    ],
+                    responsive: true,
+                    // scrollY:        "400vh",
+                    // scrollX:        true,
+                    // scrollCollapse: true,
+                    paging:         true,
+                    fixedColumns:   {
+                        heightMatch: 'none'
+                    },
+                    "ordering": true,
+                    "order": [[ 0, "desc" ]],
+                })
+            })
+        </script>
+    @endpush
 @endsection

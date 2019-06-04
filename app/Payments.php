@@ -5,20 +5,18 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Sales extends Model
+class Payments extends Model
 {
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'price', 'method', 'discount', 'user_id', 'store_id', 'client_id'
+        'price', 'comment', 'type', 'payment_date', 'user_id', 'store_id'
     ];
 
     public function user ()
     {
         return $this->belongsTo(User::class);
     }
-
-
 }

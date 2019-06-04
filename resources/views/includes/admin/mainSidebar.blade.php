@@ -17,7 +17,7 @@
                         Seller
                     @endif
                 </p>
-                <a href="{{ route('user.profile', Auth::user()->id) }}"><i class="fa fa-circle text-success"></i> Online</a>
+{{--                <a href="{{ route('user.profile', Auth::user()->id) }}"><i class="fa fa-circle text-success"></i> Online</a>--}}
             </div>
         </div>
         <!-- search form -->
@@ -36,8 +36,8 @@
 
 {{--=========================================================--}}
 
-            @if(Auth::user()->seller == true)
-                {{-- User Area --}}
+           {{-- @if(Auth::user()->seller == true)
+                --}}{{-- User Area --}}{{--
                 <li class="header">Seller</li>
                 <li class="{{ Route::currentRouteName() == 'user.dashboard' ? 'active': '' }}">
                     <a href="{{ route('user.dashboard') }}">
@@ -50,12 +50,12 @@
                         <i class="fa fa-comments"></i> <span>comments</span>
                     </a>
                 </li>
-            @endif
+            @endif--}}
 
 {{--=========================================================--}}
 
-        @if(Auth::user()->moderator == true)
-            {{-- Dealer Area --}}
+        {{--@if(Auth::user()->moderator == true)
+            --}}{{-- Dealer Area --}}{{--
             <li class="header">Moderator Area</li>
 
             <li class="">
@@ -84,7 +84,7 @@
                     <li><a href="{{ route('dealer.products') }}"><i class="fa fa-eye"></i> Show All Products</a></li>
                 </ul>
             </li>
-        @endif
+        @endif--}}
 {{--=========================================================--}}
 
         @if(Auth::user()->admin == true)
@@ -99,16 +99,16 @@
                 </li>
 
             {{-- Comments link--}}
-                <li class="">
+                {{--<li class="">
                     <a href="#">
                         <i class="fa fa-comments"></i>
                         <span>Comments</span>
                     </a>
-                </li>
+                </li>--}}
 
             {{-- Categories link--}}
             <li class="treeview">
-                <a href="{{ route('admin.categories') }}" onclick="event.preventDefault();">
+                <a href="{{ route('admin.categories.index') }}" onclick="event.preventDefault();">
                     <i class="fa fa-th-large"></i>
                     <span>Categories</span>
                     <span class="pull-right-container">
@@ -116,14 +116,14 @@
                             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.createCategory') }}"><i class="fa fa-plus"></i>Create Category</a></li>
-                    <li><a href="{{ route('admin.categories') }}"><i class="fa fa-eye"></i> Show All Categories</a></li>
+                    <li><a href="{{ route('admin.categories.create') }}"><i class="fa fa-plus"></i>Create Category</a></li>
+                    <li><a href="{{ route('admin.categories.index') }}"><i class="fa fa-eye"></i> Show All Categories</a></li>
                 </ul>
             </li>
 
             {{-- Products link--}}
-                <li class="treeview">
-                    <a href="{{ route('admin.products') }}" onclick="event.preventDefault();">
+            <li class="treeview">
+                    <a href="{{ route('admin.products.index') }}" onclick="event.preventDefault();">
                         <i class="fa fa-shopping-cart"></i>
                         <span>Products</span>
                         <span class="pull-right-container">
@@ -131,14 +131,14 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ route('admin.createProduct') }}"><i class="fa fa-plus"></i>Create Product</a></li>
-                        <li><a href="{{ route('admin.products') }}"><i class="fa fa-eye"></i> Show All Products</a></li>
+                        <li><a href="{{ route('admin.products.create') }}"><i class="fa fa-plus"></i>Create Product</a></li>
+                        <li><a href="{{ route('admin.products.index') }}"><i class="fa fa-eye"></i> Show All Products</a></li>
                     </ul>
                 </li>
 
             {{-- Stores link--}}
             <li class="treeview">
-                <a href="{{ route('admin.stores') }}" onclick="event.preventDefault();">
+                <a href="{{ route('admin.stores.index') }}" onclick="event.preventDefault();">
                     <i class="fa fa-renren"></i>
                     <span>Stores</span>
                     <span class="pull-right-container">
@@ -146,14 +146,14 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.createStore') }}"><i class="fa fa-plus"></i>Create Store</a></li>
-                    <li><a href="{{ route('admin.stores') }}"><i class="fa fa-eye"></i> Show All Stores</a></li>
+                    <li><a href="{{ route('admin.stores.create') }}"><i class="fa fa-plus"></i>Create Store</a></li>
+                    <li><a href="{{ route('admin.stores.index') }}"><i class="fa fa-eye"></i> Show All Stores</a></li>
                 </ul>
             </li>
 
             {{-- Suppliers link--}}
             <li class="treeview">
-                <a href="{{ route('admin.suppliers') }}" onclick="event.preventDefault();">
+                <a href="{{ route('admin.suppliers.index') }}" onclick="event.preventDefault();">
                     <i class="fa fa-truck"></i>
                     <span>Suppliers</span>
                     <span class="pull-right-container">
@@ -161,14 +161,14 @@
                         </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.createSupplier') }}"><i class="fa fa-plus"></i>Create Supplier</a></li>
-                    <li><a href="{{ route('admin.suppliers') }}"><i class="fa fa-eye"></i> Show All Suppliers</a></li>
+                    <li><a href="{{ route('admin.suppliers.create') }}"><i class="fa fa-plus"></i>Create Supplier</a></li>
+                    <li><a href="{{ route('admin.suppliers.index') }}"><i class="fa fa-eye"></i> Show All Suppliers</a></li>
                 </ul>
             </li>
 
             {{-- Clients link--}}
             <li class="treeview">
-                <a href="{{ route('admin.clients') }}" onclick="event.preventDefault();">
+                <a href="{{ route('admin.clients.index') }}" onclick="event.preventDefault();">
                     <i class="fa fa-address-card-o"></i>
                     <span>Clients</span>
                     <span class="pull-right-container">
@@ -176,14 +176,14 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.createClient') }}"><i class="fa fa-plus"></i>Create Client</a></li>
-                    <li><a href="{{ route('admin.clients') }}"><i class="fa fa-eye"></i> Show All Clients</a></li>
+                    <li><a href="{{ route('admin.clients.create') }}"><i class="fa fa-plus"></i>Create Client</a></li>
+                    <li><a href="{{ route('admin.clients.index') }}"><i class="fa fa-eye"></i> Show All Clients</a></li>
                 </ul>
             </li>
 
             {{-- Purchases link--}}
             <li class="treeview">
-                <a href="{{ route('admin.purchases') }}" onclick="event.preventDefault();">
+                <a href="{{ route('admin.purchases.index') }}" onclick="event.preventDefault();">
                     <i class="fa fa-credit-card"></i>
                     <span>Purchases</span>
                     <span class="pull-right-container">
@@ -191,14 +191,14 @@
                 </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.createPurchases') }}"><i class="fa fa-plus"></i>Create Purchase Order</a></li>
-                    <li><a href="{{ route('admin.purchases') }}"><i class="fa fa-eye"></i> Show All Purchases</a></li>
+                    <li><a href="{{ route('admin.purchases.create') }}"><i class="fa fa-plus"></i>Create Purchase Order</a></li>
+                    <li><a href="{{ route('admin.purchases.index') }}"><i class="fa fa-eye"></i> Show All Purchases Invoices</a></li>
                 </ul>
             </li>
 
             {{-- Sales link--}}
             <li class="treeview">
-                <a href="{{ route('admin.sales') }}" onclick="event.preventDefault();">
+                <a href="{{ route('admin.sales.index') }}" onclick="event.preventDefault();">
                     <i class="fa fa-money"></i>
                     <span>Sales</span>
                     <span class="pull-right-container">
@@ -206,13 +206,43 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin.createSales') }}"><i class="fa fa-plus"></i>Create Sales</a></li>
-                    <li><a href="{{ route('admin.sales') }}"><i class="fa fa-eye"></i> Show All Sales</a></li>
+                    <li><a href="{{ route('admin.sales.create') }}"><i class="fa fa-plus"></i>Create Sale</a></li>
+                    <li><a href="{{ route('admin.sales.index') }}"><i class="fa fa-eye"></i> Show All Sales</a></li>
                 </ul>
             </li>
 
-            {{-- Users link--}}
+                {{-- Expenses link--}}
                 <li class="treeview">
+                    <a href="{{ route('admin.expenses.index') }}" onclick="event.preventDefault();">
+                        <i class="fa fa-money"></i>
+                        <span>Expenses</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ route('admin.expenses.create') }}"><i class="fa fa-plus"></i>Create Expense</a></li>
+                        <li><a href="{{ route('admin.expenses.index') }}"><i class="fa fa-eye"></i> Show All Expenses</a></li>
+                    </ul>
+                </li>
+
+                {{-- ExpensesTypes link--}}
+                <li class="treeview">
+                    <a href="{{ route('admin.expensesTypes.index') }}" onclick="event.preventDefault();">
+                        <i class="fa fa-money"></i>
+                        <span>Expenses Types</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ route('admin.expensesTypes.create') }}"><i class="fa fa-plus"></i>Create Expenses Type</a></li>
+                        <li><a href="{{ route('admin.expensesTypes.index') }}"><i class="fa fa-eye"></i> Show All Expenses Types</a></li>
+                    </ul>
+                </li>
+
+            {{-- Users link--}}
+                {{--<li class="treeview">
                     <a href="{{ route('admin.users') }}" onclick="event.preventDefault();">
                         <i class="fa fa-users"></i>
                         <span>Users</span>
@@ -224,7 +254,7 @@
                         <li><a href="{{ route('admin.createUser') }}"><i class="fa fa-plus"></i>Create User</a></li>
                         <li><a href="{{ route('admin.users') }}"><i class="fa fa-eye"></i> Show All Users</a></li>
                     </ul>
-                </li>
+                </li>--}}
             @endif
 
         </ul>

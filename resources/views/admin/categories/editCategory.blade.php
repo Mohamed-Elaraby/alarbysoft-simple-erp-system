@@ -7,8 +7,9 @@
         <div class="row">
             <div class="col-sm-offset-3 col-sm-6">
                 <h3 class="text-center"><i class="fa fa-edit"></i> Edit Category</h3>
-                <form action="{{ route('admin.updateCategory', $category->id) }}" method="POST">
+                <form action="{{ route('admin.categories.update', $category->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="form-group">
                         <label for="product">Category</label>
                         <input name="name" type="text" class="form-control" id="product" value="{{ $category->name }}">
