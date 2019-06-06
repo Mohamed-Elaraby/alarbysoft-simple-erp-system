@@ -112,8 +112,8 @@
                     <i class="fa fa-th-large"></i>
                     <span>Categories</span>
                     <span class="pull-right-container">
-                              <i class="fa fa-angle-left pull-right"></i>
-                            </span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.categories.create') }}"><i class="fa fa-plus"></i>Create Category</a></li>
@@ -127,7 +127,7 @@
                         <i class="fa fa-shopping-cart"></i>
                         <span>Products</span>
                         <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
+                            <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
@@ -142,8 +142,8 @@
                     <i class="fa fa-renren"></i>
                     <span>Stores</span>
                     <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.stores.create') }}"><i class="fa fa-plus"></i>Create Store</a></li>
@@ -157,8 +157,8 @@
                     <i class="fa fa-truck"></i>
                     <span>Suppliers</span>
                     <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.suppliers.create') }}"><i class="fa fa-plus"></i>Create Supplier</a></li>
@@ -187,8 +187,8 @@
                     <i class="fa fa-credit-card"></i>
                     <span>Purchases</span>
                     <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.purchases.create') }}"><i class="fa fa-plus"></i>Create Purchase Order</a></li>
@@ -202,8 +202,8 @@
                     <i class="fa fa-money"></i>
                     <span>Sales</span>
                     <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.sales.create') }}"><i class="fa fa-plus"></i>Create Sale</a></li>
@@ -217,8 +217,8 @@
                         <i class="fa fa-money"></i>
                         <span>Expenses</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ route('admin.expenses.create') }}"><i class="fa fa-plus"></i>Create Expense</a></li>
@@ -226,18 +226,33 @@
                     </ul>
                 </li>
 
-                {{-- ExpensesTypes link--}}
+                {{-- Payments link--}}
                 <li class="treeview">
-                    <a href="{{ route('admin.expensesTypes.index') }}" onclick="event.preventDefault();">
+                    <a href="{{ route('admin.payments.index') }}" onclick="event.preventDefault();">
                         <i class="fa fa-money"></i>
-                        <span>Expenses Types</span>
+                        <span>Payments</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ route('admin.expensesTypes.create') }}"><i class="fa fa-plus"></i>Create Expenses Type</a></li>
-                        <li><a href="{{ route('admin.expensesTypes.index') }}"><i class="fa fa-eye"></i> Show All Expenses Types</a></li>
+                        <li><a href="{{ route('admin.payments.create') }}"><i class="fa fa-plus"></i>Create Payment</a></li>
+                        <li><a href="{{ route('admin.payments.index') }}"><i class="fa fa-eye"></i> Show All Payments</a></li>
+                    </ul>
+                </li>
+
+                {{-- Collecting link--}}
+                <li class="treeview">
+                    <a href="{{ route('admin.collecting.index') }}" onclick="event.preventDefault();">
+                        <i class="fa fa-money"></i>
+                        <span>Collecting</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ route('admin.collecting.create') }}"><i class="fa fa-plus"></i>Create Collecting</a></li>
+                        <li><a href="{{ route('admin.collecting.index') }}"><i class="fa fa-eye"></i> Show All Collecting</a></li>
                     </ul>
                 </li>
 

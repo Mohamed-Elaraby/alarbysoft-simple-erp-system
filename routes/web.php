@@ -78,6 +78,15 @@ Route::get('/', function () {
         Route::resource('expensesTypes', 'ExpensesTypeController')->except(['destroy']);
         Route::delete('expensesTypes/destroy', 'ExpensesTypeController@destroy')->name('expensesTypes.destroy');
 
+        /* Payments Routes */
+        Route::resource('payments', 'PaymentController')->except(['destroy']);
+        Route::delete('payments/destroy', 'PaymentController@destroy')->name('payments.destroy');
+
+        /* Collecting Routes */
+        Route::resource('collecting', 'CollectingController')->except(['destroy']);
+        Route::delete('collecting/destroy', 'CollectingController@destroy')->name('collecting.destroy');
+
+
     });
 
     Auth::routes();
