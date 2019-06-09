@@ -45,6 +45,7 @@
                                         <th scope="col">Notes</th>
                                         <th scope="col">Agent</th>
                                         <th scope="col">Supplier</th>
+                                        <th scope="col">Related Products</th>
                                         <th scope="col">Created At</th>
                                         <th scope="col">Updated At</th>
                                     </tr>
@@ -56,8 +57,8 @@
                                                 <input type="checkbox" name="id[]" value="{{ $item->id }}">
                                             </td>
                                             <td>
-                                            <a href="{{ route('admin.purchases.show', $item->id) }}" class="btn btn-sm btn-warning">Details</a>
-                                            <a href="{{ route('admin.purchases.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a></td>
+                                                <a href="{{ route('admin.purchases.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                            </td>
                                             <th scope="col">{{ $item->id }}</th>
                                             <td class="bg-warning">{{ $item->invoiceNo }}</td>
                                             <td>{{ $item->invoiceDate }}</td>
@@ -72,6 +73,9 @@
                                             <td>{{ $item->notes }}</td>
                                             <td>{{ $item->user->name }}</td>
                                             <td>{{ $item->supplier->name }}</td>
+                                            <td>
+                                                <a href="{{ route('admin.purchases.show', $item->id) }}" class="btn btn-sm btn-warning">Products</a>
+                                            </td>
                                             <td>{{ $item->created_at }}</td>
                                             <td>{{ $item->updated_at }}</td>
                                         </tr>
@@ -112,6 +116,7 @@
                 fixedColumns:   {
                     heightMatch: 'none'
                 },
+                "autoWidth": false,
                 "ordering": true,
                 "order": [[ 16, "desc" ]],
             })

@@ -27,6 +27,7 @@ class SaleOrderController extends Controller
 
     public function store(Request $request, SaleOrder $saleOrder)
     {
+//        dd($request->all());
         $saleOrder = SaleOrder::create($request->all() + ['user_id' => Auth::user()->id]);
         $products_info = $request->data;
         foreach($products_info as $item){
@@ -44,6 +45,19 @@ class SaleOrderController extends Controller
                 $productExists->save();
             }
         }
+
+        /* Record Transaction On Clint Transaction Table */
+
+        $saleOrder->clientTransaction()->create([
+            'amount' => $request->invoice_total,
+            'transaction_date' => $request->invoiceDate,
+            'user_id' => Auth::user()->id,
+            'client_id' => $request->client_id,
+        ]);
+
+        /* Payments */
+
+        /* Collecting */
 
         return redirect()->back()->with('success', 'Sale Order Added Successfully');
     }
@@ -63,6 +77,7 @@ class SaleOrderController extends Controller
 
     public function update(Request $request, $id)
     {
+//        dd($request->all());
         /* Update Sale Order */
         $saleOrder = SaleOrder::findOrFail($id)->update($request->all() + ['user_id' => Auth::user()->id]);
 
@@ -72,6 +87,7 @@ class SaleOrderController extends Controller
         foreach($products_info as $item){
             /* Update Products Quantity On Products Table*/
             $product = Product::where('name', $item['product_name'])->first();
+//            dd($product);
             $saleOrderProducts = SaleOrderProducts::where(['sale_order_id' => $id, 'id' => $item['product_id']])->get();
 
             foreach ($saleOrderProducts as $orderProduct){
@@ -93,8 +109,7 @@ class SaleOrderController extends Controller
                 'quantity' => $item['quantity'],
                 'total' => $item['total'],
             ]);
-            $product->save();
-
+//            $product->save();
         }
         return redirect()->route('admin.sales.index')->with('success', 'Purchase Invoice Edit Successfully');
     }
@@ -108,5 +123,11 @@ class SaleOrderController extends Controller
         }else {
             return redirect()->back();
         }
+    }
+
+    protected function fullOrder($id)
+    {
+        $salesOrder = SaleOrder::where('id', $id)->with('client')->first();
+        return view('admin.sales.fullOrder', compact('salesOrder'));
     }
 }

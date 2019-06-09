@@ -7,8 +7,8 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     @stack('csrf-token')
-    @stack('links')
     @include('includes.admin.headerfiles')
+    @stack('links')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">

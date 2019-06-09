@@ -46,7 +46,7 @@
                                     <td>{{ $supplier->updated_at }}</td>
                                     <td>
                                         <a href="{{ route('admin.suppliers.edit', $supplier->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="" class="btn btn-sm btn-warning">Details</a>
+                                        <a href="{{ route('admin.suppliers.show', $supplier->id) }}" class="btn btn-sm btn-warning">Details</a>
                                     </td>
                                     <td>
                                         <input type="checkbox" name="id[]" value="{{ $supplier->id }}">

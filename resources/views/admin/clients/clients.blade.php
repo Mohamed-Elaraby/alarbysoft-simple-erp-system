@@ -46,7 +46,7 @@
                                     <td>{{ $client->updated_at }}</td>
                                     <td>
                                         <a href="{{ route('admin.clients.edit', $client->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="#" class="btn btn-sm btn-warning">Details</a></td>
+                                        <a href="{{ route('admin.clients.show', $client->id) }}" class="btn btn-sm btn-warning">Details</a></td>
                                     </td>
                                     <td>
                                         <input type="checkbox" name="id[]" value="{{ $client->id }}">

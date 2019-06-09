@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ClientTransaction;
 use App\Product;
 use App\PurchaseOrder;
 use App\PurchaseOrderProducts;
@@ -27,6 +28,7 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request, PurchaseOrder $purchaseOrder)
     {
+//        dd($request->all());
         $purchaseOrder = PurchaseOrder::create($request->all() + ['user_id' => Auth::user()->id]);
         $products_info = $request->data;
         foreach($products_info as $item){
@@ -51,6 +53,17 @@ class PurchaseOrderController extends Controller
                 ]);
             }
         }
+
+
+        /* Record Transaction On Supplier Transaction Table */
+
+        $purchaseOrder->supplierTransactions()->create([
+            'amount' => $request->invoice_total,
+            'transaction_date' => $request->invoiceDate,
+            'user_id' => Auth::user()->id,
+            'supplier_id' => $request->supplier_id,
+        ]);
+
 
         return redirect()->route('admin.purchases.index')->with('success', 'PurchasesOrder Added Successfully');
 
@@ -114,5 +127,11 @@ class PurchaseOrderController extends Controller
         }else {
             return redirect()->back();
         }
+    }
+
+    protected function fullOrder($id)
+    {
+        $purchasesOrder = PurchaseOrder::where('id', $id)->with('supplier')->first();
+        return view('admin.purchases.fullOrder', compact('purchasesOrder'));
     }
 }

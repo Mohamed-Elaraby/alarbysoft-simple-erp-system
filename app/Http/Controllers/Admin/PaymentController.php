@@ -25,7 +25,16 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
-        Payment::create($request->all() + ['user_id' => Auth::user()->id]);
+        $payment = Payment::create($request->all() + ['user_id' => Auth::user()->id]);
+
+        /* Record Transaction On Clint Transaction Table */
+
+        $payment->clientTransaction()->create([
+            'amount' => $request->amount,
+            'transaction_date' => $request->payment_date,
+            'user_id' => Auth::user()->id,
+            'client_id' => $request->client_id,
+        ]);
         return redirect()->route('admin.payments.index')->with('success', 'Payment Added Successfully');
     }
 

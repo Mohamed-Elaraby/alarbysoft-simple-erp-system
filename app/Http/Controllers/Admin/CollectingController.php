@@ -24,7 +24,16 @@ class CollectingController extends Controller
 
     public function store(Request $request)
     {
-        Collecting::create($request->all() + ['user_id' => Auth::user()->id]);
+        $collecting = Collecting::create($request->all() + ['user_id' => Auth::user()->id]);
+
+        /* Record Transaction On Clint Transaction Table */
+
+        $collecting->clientTransaction()->create([
+            'amount' => $request->amount,
+            'transaction_date' => $request->payment_date,
+            'user_id' => Auth::user()->id,
+            'client_id' => $request->client_id,
+        ]);
         return redirect()->route('admin.collecting.index')->with('success', 'Collecting Added Successfully');
     }
 

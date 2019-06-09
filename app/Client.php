@@ -19,4 +19,14 @@ class Client extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected function SaleOrders()
+    {
+        return $this->hasMany(SaleOrder::class);
+    }
+
+    public function transections ()
+    {
+        return $this->hasMany(ClientTransaction::class);
+    }
 }

@@ -22,7 +22,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <table id="purchaseOrderProducts" class="table table-bordered table-hover row-border">
+                        <table id="sale_orders" class="table table-bordered table-hover row-border">
                             <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -43,15 +43,6 @@
                                 </tr>
                             @endforeach
                             </tbody>
-                            <tfoot>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Product</th>
-                                <th scope="col">price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                            </tfoot>
                         </table>
                     </div>
                     <!-- /.box-body -->
@@ -62,7 +53,7 @@
 @push('scripts')
     <script>
         $(function () {
-            $('#purchaseOrderProducts').DataTable({
+            $('#sale_orders').DataTable({
                 dom: 'lBfrtip',// dom: 'B<"clear">lfrtip',
                 // buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 "buttons": [

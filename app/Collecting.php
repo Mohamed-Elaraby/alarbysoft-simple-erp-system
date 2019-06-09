@@ -29,4 +29,9 @@ class Collecting extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function clientTransaction ()
+    {
+        return $this->hasMany(ClientTransaction::class);
+    }
 }

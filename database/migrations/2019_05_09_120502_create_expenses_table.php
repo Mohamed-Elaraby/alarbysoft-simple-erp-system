@@ -19,6 +19,11 @@ class CreateExpensesTable extends Migration
             $table->text('comment')->nullable();
             $table->date('expenses_date');
             $table->integer('expenses_type_id')->unsigned();
+            $table->foreign('expenses_type_id')
+                ->references('id')
+                ->on('expenses_types')
+                ->onUpdate('CASCADE')
+                ->onUpdate('CASCADE');
             $table->integer('user_id')->unsigned();
             $table->integer('store_id')->unsigned()->nullable();
             $table->timestamps();

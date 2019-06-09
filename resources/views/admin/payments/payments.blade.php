@@ -48,7 +48,6 @@
                                     <td>{{ $payment->updated_at }}</td>
                                     <td>
                                         <a href="{{ route('admin.payments.edit', $payment->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="#" class="btn btn-sm btn-warning">Details</a></td>
                                     </td>
                                     <td>
                                         <input type="checkbox" name="id[]" value="{{ $payment->id }}">

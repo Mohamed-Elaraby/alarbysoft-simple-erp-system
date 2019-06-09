@@ -162,10 +162,10 @@
             </div>
         </div>
     </div>
-    @push('scripts')
-        <script src="{{ asset('admin/js/ajax.js') }}"></script>
-        <script>
-            $('#invoiceDate').datepicker();
-        </script>
-    @endpush
+@push('scripts')
+    <script src="{{ asset('admin/js/ajax.js') }}"></script>
+    <script>
+        $('#invoiceDate').datepicker();
+    </script>
+@endpush
 @endsection

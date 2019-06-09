@@ -5,14 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Payment extends Model
+class SupplierCollecting extends Model
 {
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'amount', 'comment', 'payment_date', 'user_id', 'store_id', 'client_id'
+        'amount', 'comment', 'collecting_date', 'user_id', 'store_id', 'supplier_id'
     ];
 
     public function user ()
@@ -25,13 +25,13 @@ class Payment extends Model
         return $this->belongsTo(Store::class);
     }
 
-    public function client ()
+    public function supplier ()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Supplier::class);
     }
 
-    public function clientTransaction ()
+    public function supplierTransactions ()
     {
-        return $this->hasMany(ClientTransaction::class);
+        return $this->hasMany(SupplierTransaction::class);
     }
 }

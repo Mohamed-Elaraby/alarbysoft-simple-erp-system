@@ -35,4 +35,9 @@ class PurchaseOrder extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function supplierTransactions ()
+    {
+        return $this->hasMany(SupplierTransaction::class);
+    }
+
 }

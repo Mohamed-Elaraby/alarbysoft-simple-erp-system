@@ -32,7 +32,9 @@ class SupplierController extends Controller
 
     public function show($id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+//        dd($supplier->supplierTransactions[1]->id);
+        return view('admin.suppliers.detailsSupplierTransaction', compact('supplier'));
     }
 
     public function edit($id)

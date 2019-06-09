@@ -34,6 +34,7 @@
                                             <th scope="col">ID</th>
                                             <th scope="col">Invoice Number</th>
                                             <th scope="col">Invoice Date</th>
+                                            <th scope="col">Products Count</th>
                                             <th scope="col">Client</th>
                                             <th scope="col">Invoice Subtotal</th>
                                             <th scope="col">Tax Percent</th>
@@ -44,6 +45,7 @@
                                             <th scope="col">Amount Due</th>
                                             <th scope="col">Agent</th>
                                             <th scope="col">Notes</th>
+                                            <th scope="col">Related Products</th>
                                             <th scope="col">Created At</th>
                                             <th scope="col">Updated At</th>
                                         </tr>
@@ -55,12 +57,12 @@
                                                 <input type="checkbox" name="id[]" value="{{ $item->id }}">
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.sales.show', $item->id) }}" class="btn btn-sm btn-warning">Details</a>
                                                 <a href="{{ route('admin.sales.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                             </td>
                                             <th scope="col">{{ $item->id }}</th>
                                             <td class="bg-warning">{{ $item->invoiceNo }}</td>
                                             <td>{{ $item->invoiceDate }}</td>
+                                            <td>{{ $item->saleOrderProducts->count() }}</td>
                                             <td>{{ $item->client->name }}</td>
                                             <td>{{ $item->invoice_subtotal }}</td>
                                             <td>{{ $item->tax_percent == NULL ? 0 : $item->tax_percent }}</td>
@@ -71,6 +73,9 @@
                                             <td>{{ $item->amount_due }}</td>
                                             <td>{{ $item->user->name }}</td>
                                             <td>{{ $item->notes }}</td>
+                                            <td>
+                                                <a href="{{ route('admin.sales.show', $item->id) }}" class="btn btn-sm btn-warning">Products</a>
+                                            </td>
                                             <td>{{ $item->created_at }}</td>
                                             <td>{{ $item->updated_at }}</td>
                                         </tr>

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title','Admin Expenses')
+@section('title','Admin Supplier Collecting')
 
 @section('content')
     <div class="">
@@ -16,19 +16,19 @@
                         {{ session('delete') }}
                     </div>
                 @endif
-                <div class="expenses_table">
-                    <form action="{{ route('admin.expenses.destroy') }}" method="post">
+                <div class="payments_table">
+                    <form action="{{ route('admin.supplierCollecting.destroy') }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <table id="expenses_table" class="table table-bordered table-hover table-striped">
+                        <table id="payments_table" class="table table-bordered table-hover table-striped">
                             <thead>
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Amount</th>
-                                <th scope="col">Comment</th>
-                                <th scope="col">Expenses Date</th>
-                                <th scope="col">Expenses Type</th>
+                                <th scope="col">Collecting Date</th>
                                 <th scope="col">Agent</th>
+                                <th scope="col">Client</th>
+                                <th scope="col">Comment</th>
                                 <th scope="col">Created_at</th>
                                 <th scope="col">Updated_at</th>
                                 <th scope="col">Action</th>
@@ -36,21 +36,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($expenses as $expense)
+                            @foreach($supplierCollecting as $collecting)
                                 <tr>
-                                    <th scope="col">{{ $expense->id }}</th>
-                                    <td>{{ $expense->amount }}</td>
-                                    <td>{{ $expense->comment }}</td>
-                                    <td>{{ $expense->expenses_date }}</td>
-                                    <td>{{ $expense->expensesType->name }}</td>
-                                    <td>{{ $expense->user->name }}</td>
-                                    <td>{{ $expense->created_at }}</td>
-                                    <td>{{ $expense->updated_at }}</td>
+                                    <th scope="col">{{ $collecting->id }}</th>
+                                    <td>{{ $collecting->amount }}</td>
+                                    <td>{{ $collecting->collecting_date }}</td>
+                                    <td>{{ $collecting->user->name }}</td>
+                                    <td>{{ $collecting->supplier->name }}</td>
+                                    <td>{{ $collecting->comment }}</td>
+                                    <td>{{ $collecting->created_at }}</td>
+                                    <td>{{ $collecting->updated_at }}</td>
                                     <td>
-                                        <a href="{{ route('admin.expenses.edit', $expense->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="{{ route('admin.supplierCollecting.edit', $collecting->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="id[]" value="{{ $expense->id }}">
+                                        <input type="checkbox" name="id[]" value="{{ $collecting->id }}">
                                     </td>
                                 </tr>
                             @endforeach
@@ -65,7 +65,7 @@
     @push('scripts')
         <script>
             $(function () {
-                $('#expenses_table').DataTable({
+                $('#payments_table').DataTable({
                     dom: 'lBfrtip',// dom: 'B<"clear">lfrtip',
                     // buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                     "buttons": [

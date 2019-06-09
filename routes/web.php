@@ -65,10 +65,13 @@ Route::get('/', function () {
         /* Purchases Routes */
         Route::resource('purchases', 'PurchaseOrderController')->except(['destroy']);
         Route::delete('purchases/destroy', 'PurchaseOrderController@destroy')->name('purchases.destroy');
+        Route::get('purchases/order/{id}', 'PurchaseOrderController@fullOrder')->name('purchases.order');
+
 
         /* Sales Routes */
         Route::resource('sales', 'SaleOrderController')->except(['destroy']);
         Route::delete('sales/destroy', 'SaleOrderController@destroy')->name('sales.destroy');
+        Route::get('sales/order/{id}', 'SaleOrderController@fullOrder')->name('sales.order');
 
         /* Expenses Routes */
         Route::resource('expenses', 'ExpensesController')->except(['destroy']);
@@ -86,6 +89,14 @@ Route::get('/', function () {
         Route::resource('collecting', 'CollectingController')->except(['destroy']);
         Route::delete('collecting/destroy', 'CollectingController@destroy')->name('collecting.destroy');
 
+        /* supplierPayments Routes */
+        Route::resource('supplierPayments', 'SupplierPaymentController')->except(['destroy']);
+        Route::delete('supplierPayments/destroy', 'SupplierPaymentController@destroy')->name('supplierPayments.destroy');
+
+
+        /* supplierPayments Routes */
+        Route::resource('supplierCollecting', 'SupplierCollectingController')->except(['destroy']);
+        Route::delete('supplierCollecting/destroy', 'SupplierCollectingController@destroy')->name('supplierCollecting.destroy');
 
     });
 

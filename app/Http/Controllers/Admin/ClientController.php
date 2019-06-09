@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Client;
+use App\ClientTransaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,9 @@ class ClientController extends Controller
 
     public function show($id)
     {
-        //
+        $clientTransaction = Client::findOrFail($id);
+//        dd($clientTransaction);
+        return view('admin.clients.detailsClientTransaction', compact('clientTransaction'));
     }
 
     public function edit($id)

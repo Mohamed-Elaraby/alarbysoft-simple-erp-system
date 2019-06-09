@@ -12,7 +12,7 @@ class Supplier extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'address', 'phones', 'user_id',
+        'name', 'balance', 'address', 'phones', 'user_id',
     ];
 
     public function user ()
@@ -27,6 +27,16 @@ class Supplier extends Model
 
     public function purchases ()
     {
-        return $this->hasMany(Purchases::class);
+        return $this->hasMany(PurchaseOrder::class);
+    }
+
+    public function supplierPayment ()
+    {
+        return $this->hasMany(SupplierPayment::class);
+    }
+
+    public function supplierTransactions ()
+    {
+        return $this->hasMany(SupplierTransaction::class);
     }
 }
