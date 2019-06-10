@@ -34,6 +34,11 @@ class SupplierCollectingController extends Controller
             'user_id' => Auth::user()->id,
             'supplier_id' => $request->supplier_id,
         ]);
+
+        /* Update Supplier balance */
+
+        $supplier = Supplier::findOrFail($request->supplier_id);
+        $supplier->update(['balance' => (($request->amount) + $supplier->balance)]);
         return redirect()->route('admin.supplierCollecting.index')->with('success', 'Payment Added Successfully');
     }
 

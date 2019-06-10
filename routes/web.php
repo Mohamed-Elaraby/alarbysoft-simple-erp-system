@@ -81,13 +81,13 @@ Route::get('/', function () {
         Route::resource('expensesTypes', 'ExpensesTypeController')->except(['destroy']);
         Route::delete('expensesTypes/destroy', 'ExpensesTypeController@destroy')->name('expensesTypes.destroy');
 
-        /* Payments Routes */
-        Route::resource('payments', 'PaymentController')->except(['destroy']);
-        Route::delete('payments/destroy', 'PaymentController@destroy')->name('payments.destroy');
+        /* Clients Payments Routes */
+        Route::resource('clientPayments', 'ClientPaymentController')->except(['destroy']);
+        Route::delete('clientPayments/destroy', 'ClientPaymentController@destroy')->name('clientPayments.destroy');
 
-        /* Collecting Routes */
-        Route::resource('collecting', 'CollectingController')->except(['destroy']);
-        Route::delete('collecting/destroy', 'CollectingController@destroy')->name('collecting.destroy');
+        /* Clients Collecting Routes */
+        Route::resource('clientCollecting', 'ClientCollectingController')->except(['destroy']);
+        Route::delete('clientCollecting/destroy', 'ClientCollectingController@destroy')->name('clientCollecting.destroy');
 
         /* supplierPayments Routes */
         Route::resource('supplierPayments', 'SupplierPaymentController')->except(['destroy']);

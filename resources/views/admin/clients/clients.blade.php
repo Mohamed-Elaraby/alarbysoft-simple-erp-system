@@ -31,6 +31,7 @@
                                 <th scope="col">created_at</th>
                                 <th scope="col">updated_at</th>
                                 <th scope="col">Action</th>
+                                <th scope="col">Details</th>
                                 <th scope="col">Select</th>
                             </tr>
                             </thead>
@@ -39,13 +40,15 @@
                                 <tr>
                                     <th scope="col">{{ $client->id }}</th>
                                     <td>{{ $client->name }}</td>
-                                    <td>{{ $client->balance }}</td>
+                                    <td class="bg-primary">{{ $client->balance }}</td>
                                     <td>{{ $client->phones }}</td>
                                     <td>{{ $client->user->name }}</td>
                                     <td>{{ $client->created_at }}</td>
                                     <td>{{ $client->updated_at }}</td>
                                     <td>
                                         <a href="{{ route('admin.clients.edit', $client->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    </td>
+                                    <td>
                                         <a href="{{ route('admin.clients.show', $client->id) }}" class="btn btn-sm btn-warning">Details</a></td>
                                     </td>
                                     <td>

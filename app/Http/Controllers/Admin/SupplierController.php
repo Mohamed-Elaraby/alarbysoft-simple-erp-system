@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\PurchaseOrder;
 use App\Supplier;
+use App\SupplierCollecting;
+use App\SupplierPayment;
+use App\SupplierTransaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +37,6 @@ class SupplierController extends Controller
     public function show($id)
     {
         $supplier = Supplier::findOrFail($id);
-//        dd($supplier->supplierTransactions[1]->id);
         return view('admin.suppliers.detailsSupplierTransaction', compact('supplier'));
     }
 

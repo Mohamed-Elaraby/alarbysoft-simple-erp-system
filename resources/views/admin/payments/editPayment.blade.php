@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-sm-offset-3 col-sm-6">
                 <h3 class="text-center"><i class="fa fa-edit"></i> Edit payments</h3>
-                <form action="{{ route('admin.payments.update', $payment->id) }}" method="POST">
+                <form action="{{ route('admin.clientPayments.update', $payment->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

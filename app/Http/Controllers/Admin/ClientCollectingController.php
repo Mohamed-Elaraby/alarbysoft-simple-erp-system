@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Client;
-use App\Collecting;
+use App\ClientCollecting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class CollectingController extends Controller
+class ClientCollectingController extends Controller
 {
     public function index()
     {
-        $collecting = Collecting::all();
+        $collecting = ClientCollecting::all();
         return view('admin.collecting.collecting', compact('collecting'));
     }
 
@@ -24,7 +23,7 @@ class CollectingController extends Controller
 
     public function store(Request $request)
     {
-        $collecting = Collecting::create($request->all() + ['user_id' => Auth::user()->id]);
+        $collecting = ClientCollecting::create($request->all() + ['user_id' => Auth::user()->id]);
 
         /* Record Transaction On Clint Transaction Table */
 
@@ -34,7 +33,7 @@ class CollectingController extends Controller
             'user_id' => Auth::user()->id,
             'client_id' => $request->client_id,
         ]);
-        return redirect()->route('admin.collecting.index')->with('success', 'Collecting Added Successfully');
+        return redirect()->route('admin.clientCollecting.index')->with('success', 'Collecting Added Successfully');
     }
 
     public function show($id)
@@ -44,23 +43,23 @@ class CollectingController extends Controller
 
     public function edit($id)
     {
-        $collect = Collecting::findOrFail($id);
+        $collect = ClientCollecting::findOrFail($id);
         $clients = Client::all();
         return view('admin.collecting.editCollecting', compact('collect', 'clients'));
     }
 
     public function update(Request $request, $id)
     {
-        Collecting::findOrFail($id)->update($request->all());
-        return redirect()->route('admin.collecting.index')->with('success', 'Collecting Edit Successfully');
+        ClientCollecting::findOrFail($id)->update($request->all());
+        return redirect()->route('admin.clientCollecting.index')->with('success', 'Collecting Edit Successfully');
     }
 
     public function destroy(Request $request)
     {
         if (isset($request->id)){
             $collect_id = $request->id;
-            Collecting::destroy($collect_id);
-            return redirect()->route('admin.collecting.index')->with('delete', 'Collecting /s Delete Successfully');
+            ClientCollecting::destroy($collect_id);
+            return redirect()->route('admin.clientCollecting.index')->with('delete', 'Collecting /s Delete Successfully');
         }else {
             return redirect()->back();
         }

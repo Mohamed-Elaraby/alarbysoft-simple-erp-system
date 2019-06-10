@@ -23,6 +23,12 @@
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
+{{--                                @foreach ($supplier->supplierTransactions as $transaction)--}}
+{{--                                    @if ($transaction->purchaseOrder)--}}
+{{--                                        {{ sum($transaction->purchaseOrder->amount_paid )}}--}}
+{{--                                    @endif--}}
+{{--                                @endforeach--}}
+
                                 <table id="supplierTransaction" class="table table-bordered table-hover row-border">
                                     <thead>
                                     <tr>
@@ -37,11 +43,15 @@
                                     @foreach ($supplier->supplierTransactions as $transaction)
                                         <tr>
                                             <td>{{ $transaction->id }}</td>
-                                            <td>{{ $transaction->amount }}</td>
+                                            <td class="bg-primary">{{ $transaction->amount }}</td>
                                             <td>{{ $transaction->transaction_date }}</td>
                                             <td>{{ $transaction->user->name }}</td>
                                             <td>
                                                @if ($transaction->purchaseOrder)
+                                                   {{--{{$transaction->purchaseOrder->invoice_total}}|
+                                                   {{$transaction->purchaseOrder->amount_paid}}|
+                                                   {{$transaction->purchaseOrder->amount_due}}|
+                                                Total = {{ ($transaction->purchaseOrder->amount_paid) - ($transaction->purchaseOrder->amount_due) }}--}}
                                                     <a href="{{ route('admin.purchases.order', $transaction->purchaseOrder->id) }}">Purchase Order</a>
                                                @elseif($transaction->supplierPayment)
                                                     Payments

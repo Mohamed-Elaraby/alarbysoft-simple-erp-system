@@ -72,7 +72,7 @@
                                             <td>{{ $item->amount_due }}</td>
                                             <td>{{ $item->notes }}</td>
                                             <td>{{ $item->user->name }}</td>
-                                            <td>{{ $item->supplier->name }}</td>
+                                            <td><a href="{{ route('admin.suppliers.show', $item->supplier->id) }}">{{ $item->supplier->name }}</a></td>
                                             <td>
                                                 <a href="{{ route('admin.purchases.show', $item->id) }}" class="btn btn-sm btn-warning">Products</a>
                                             </td>
@@ -118,7 +118,7 @@
                 },
                 "autoWidth": false,
                 "ordering": true,
-                "order": [[ 16, "desc" ]],
+                "order": [[ 17, "desc" ]],
             })
         })
     </script>

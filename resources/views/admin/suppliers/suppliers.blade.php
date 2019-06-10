@@ -25,20 +25,29 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Supplier</th>
-                                <th scope="col">address</th>
-                                <th scope="col">phones</th>
-                                <th scope="col">Created_by</th>
+                                <th scope="col">Balance</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Phones</th>
+                                <th scope="col">Agent</th>
                                 <th scope="col">created_at</th>
                                 <th scope="col">updated_at</th>
                                 <th scope="col">Action</th>
+                                <th scope="col">Details</th>
                                 <th scope="col">Select</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($suppliers as $supplier)
+{{--                                @php--}}
+{{--                                    $purchaseOrder_due = $supplier->purchases->sum('amount_due');--}}
+{{--                                    $supplierPayments = $supplier->supplierPayment->sum('amount');--}}
+{{--                                    $suppliercollecting = $supplier->supplierCollecting->sum('amount');--}}
+{{--                                    $balance = $purchaseOrder_due + $suppliercollecting - $supplierPayments  ;--}}
+{{--                                @endphp--}}
                                 <tr>
                                     <th scope="col">{{ $supplier->id }}</th>
                                     <td>{{ $supplier->name }}</td>
+                                    <td class="bg-primary">{{ $supplier->balance }}</td>
                                     <td>{{ $supplier->address }}</td>
                                     <td>{{ $supplier->phones }}</td>
                                     <td>{{ $supplier->user->name }}</td>
@@ -46,6 +55,8 @@
                                     <td>{{ $supplier->updated_at }}</td>
                                     <td>
                                         <a href="{{ route('admin.suppliers.edit', $supplier->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    </td>
+                                    <td>
                                         <a href="{{ route('admin.suppliers.show', $supplier->id) }}" class="btn btn-sm btn-warning">Details</a>
                                     </td>
                                     <td>

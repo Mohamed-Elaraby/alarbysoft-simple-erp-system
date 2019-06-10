@@ -17,7 +17,7 @@
                     </div>
                 @endif
                 <div class="payments_table">
-                    <form action="{{ route('admin.payments.destroy') }}" method="post">
+                    <form action="{{ route('admin.clientPayments.destroy') }}" method="post">
                         @csrf
                         @method('DELETE')
                         <table id="payments_table" class="table table-bordered table-hover table-striped">
@@ -47,7 +47,7 @@
                                     <td>{{ $payment->created_at }}</td>
                                     <td>{{ $payment->updated_at }}</td>
                                     <td>
-                                        <a href="{{ route('admin.payments.edit', $payment->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="{{ route('admin.clientPayments.edit', $payment->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                     </td>
                                     <td>
                                         <input type="checkbox" name="id[]" value="{{ $payment->id }}">

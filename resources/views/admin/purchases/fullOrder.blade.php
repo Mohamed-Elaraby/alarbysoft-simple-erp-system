@@ -93,6 +93,16 @@
                                         <td colspan="2">GRAND TOTAL</td>
                                         <td>{{ $purchasesOrder->invoice_total }} E.G</td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td colspan="2">AMOUNT PAID</td>
+                                        <td>{{ $purchasesOrder->amount_paid }} E.G</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td colspan="2">AMOUNT DUE</td>
+                                        <td>{{ $purchasesOrder->amount_due }} E.G</td>
+                                    </tr>
                                     </tfoot>
                                 </table>
                                 <div class="thanks">Thank you!</div>

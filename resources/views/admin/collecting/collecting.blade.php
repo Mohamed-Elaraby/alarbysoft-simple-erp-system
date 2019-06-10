@@ -17,7 +17,7 @@
                     </div>
                 @endif
                 <div class="collecting_table">
-                    <form action="{{ route('admin.collecting.destroy') }}" method="post">
+                    <form action="{{ route('admin.clientCollecting.destroy') }}" method="post">
                         @csrf
                         @method('DELETE')
                         <table id="collecting_table" class="table table-bordered table-hover table-striped">
@@ -47,7 +47,7 @@
                                     <td>{{ $collect->created_at }}</td>
                                     <td>{{ $collect->updated_at }}</td>
                                     <td>
-                                        <a href="{{ route('admin.collecting.edit', $collect->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="{{ route('admin.clientCollecting.edit', $collect->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                     </td>
                                     <td>
                                         <input type="checkbox" name="id[]" value="{{ $collect->id }}">

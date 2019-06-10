@@ -28,7 +28,6 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request, PurchaseOrder $purchaseOrder)
     {
-//        dd($request->all());
         $purchaseOrder = PurchaseOrder::create($request->all() + ['user_id' => Auth::user()->id]);
         $products_info = $request->data;
         foreach($products_info as $item){
@@ -64,9 +63,19 @@ class PurchaseOrderController extends Controller
             'supplier_id' => $request->supplier_id,
         ]);
 
+        /* Update Supplier balance */
 
-        return redirect()->route('admin.purchases.index')->with('success', 'PurchasesOrder Added Successfully');
+        $supplier = Supplier::findOrFail($request->supplier_id);
+        if ($supplier->balance < 0) {
+            // [ - ] DE
+            $supplier->update(['balance' => ($supplier->balance - ($request->amount_due))]);// -100 - -150
+        } else {
+            // [ + ] CR
+            $supplier->update(['balance' => ($supplier->balance + ($request->amount_due))]); // 50 + -50
+        }
 
+//        return redirect()->route('admin.purchases.index')->with('success', 'PurchasesOrder Added Successfully');
+        return redirect()->back();
     }
 
     public function show($id)
