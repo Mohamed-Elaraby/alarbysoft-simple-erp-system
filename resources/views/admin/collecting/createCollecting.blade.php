@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-offset-3 col-sm-6">
-            <h3 class="text-center"><i class="fa fa-edit"></i> Create Collecting</h3>
+            <h3 class="text-center"><i class="fa fa-edit"></i> Create Client Collecting</h3>
             <form action="{{ route('admin.clientCollecting.store') }}" method="POST">
                 @csrf
                 <div class="form-group">

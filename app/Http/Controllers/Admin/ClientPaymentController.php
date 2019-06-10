@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Client;
 use App\ClientPayment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

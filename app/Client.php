@@ -25,7 +25,7 @@ class Client extends Model
         return $this->hasMany(SaleOrder::class);
     }
 
-    public function transections ()
+    public function transactions ()
     {
         return $this->hasMany(ClientTransaction::class);
     }

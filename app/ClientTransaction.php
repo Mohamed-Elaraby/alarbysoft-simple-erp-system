@@ -30,13 +30,13 @@ class ClientTransaction extends Model
         return $this->belongsTo(SaleOrder::class);
     }
 
-    public function payment ()
+    public function clientPayment ()
     {
-        return $this->belongsTo(Payment::class);
+        return $this->belongsTo(ClientPayment::class);
     }
 
-    public function collecting ()
+    public function clientCollecting ()
     {
-        return $this->belongsTo(Collecting::class);
+        return $this->belongsTo(ClientCollecting::class);
     }
 }

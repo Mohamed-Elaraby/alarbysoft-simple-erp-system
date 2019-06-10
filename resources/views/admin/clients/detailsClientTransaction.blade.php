@@ -34,7 +34,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($clientTransaction->transections as $transaction)
+                                    @foreach ($clientTransaction->transactions as $transaction)
                                         <tr>
                                             <td>{{ $transaction->id }}</td>
                                             <td>{{ $transaction->amount }}</td>
@@ -43,9 +43,9 @@
                                             <td>
                                                 @if ($transaction->saleOrder)
                                                     <a href="{{ route('admin.sales.order', $transaction->saleOrder->id) }}">Sales Order</a>
-                                                @elseif($transaction->payment)
+                                                @elseif($transaction->clientPayment)
                                                     Payments
-                                                @elseif($transaction->collecting)
+                                                @elseif($transaction->clientCollecting)
                                                     Collecting
                                                 @endif
                                             </td>
