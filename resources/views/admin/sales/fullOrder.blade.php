@@ -5,112 +5,168 @@
 @section('content')
 
 @push('links')
-    <link rel="stylesheet" href="{{ asset('admin/css/invoiceTemplate.css') }}">
+
 @endpush
-    <div class="">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="invoice">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Invoice
+            <small>#{{ $salesOrder->invoiceNo }}</small>
+        </h1>
+    </section>
 
-                    <div class="toolbar hidden-print">
-                        <div class="text-right">
-                            <button id="printInvoice" class="btn btn-info"><i class="fa fa-print"></i> Print</button>
-                            <button class="btn btn-info"><i class="fa fa-file-pdf-o"></i> Export as PDF</button>
-                        </div>
-                        <hr>
-                    </div>
-                    <div class="invoice overflow-auto">
-                        <div style="min-width: 600px">
-                            <header>
-                                <div class="row">
-                                    <div class="col">
-                                        <a target="_blank" href="https://lobianijs.com">
-                                            <img src="http://lobianijs.com/lobiadmin/version/1.0/ajax/img/logo/lobiadmin-logo-text-64.png" data-holder-rendered="true" />
-                                        </a>
-                                    </div>
-                                    <div class="col company-details">
-                                        <h2 class="name">
-                                            <a target="_blank" href="#">
-                                                <b>A</b>laraby<b>S</b>oft
-                                            </a>
-                                        </h2>
-                                        <div>455 Foggy Heights, AZ 85004, US</div>
-                                        <div>(123) 456-789</div>
-                                        <div>company@example.com</div>
-                                    </div>
-                                </div>
-                            </header>
-                            <main>
-                                <div class="row contacts">
-                                    <div class="col invoice-to">
-                                        <div class="text-gray-light">INVOICE TO:</div>
-                                        <h2 class="to">{{ $salesOrder->client->name }}</h2>
-                                        <div class="address">796 Silver Harbour, TX 79273, US</div>
-                                        <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
-                                    </div>
-                                    <div class="col invoice-details">
-                                        <h1 class="invoice-id">INVOICE {{ $salesOrder->invoiceNo }}</h1>
-                                        <div class="date">Date of Invoice: {{ $salesOrder->invoiceDate }}</div>
-                                    </div>
-                                </div>
-                                <table border="0" cellspacing="0" cellpadding="0">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-left">ID</th>
-                                        <th class="text-right">Product</th>
-                                        <th class="text-right">price</th>
-                                        <th class="text-right">Quantity</th>
-                                        <th class="text-right">TOTAL</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($salesOrder->saleOrderProducts as $order)
-                                            <tr>
-                                                <td class="no">{{ $order->id }}</td>
-                                                <td class="text-left">
-                                                    <h3>{{ $order->name }}</h3>
-                                                </td>
-                                                <td class="unit">$ {{ $order->price }} E.G</td>
-                                                <td class="qty">{{ $order->quantity }}</td>
-                                                <td class="total">$ {{ $order->total }}</td>
-                                            </tr>
-
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td colspan="2">SUBTOTAL</td>
-                                        <td>{{ $salesOrder->invoice_subtotal }} E.G</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td colspan="2">TAX 14%</td>
-                                        <td>{{ $salesOrder->tax_percent }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td colspan="2">GRAND TOTAL</td>
-                                        <td>{{ $salesOrder->invoice_total }} E.G</td>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                                <div class="thanks">Thank you!</div>
-                                <div class="notices">
-                                    <div>NOTICE:</div>
-                                    <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
-                                </div>
-                            </main>
-                            <footer>
-                                Invoice was created on a computer and is valid without the signature and seal.
-                            </footer>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+    <div class="pad margin no-print">
+        <div class="callout callout-info" style="margin-bottom: 0!important;">
+            <h4><i class="fa fa-info"></i> Note:</h4>
+            This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
         </div>
     </div>
+
+    <!-- Main content -->
+    <section class="invoice">
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> AdminLTE, Inc.
+                    <small class="pull-right">Date: {{ $salesOrder->invoiceDate }}</small>
+                </h2>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- info row -->
+        <div class="row invoice-info">
+            <div class="col-sm-6 invoice-col">
+                From
+                <address>
+                    <strong>Admin, Inc.</strong><br>
+                    795 Folsom Ave, Suite 600<br>
+                    San Francisco, CA 94107<br>
+                    Phone: (804) 123-5432<br>
+                    Email: info@almasaeedstudio.com
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6 invoice-col">
+                To
+                <address>
+                    <strong>{{ $salesOrder->client->name }}</strong><br>
+                    795 Folsom Ave, Suite 600<br>
+                    San Francisco, CA 94107<br>
+                    Phone: (555) 539-1037<br>
+                    Email: john.doe@example.com
+                </address>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <!-- Table row -->
+        <div class="row">
+            <div class="col-xs-12 table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($salesOrder->saleOrderProducts as $order)
+                        <tr>
+                            <td>{{ $order->id }}</td>
+                            <td>{{ $order->name }}</td>
+                            <td>{{ $order->price }} EGP</td>
+                            <td>{{ $order->quantity }}</td>
+                            <td>{{ $order->total }} EGP</td>
+                        </tr>
+
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-xs-6">
+                <p class="lead">Payment Methods:</p>
+                <img src="../../dist/img/credit/visa.png" alt="Visa">
+                <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
+                <img src="../../dist/img/credit/american-express.png" alt="American Express">
+                <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+
+                <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
+                    dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                </p>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-6">
+                <p class="lead">Amount Due 2/22/2014</p>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th style="width:50%">Subtotal:</th>
+                            <td>{{ $total_amount_products }} EGP</td>
+                        </tr>
+
+                        @if ($salesOrder->tax_percent)
+                            <div class="ttl-amts">
+                                <h5>  Tax : {{ $salesOrder->tax }} EGP ( by {{ $salesOrder->tax_percent }} % on bill ) </h5>
+                            </div>
+                            <hr />
+                            <tr>
+                                <th>Tax ({{ $salesOrder->tax_percent }} %)</th>
+                                <td>{{ $salesOrder->tax }} EGP</td>
+                            </tr>
+                        @endif
+                        <tr>
+                            <th>Total:</th>
+                            <td>{{ $salesOrder->invoice_total }} EGP</td>
+                        </tr>
+
+                        <tr>
+                            <th>Amount Paid:</th>
+                            <td>{{ $salesOrder->amount_paid }} EGP</td>
+                        </tr>
+
+                        <tr>
+                            <th>Amount Due:</th>
+                            <td>{{ $salesOrder->amount_due }} EGP</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <!-- this row will not appear when printing -->
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
+                <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
+                </button>
+                <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                    <i class="fa fa-download"></i> Generate PDF
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+    <div class="clearfix"></div>
+</div>
+
 @push('scripts')
     <script>
         $(function () {
@@ -136,16 +192,6 @@
                 "order": [[ 0, "desc" ]],
             })
         })
-    </script>
-    <script>
-        $('#printInvoice').click(function(){
-            Popup($('.invoice')[0].outerHTML);
-            function Popup(data)
-            {
-                window.print();
-                return true;
-            }
-        });
     </script>
 @endpush
 @endsection

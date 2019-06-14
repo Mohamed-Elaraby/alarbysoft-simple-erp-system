@@ -1,0 +1,27 @@
+.theSafe
+{
+    margin: auto;
+    max-width: 900px;
+}
+
+.safe_box
+{
+    background-color: #222d32;
+    color: #ffffff;
+    font-size: 10vw;
+    text-align: center;
+    border: 20px #192226 solid;
+    border-radius: 20px;
+    margin-top: 20vh;
+    margin-bottom: 5vh;
+}
+
+.theSafe .btn
+{
+    border-radius: 20px;
+}
+@media print {
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}

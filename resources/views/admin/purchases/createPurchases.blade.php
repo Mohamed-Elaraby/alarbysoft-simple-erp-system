@@ -119,12 +119,12 @@
                         <div class="form-group">
                             <label>Payment Method: &nbsp;</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="0" id="cash" name="payment_method" checked>
+                                <input class="form-check-input" type="radio" value="1" id="cash" name="payment_method" checked>
                                 <label class="form-check-label" for="cash">
                                     Cash
                             </label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="1" id="due" name="payment_method">
+                                <input class="form-check-input" type="radio" value="0" id="due" name="payment_method">
                                 <label class="form-check-label" for="due">
                                     Due
                             </label>

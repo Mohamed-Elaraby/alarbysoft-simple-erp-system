@@ -67,7 +67,7 @@
                                             <td>{{ $item->tax_percent == NULL ? 0 : $item->tax_percent }}</td>
                                             <td>{{ $item->tax == NULL ? 0 : $item->tax}}</td>
                                             <td class="bg-primary">{{ $item->invoice_total }}</td>
-                                            <td>{{ $item->payment_method == 0 ? 'Cash':'Due' }}</td>
+                                            <td>{{ $item->payment_method == 1 ? 'Cash':'Due' }}</td>
                                             <td>{{ $item->amount_paid }}</td>
                                             <td>{{ $item->amount_due }}</td>
                                             <td>{{ $item->notes }}</td>

@@ -15,7 +15,7 @@ class CreateClientTransactionsTable extends Migration
     {
         Schema::create('client_transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('amount');
+            $table->double('amount');
             $table->date('transaction_date');
             $table->integer('user_id')->unsigned();
             $table->integer('sale_order_id')->unsigned()->nullable();

@@ -15,7 +15,7 @@ class CreateSupplierPaymentsTable extends Migration
     {
         Schema::create('supplier_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('amount');
+            $table->double('amount');
             $table->text('comment')->nullable();
             $table->date('payment_date');
             $table->integer('user_id')->unsigned();

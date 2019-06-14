@@ -6,6 +6,7 @@ use App\ClientTransaction;
 use App\Product;
 use App\PurchaseOrder;
 use App\PurchaseOrderProducts;
+use App\Safe;
 use App\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,7 +27,7 @@ class PurchaseOrderController extends Controller
         return view('admin.purchases.createPurchases', compact('suppliers', 'products'));
     }
 
-    public function store(Request $request, PurchaseOrder $purchaseOrder)
+    public function store(Request $request)
     {
         $purchaseOrder = PurchaseOrder::create($request->all() + ['user_id' => Auth::user()->id]);
         $products_info = $request->data;
@@ -73,6 +74,16 @@ class PurchaseOrderController extends Controller
             // [ + ] CR
             $supplier->update(['balance' => ($supplier->balance + ($request->amount_due))]); // 50 + -50
         }
+
+        /* Update The Safe Amount */
+        $last_amount = Safe::all()->last();
+//        dd($last_amount);
+
+        $purchaseOrder->theSafe()->create([
+            'amount_paid' => $request->amount_paid,
+            'final_amount' => ($last_amount->final_amount - ($request->amount_paid)),
+            'user_id' => Auth::user()->id,
+        ]);
 
 //        return redirect()->route('admin.purchases.index')->with('success', 'PurchasesOrder Added Successfully');
         return redirect()->back();

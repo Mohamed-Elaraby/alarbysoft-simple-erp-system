@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Safe;
 use App\Supplier;
 use App\SupplierPayment;
 use Illuminate\Http\Request;
@@ -40,6 +41,15 @@ class SupplierPaymentController extends Controller
 
         $supplier = Supplier::findOrFail($request->supplier_id);
         $supplier->update(['balance' => ($supplier->balance - ($request->amount))]);
+
+        /* Update The Safe Amount */
+
+        $last_amount = Safe::all()->last();
+        $supplierPayments->theSafe()->create([
+            'amount_paid' => $request->amount,
+            'final_amount' => ($last_amount->final_amount - ($request->amount)),
+            'user_id' => Auth::user()->id,
+        ]);
         return redirect()->route('admin.supplierPayments.index')->with('success', 'Payment Added Successfully');
     }
 

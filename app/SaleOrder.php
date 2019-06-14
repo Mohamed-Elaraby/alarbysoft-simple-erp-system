@@ -40,4 +40,8 @@ class SaleOrder extends Model
         return $this->hasMany(ClientTransaction::class);
     }
 
+    public function theSafe(){
+        return $this->hasMany(Safe::class);
+    }
+
 }

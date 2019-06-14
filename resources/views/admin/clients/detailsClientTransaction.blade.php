@@ -25,38 +25,43 @@
                             <div class="box-body">
                                 <table id="clientTransaction" class="table table-bordered table-hover row-border">
                                     <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">transaction_date</th>
-                                        <th scope="col">Agent</th>
-                                        <th scope="col">References</th>
-                                    </tr>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">transaction_date</th>
+                                            <th scope="col">Agent</th>
+                                            <th scope="col">References</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($clientTransaction->transactions as $transaction)
+                                        @foreach ($clientTransaction->transactions as $transaction)
+                                            <tr>
+                                                <td>{{ $transaction->id }}</td>
+                                                <td>{{ $transaction->amount }}</td>
+                                                <td>{{ $transaction->created_at }}</td>
+                                                <td>{{ $transaction->user->name }}</td>
+                                                <td>
+                                                    @if ($transaction->saleOrder)
+                                                        <a href="{{ route('admin.sales.order', $transaction->saleOrder->id) }}">Sales Order</a>
+                                                    @elseif($transaction->clientPayment)
+                                                        Payments
+                                                    @elseif($transaction->clientCollecting)
+                                                        Collecting
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+{{--                                    <tfoot>
                                         <tr>
-                                            <td>{{ $transaction->id }}</td>
-                                            <td>{{ $transaction->amount }}</td>
-                                            <td>{{ $transaction->transaction_date }}</td>
-                                            <td>{{ $transaction->user->name }}</td>
-                                            <td>
-                                                @if ($transaction->saleOrder)
-                                                    <a href="{{ route('admin.sales.order', $transaction->saleOrder->id) }}">Sales Order</a>
-                                                @elseif($transaction->clientPayment)
-                                                    Payments
-                                                @elseif($transaction->clientCollecting)
-                                                    Collecting
-                                                @endif
-                                            </td>
+                                            <th scope="col">Total</th>
+                                            <td scope="col">{{ $clientTransaction->balance }}</td>
                                         </tr>
-                                    @endforeach
+                                    </tfoot>--}}
                                 </table>
                             </div>
                             <!-- /.box-body -->
                         </div>
-                @else
-                    no data
                 @endif
             </div>
         </div>

@@ -13,7 +13,8 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::all();
-        return view('admin.clients.clients', compact('clients'));
+        $totalClientsAccountsBalance = Client::sum('balance');
+        return view('admin.clients.clients', compact('clients', 'totalClientsAccountsBalance'));
     }
 
     public function create()
@@ -33,7 +34,6 @@ class ClientController extends Controller
     public function show($id)
     {
         $clientTransaction = Client::findOrFail($id);
-//        dd($clientTransaction);
         return view('admin.clients.detailsClientTransaction', compact('clientTransaction'));
     }
 

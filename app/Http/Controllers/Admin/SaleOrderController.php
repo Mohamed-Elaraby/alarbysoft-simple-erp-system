@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Client;
 use App\Product;
+use App\Safe;
 use App\SaleOrder;
 use App\SaleOrderProducts;
 use Illuminate\Http\Request;
@@ -55,9 +56,26 @@ class SaleOrderController extends Controller
             'client_id' => $request->client_id,
         ]);
 
-        /* Payments */
+        /* Update Client balance */
 
-        /* Collecting */
+        $client = Client::findOrFail($request->client_id);
+        if ($client->balance < 0) {
+            // [ - ] DE
+            $client->update(['balance' => ($client->balance - ($request->amount_due))]);//
+        } else {
+            // [ + ] CR
+            $client->update(['balance' => ($client->balance - ($request->amount_due))]); //
+        }
+
+        /* Update The Safe Amount */
+        $last_amount = Safe::all()->last();
+//        dd($last_amount);
+
+        $saleOrder->theSafe()->create([
+            'amount_paid' => $request->amount_paid,
+            'final_amount' => ($last_amount->final_amount + ($request->amount_paid)),
+            'user_id' => Auth::user()->id,
+        ]);
 
         return redirect()->back()->with('success', 'Sale Order Added Successfully');
     }
@@ -128,6 +146,7 @@ class SaleOrderController extends Controller
     protected function fullOrder($id)
     {
         $salesOrder = SaleOrder::where('id', $id)->with('client')->first();
-        return view('admin.sales.fullOrder', compact('salesOrder'));
+        $total_amount_products = $salesOrder->saleOrderProducts->sum('total');
+        return view('admin.sales.fullOrder', compact('salesOrder', 'total_amount_products'));
     }
 }

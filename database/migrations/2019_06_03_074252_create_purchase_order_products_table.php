@@ -18,7 +18,7 @@ class CreatePurchaseOrderProductsTable extends Migration
             $table->string('name');
             $table->double('price');
             $table->string('quantity');
-            $table->string('total');
+            $table->double('total');
             $table->integer('purchase_orders_id')->unsigned();
             $table->foreign('purchase_orders_id')
                 ->references('id')

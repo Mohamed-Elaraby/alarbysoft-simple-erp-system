@@ -98,6 +98,11 @@ Route::get('/', function () {
         Route::resource('supplierCollecting', 'SupplierCollectingController')->except(['destroy']);
         Route::delete('supplierCollecting/destroy', 'SupplierCollectingController@destroy')->name('supplierCollecting.destroy');
 
+        /* theSafe Routes */
+//        Route::resource('safe', 'SafeController')->except(['destroy']);
+        Route::get('safe', 'SafeController@index')->name('safe.index');
+        Route::get('safe/operations', 'SafeController@operations')->name('safe.operations');
+        Route::post('safe/store', 'SafeController@store')->name('safe.store');
     });
 
     Auth::routes();

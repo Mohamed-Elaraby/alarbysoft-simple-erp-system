@@ -34,4 +34,9 @@ class SupplierCollecting extends Model
     {
         return $this->hasMany(SupplierTransaction::class);
     }
+
+    public function theSafe ()
+    {
+        return $this->hasMany(Safe::class);
+    }
 }

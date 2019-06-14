@@ -92,19 +92,19 @@
             <li class="header">Admin</li>
 
             {{-- Dashboard link--}}
-                <li class="">
-                    <a href="{{ route('admin.dashboard') }}">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                    </a>
-                </li>
+            <li class="">
+                <a href="{{ route('admin.dashboard') }}">
+                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                </a>
+            </li>
 
-            {{-- Comments link--}}
-                {{--<li class="">
-                    <a href="#">
-                        <i class="fa fa-comments"></i>
-                        <span>Comments</span>
-                    </a>
-                </li>--}}
+            {{-- The Safe link --}}
+            <li class="">
+                <a href="{{ route('admin.safe.index') }}">
+                    <i class="fa fa-money"></i>
+                    <span>The Safe</span>
+                </a>
+            </li>
 
             {{-- Categories link--}}
             <li class="treeview">

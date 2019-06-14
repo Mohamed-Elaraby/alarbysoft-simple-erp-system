@@ -15,7 +15,7 @@ class CreateSupplierTransactionsTable extends Migration
     {
         Schema::create('supplier_transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('amount');
+            $table->double('amount');
             $table->date('transaction_date');
             $table->integer('user_id')->unsigned();
             $table->integer('purchase_order_id')->unsigned()->nullable();

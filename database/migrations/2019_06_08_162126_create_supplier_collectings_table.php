@@ -15,7 +15,7 @@ class CreateSupplierCollectingsTable extends Migration
     {
         Schema::create('supplier_collectings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('amount');
+            $table->double('amount');
             $table->text('comment')->nullable();
             $table->date('collecting_date');
             $table->integer('user_id')->unsigned();

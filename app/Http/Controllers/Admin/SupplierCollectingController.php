@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Safe;
 use App\Supplier;
 use App\SupplierCollecting;
 use Illuminate\Http\Request;
@@ -39,6 +40,17 @@ class SupplierCollectingController extends Controller
 
         $supplier = Supplier::findOrFail($request->supplier_id);
         $supplier->update(['balance' => (($request->amount) + $supplier->balance)]);
+
+        /* Update The Safe Amount */
+        $last_amount = Safe::all()->last();
+//        dd($last_amount);
+
+        $supplierCollecting->theSafe()->create([
+            'amount_paid' => $request->amount,
+            'final_amount' => ($last_amount->final_amount + ($request->amount)),
+            'user_id' => Auth::user()->id,
+        ]);
+
         return redirect()->route('admin.supplierCollecting.index')->with('success', 'Payment Added Successfully');
     }
 

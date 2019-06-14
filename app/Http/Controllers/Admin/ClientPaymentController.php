@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Client;
 use App\ClientPayment;
+use App\Safe;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,21 @@ class ClientPaymentController extends Controller
             'transaction_date' => $request->payment_date,
             'user_id' => Auth::user()->id,
             'client_id' => $request->client_id,
+        ]);
+
+        /* Update Client balance */
+
+        $client = Client::findOrFail($request->client_id);
+        $client->update(['balance' => ($client->balance - ($request->amount))]);
+
+
+        /* Update The Safe Amount */
+
+        $last_amount = Safe::all()->last();
+        $payment->theSafe()->create([
+            'amount_paid' => $request->amount,
+            'final_amount' => ($last_amount->final_amount - ($request->amount)),
+            'user_id' => Auth::user()->id,
         ]);
         return redirect()->route('admin.clientPayments.index')->with('success', 'Payment Added Successfully');
     }

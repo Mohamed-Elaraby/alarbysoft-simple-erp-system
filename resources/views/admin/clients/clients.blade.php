@@ -57,6 +57,19 @@
                                 </tr>
                             @endforeach
                             </tbody>
+                            <tfoot>
+                                <th>Total</th>
+                                <td></td>
+                                <td>
+                                    @if ( $totalClientsAccountsBalance > 0 )
+                                        {{ $totalClientsAccountsBalance }} CR
+                                    @elseif( $totalClientsAccountsBalance < 0 )
+                                        {{ $totalClientsAccountsBalance }} DE
+                                    @else
+                                        {{ $totalClientsAccountsBalance }}
+                                    @endif
+                                </td>
+                            </tfoot>
                         </table>
                         <input type="submit" value="DELETE" name="softDelete" class="btn btn-danger">
                     </form>
