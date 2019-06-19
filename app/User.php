@@ -89,4 +89,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Expenses::class);
     }
+
+    public function serials ()
+    {
+        return $this->hasMany(Serial::class);
+    }
 }

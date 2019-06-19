@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSavesTable extends Migration
+class CreateEquityCapitalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,13 @@ class CreateSavesTable extends Migration
      */
     public function up()
     {
-        Schema::create('saves', function (Blueprint $table) {
+        Schema::create('equity_capitals', function (Blueprint $table) {
             $table->increments('id');
             $table->double('amount_paid');
             $table->double('final_amount');
             $table->text('comment')->nullable();
             $table->boolean('processType')->nullable();
             $table->integer('user_id')->unsigned();
-            $table->integer('sale_order_id')->unsigned()->nullable();
-            $table->integer('client_payment_id')->unsigned()->nullable();
-            $table->integer('client_collecting_id')->unsigned()->nullable();
-            $table->integer('purchase_order_id')->unsigned()->nullable();
-            $table->integer('supplier_payment_id')->unsigned()->nullable();
-            $table->integer('supplier_collecting_id')->unsigned()->nullable();
-            $table->integer('equity_capital_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }
@@ -38,6 +31,6 @@ class CreateSavesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('saves');
+        Schema::dropIfExists('equity_capitals');
     }
 }

@@ -7,6 +7,7 @@ use App\Product;
 use App\Safe;
 use App\SaleOrder;
 use App\SaleOrderProducts;
+use App\Serial;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -73,7 +74,7 @@ class SaleOrderController extends Controller
 
         $saleOrder->theSafe()->create([
             'amount_paid' => $request->amount_paid,
-            'final_amount' => ($last_amount->final_amount + ($request->amount_paid)),
+            'final_amount' => ($last_amount == null ? 0 : $last_amount->final_amount + ($request->amount_paid)),
             'user_id' => Auth::user()->id,
         ]);
 
@@ -143,10 +144,26 @@ class SaleOrderController extends Controller
         }
     }
 
-    protected function fullOrder($id)
+    public function fullOrder($id)
     {
         $salesOrder = SaleOrder::where('id', $id)->with('client')->first();
         $total_amount_products = $salesOrder->saleOrderProducts->sum('total');
         return view('admin.sales.fullOrder', compact('salesOrder', 'total_amount_products'));
     }
+
+    public function getSerials()
+    {
+        //
+    }
+
+    public function getProductById(Request $request)
+    {
+        if ($request->ajax()){
+            $item_id = $_GET['item_id'];
+            $product = Product::where('id', $item_id)->first();
+            $productSerials = $product->serials;
+            return response()->json(['product'=>$product, 'serials'=>$productSerials],200) ;
+        }
+    }
+
 }

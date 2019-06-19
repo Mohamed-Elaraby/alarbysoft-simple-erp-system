@@ -16,37 +16,40 @@
                         {{ session('delete') }}
                     </div>
                 @endif
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Purchases Order Number {{ $sale_orders->invoiceNo }} Products Details</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <table id="sale_orders" class="table table-bordered table-hover row-border">
-                            <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Product</th>
-                                <th scope="col">price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($sale_orders->saleOrderProducts as $value)
-                                <tr>
-                                    <td>{{ $value->id }}</td>
-                                    <td>{{ $value->name }}</td>
-                                    <td>{{ $value->price }}</td>
-                                    <td>{{ $value->quantity }}</td>
-                                    <td>{{ $value->total }}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
+                    @if ($sale_orders)
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Purchases Order Number {{ $sale_orders->invoiceNo }} Products Details</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="sale_orders" class="table table-bordered table-hover row-border">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($sale_orders->saleOrderProducts as $value)
+                                        <tr>
+                                            <td>{{ $value->id }}</td>
+                                            <td>{{ $value->name }}</td>
+                                            <td>{{ $value->price }}</td>
+                                            <td>{{ $value->quantity }}</td>
+                                            <td>{{ $value->total }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    @endif
+
             </div>
         </div>
     </div>

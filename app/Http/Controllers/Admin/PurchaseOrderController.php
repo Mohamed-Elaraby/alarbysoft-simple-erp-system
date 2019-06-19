@@ -81,12 +81,12 @@ class PurchaseOrderController extends Controller
 
         $purchaseOrder->theSafe()->create([
             'amount_paid' => $request->amount_paid,
-            'final_amount' => ($last_amount->final_amount - ($request->amount_paid)),
+            'final_amount' => ($last_amount == null ? 0 : $last_amount->final_amount - ($request->amount_paid)),
             'user_id' => Auth::user()->id,
         ]);
 
-//        return redirect()->route('admin.purchases.index')->with('success', 'PurchasesOrder Added Successfully');
-        return redirect()->back();
+        return redirect()->route('admin.purchases.index')->with('success', 'PurchasesOrder Added Successfully');
+//        return redirect()->back();
     }
 
     public function show($id)
@@ -149,9 +149,10 @@ class PurchaseOrderController extends Controller
         }
     }
 
-    protected function fullOrder($id)
+    public function fullOrder($id)
     {
-        $purchasesOrder = PurchaseOrder::where('id', $id)->with('supplier')->first();
-        return view('admin.purchases.fullOrder', compact('purchasesOrder'));
+        $purchaseOrder = PurchaseOrder::where('id', $id)->with('supplier')->first();
+        $total_amount_products = $purchaseOrder->purchaseOrderProducts->sum('total');
+        return view('admin.purchases.fullOrder', compact('purchaseOrder', 'total_amount_products'));
     }
 }

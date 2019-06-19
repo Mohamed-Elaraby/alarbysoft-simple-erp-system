@@ -57,8 +57,8 @@
                                 <th width="2%"><input id="check_all" class="formcontrol" type="checkbox"/></th>
 {{--                                <th width="15%">Item No</th>--}}
                                 <th width="38%">Item Name</th>
-                                <th width="15%">Price</th>
                                 <th width="15%">Quantity</th>
+                                <th width="15%">Price</th>
                                 <th width="15%">Total</th>
                             </tr>
                             </thead>
@@ -67,8 +67,8 @@
                                 <td><input class="case" type="checkbox"/></td>
 {{--                                <td><input type="text" data-type="productCode" name="data[0][product_id]" id="itemNo_1" class="form-control autocomplete_txt" autocomplete="off"></td>--}}
                                 <td><input type="text" data-type="productName" name="data[0][product_name]" id="itemName_1" class="form-control autocomplete_txt" autocomplete="off"></td>
-                                <td><input type="text" name="data[0][price]" id="price_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                                 <td><input type="text" name="data[0][quantity]" id="quantity_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
+                                <td><input type="text" name="data[0][price]" id="price_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                                 <td><input type="text" name="data[0][total]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                             </tr>
                             </tbody>
@@ -160,7 +160,7 @@
     </div>
 </div>
 @push('scripts')
-    <script src="{{ asset('admin/js/ajax.js') }}"></script>
+    <script src="{{ asset('admin/js/purchaseInvoiceScript.js') }}"></script>
     <script>
         $("#invoiceDate").datepicker().datepicker("setDate", new Date());
         $('#amountPaid').val(0);

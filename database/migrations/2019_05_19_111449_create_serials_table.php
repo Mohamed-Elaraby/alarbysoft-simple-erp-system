@@ -15,7 +15,7 @@ class CreateSerialsTable extends Migration
     {
         Schema::create('serials', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial');
+            $table->string('serial')->unique();
             $table->integer('product_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();

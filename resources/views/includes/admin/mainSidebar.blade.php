@@ -106,6 +106,14 @@
                 </a>
             </li>
 
+                {{-- The Equity Capital link --}}
+                <li class="">
+                    <a href="{{ route('admin.equityCapital.index') }}">
+                        <i class="fa fa-money"></i>
+                        <span>Equity Capital</span>
+                    </a>
+                </li>
+
             {{-- Categories link--}}
             <li class="treeview">
                 <a href="{{ route('admin.categories.index') }}" onclick="event.preventDefault();">
@@ -133,6 +141,21 @@
                     <ul class="treeview-menu">
                         <li><a href="{{ route('admin.products.create') }}"><i class="fa fa-plus"></i>Create Product</a></li>
                         <li><a href="{{ route('admin.products.index') }}"><i class="fa fa-eye"></i> Show All Products</a></li>
+                    </ul>
+                </li>
+
+                {{-- Serials link--}}
+                <li class="treeview">
+                    <a href="{{ route('admin.serials.index') }}" onclick="event.preventDefault();">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>Serials</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ route('admin.serials.create') }}"><i class="fa fa-plus"></i>Create Serial</a></li>
+                        <li><a href="{{ route('admin.serials.index') }}"><i class="fa fa-eye"></i> Show All Serials</a></li>
                     </ul>
                 </li>
 

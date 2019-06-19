@@ -17,7 +17,8 @@
                 </div>
             @endif
             <h3 class="text-center"><i class="fa fa-edit"></i> Sale Order</h3>
-            <form action="{{ route('admin.sales.store') }}" method="POST">
+                <button id="oks" onclick="CountRows()">Click</button>
+                <form action="{{ route('admin.sales.store') }}" method="POST">
                 @csrf
                 <!-- Logo Area -->
                 <div class='row no-margin'>
@@ -62,27 +63,34 @@
                     <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
                         <div class="well">
                             <h1 class="text-center">Items List</h1>
+                            <div class="show">nosa show</div>
                         </div>
                         <table class="table table-bordered table-hover" id="invoiceTable">
                             <thead>
                             <tr>
                                 <th width="2%"><input id="check_all" class="formcontrol" type="checkbox"/></th>
-{{--                                <th width="15%">Item No</th>--}}
+                                <th width="10%">Item No</th>
                                 <th width="38%">Item Name</th>
-                                <th width="15%">Price</th>
-                                <th width="15%">Quantity</th>
+                                <th width="10%">Quantity</th>
+                                <th width="10%">Price</th>
                                 <th width="15%">Total</th>
+                                <th width="15%">Serial</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><input class="case" type="checkbox"/></td>
-{{--                                <td><input type="text" data-type="productCode" name="data[0][product_id]" id="itemNo_1" class="form-control autocomplete_txt" autocomplete="off"></td>--}}
-                                <td><input type="text" data-type="productName" name="data[0][product_name]" id="itemName_1" class="form-control autocomplete_txt" autocomplete="off"></td>
-                                <td><input type="text" name="data[0][price]" id="price_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
-                                <td><input type="text" name="data[0][quantity]" id="quantity_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
-                                <td><input type="text" name="data[0][total]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
-                            </tr>
+                                <tr>
+                                    <td><input class="case" type="checkbox"/></td>
+                                    <td><input type="text" data-type="productCode" name="data[0][product_id]" id="itemNo_1" class="form-control autocomplete_txt item_id" autocomplete="off"></td>
+                                    <td><input value="" type="text" data-type="productName" name="data[0][product_name]" id="itemName_1" class="form-control autocomplete_txt item_name" autocomplete="off" ></td>
+                                    <td><input type="text" name="data[0][quantity]" id="quantity_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
+                                    <td><input type="text" name="data[0][price]" id="price_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
+                                    <td><input type="text" name="data[0][total]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
+                                    <td>
+                                        <select name="serials[]"class="productSerial form-control">
+                                            <option value="" disabled selected>Select Serial</option>
+                                        </select>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -134,12 +142,14 @@
                                 <input class="form-check-input" type="radio" value="1" id="cash" name="payment_method" checked>
                                 <label class="form-check-label" for="cash">
                                     Cash
-                            </label>
+                                </label>
+                            </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" value="0" id="due" name="payment_method">
                                 <label class="form-check-label" for="due">
                                     Due
-                            </label>
+                                </label>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Amount Paid: &nbsp;</label>
@@ -171,11 +181,47 @@
         </div>
     </div>
 </div>
+@push('csrf-token')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endpush
 @push('scripts')
     <script src="{{ asset('admin/js/ajax.js') }}"></script>
     <script>
         $("#invoiceDate").datepicker().datepicker("setDate", new Date());
         $('#amountPaid').val('0.00');
     </script>
+    <script>
+        $( document ).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $(document).on('change', '.item_id', function () {
+                var item_id = $(this).val();
+                var url = "{{ route('sales.product_info') }}";
+                // alert(url);
+                var that = $(this);
+                $.ajax({
+                    url:url,
+                    data: {item_id: item_id},
+                    type: 'get',
+                    success:function(data) {
+                        that.parent().siblings().find('.productSerial').empty();
+                       console.log(data);
+                       //  $('.item_name').attr('value',data.name);
+                       //  var p = that.parent().children('.item_name').val(data.name);
+                        var p = that.parent().siblings().find('.item_name').val(data.product.name);
+                        $.each(data.serials, function(index, value){
+                            that.parent().siblings().find('.productSerial').append(`<option value="${value.id}">${value.serial}</option>`);                  // handleData(data);
+                        });
+                    }
+                });
+            })
+        });
+
+    </script>
+
 @endpush
 @endsection
+

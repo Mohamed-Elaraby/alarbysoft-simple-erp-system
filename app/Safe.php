@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Safe extends Model
 {
     protected $fillable = [
-        'amount_paid','final_amount', 'comment', 'processType', 'user_id', 'payment_id', 'collecting_id', 'order_id'
+        'amount_paid','final_amount', 'comment', 'processType', 'user_id', 'client_payment_id', 'client_collecting_id', 'sale_order_id', 'supplier_payment_id', 'supplier_collecting_id', 'purchase_order_id'
     ];
 
     public function clientPayment(){
@@ -32,5 +32,9 @@ class Safe extends Model
 
     public function purchaseOrder(){
         return $this->belongsTo(PurchaseOrder::class);
+    }
+
+    public function equityCapital(){
+        return $this->belongsTo(EquityCapital::class);
     }
 }

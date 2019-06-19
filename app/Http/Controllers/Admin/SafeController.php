@@ -27,16 +27,20 @@ class SafeController extends Controller
     {
         $last_amount = Safe::all()->last();
         if ($request->processType == 0){
-            $safe->amount_paid = $request->amount;
-            $safe->final_amount = $last_amount->final_amount - $request->amount;
-            $safe->comment = $request->comment;
-            $safe->processType = $request->processType;
-            $safe->user_id = Auth::user()->id;
-            $safe->save();
-            return redirect()->route('admin.safe.index')->with('warning', 'Amount withdrawn successfully');
+            if ($last_amount == null  || $last_amount->final_amount == 0){
+                return redirect()->route('admin.safe.index')->with('danger', 'Sorry no money can be withdrawn');
+            }else {
+                $safe->amount_paid = $request->amount;
+                $safe->final_amount = $last_amount->final_amount - $request->amount_paid;
+                $safe->comment = $request->comment;
+                $safe->processType = $request->processType;
+                $safe->user_id = Auth::user()->id;
+                $safe->save();
+                return redirect()->route('admin.safe.index')->with('warning', 'Amount withdrawn successfully');
+            }
         }else{
-            $safe->amount_paid = $request->amount;
-            $safe->final_amount = $last_amount->final_amount + $request->amount;
+            $safe->amount_paid = $request->amount_paid;
+            $safe->final_amount = $last_amount == null ? $request->amount_paid : $last_amount->final_amount + $request->amount_paid;
             $safe->comment = $request->comment;
             $safe->processType = $request->processType;
             $safe->user_id = Auth::user()->id;

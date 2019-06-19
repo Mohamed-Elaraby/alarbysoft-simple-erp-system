@@ -15,7 +15,7 @@ class Product extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $appends = ['profit_percent'];
+//    protected $appends = ['profit_percent'];
 
 //    public function getProfitPercentAttribute()
 //    {
@@ -48,6 +48,11 @@ class Product extends Model
     public function purchaseInvoice ()
     {
         return $this->belongsTo(PurchaseInvoice::class);
+    }
+
+    public function serials ()
+    {
+        return $this->hasMany(Serial::class);
     }
 
 }

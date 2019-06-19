@@ -32,9 +32,9 @@
                             </div>
                         @endif
                         <div class="safe_box">
-                            <span class="text-center">{{ $theSafe?number_format($theSafe->final_amount, 2):'0.00' }} EGP</span>
+                            <span class="text-center">{{ $equityCapital?number_format($equityCapital->final_amount, 2):'0.00' }} EGP</span>
                         </div>
-                        <a class="btn btn-success btn-lg btn-block" href="{{ route('admin.safe.operations') }}">Cash/Deposit</a>
+                        <a class="btn btn-success btn-lg btn-block" href="{{ route('admin.equityCapital.operations') }}">Cash/Deposit</a>
                     </div>
                 </div>
             </div>

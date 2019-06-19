@@ -71,8 +71,8 @@
                     <tr>
                         <th>#ID</th>
                         <th>Product</th>
-                        <th>Price</th>
                         <th>Quantity</th>
+                        <th>Price</th>
                         <th>Subtotal</th>
                     </tr>
                     </thead>
@@ -81,8 +81,8 @@
                         <tr>
                             <td>{{ $order->id }}</td>
                             <td>{{ $order->name }}</td>
-                            <td>{{ $order->price }} EGP</td>
                             <td>{{ $order->quantity }}</td>
+                            <td>{{ $order->price }} EGP</td>
                             <td>{{ $order->total }} EGP</td>
                         </tr>
 

@@ -4,6 +4,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('ajaxTest', function () {
+    if (Request::ajax()){
+//        return "gooooooooooood";
+        dd($_GET['item_id']);
+    }
+});
+Route::get('sales/product_info', 'Admin\SaleOrderController@getProductById')->name('sales.product_info');
+
+
 /* User Routes */
 
 //Route::prefix('user')->name('user.')->group(function (){
@@ -46,6 +55,10 @@ Route::get('/', function () {
         Route::resource('products', 'ProductController')->except(['destroy']);
         Route::delete('products/destroy', 'ProductController@destroy')->name('products.destroy');
 
+        /* Serials Routes */
+        Route::resource('serials', 'SerialController')->except(['destroy']);
+        Route::delete('serials/destroy', 'SerialController@destroy')->name('serials.destroy');
+
         /* Categories Routes */
         Route::resource('categories', 'CategoryController')->except(['destroy']);
         Route::delete('categories/destroy', 'CategoryController@destroy')->name('categories.destroy');
@@ -72,6 +85,8 @@ Route::get('/', function () {
         Route::resource('sales', 'SaleOrderController')->except(['destroy']);
         Route::delete('sales/destroy', 'SaleOrderController@destroy')->name('sales.destroy');
         Route::get('sales/order/{id}', 'SaleOrderController@fullOrder')->name('sales.order');
+//        Route::get('sales/getSerials', 'SaleOrderController@getSerials')->name('sales.getSerials');
+//        Route::get('sales/product_info', 'SaleOrderController@getProductById')->name('sales.product_info');
 
         /* Expenses Routes */
         Route::resource('expenses', 'ExpensesController')->except(['destroy']);
@@ -93,16 +108,19 @@ Route::get('/', function () {
         Route::resource('supplierPayments', 'SupplierPaymentController')->except(['destroy']);
         Route::delete('supplierPayments/destroy', 'SupplierPaymentController@destroy')->name('supplierPayments.destroy');
 
-
         /* supplierPayments Routes */
         Route::resource('supplierCollecting', 'SupplierCollectingController')->except(['destroy']);
         Route::delete('supplierCollecting/destroy', 'SupplierCollectingController@destroy')->name('supplierCollecting.destroy');
 
         /* theSafe Routes */
-//        Route::resource('safe', 'SafeController')->except(['destroy']);
         Route::get('safe', 'SafeController@index')->name('safe.index');
         Route::get('safe/operations', 'SafeController@operations')->name('safe.operations');
         Route::post('safe/store', 'SafeController@store')->name('safe.store');
+
+        /* Equity Capital Routes */
+        Route::get('equityCapital', 'EquityCapitalController@index')->name('equityCapital.index');
+        Route::get('equityCapital/operations', 'EquityCapitalController@operations')->name('equityCapital.operations');
+        Route::post('equityCapital/store', 'EquityCapitalController@store')->name('equityCapital.store');
     });
 
     Auth::routes();
