@@ -12,7 +12,7 @@ class SaleOrderProducts extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'price', 'quantity', 'total',
+        'name', 'price', 'quantity', 'total', 'serial'
     ];
 
     public function user ()
@@ -24,4 +24,5 @@ class SaleOrderProducts extends Model
     {
         return $this->belongsTo(SaleOrder::class);
     }
+
 }

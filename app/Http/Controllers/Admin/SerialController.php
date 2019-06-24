@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Product;
+use App\PurchaseOrder;
+use App\PurchaseOrderProducts;
 use App\Serial;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SerialController extends Controller
 {
@@ -19,8 +22,9 @@ class SerialController extends Controller
 
     public function create()
     {
+        $purchaseOrders = PurchaseOrder::orderBy('id', 'desc')->get();
         $products = Product::all();
-        return view('admin.serials.createSerial', compact('products'));
+        return view('admin.serials.createSerial', compact( 'purchaseOrders', 'products'));
     }
 
     public function store(Request $request)
@@ -28,13 +32,18 @@ class SerialController extends Controller
 //        dd($request->all());
         $serials = $request->data;
         foreach($serials as $serial){
+//            dd($request->purchase_order_id);
             Serial::create([
-                'serial' => $serial['serial'],
-                'product_id' => $request->product_id,
-                'user_id' => Auth::user()->id,
+//                dd($request->all())
+                "serial" => $serial['serial'],
+                "status" => 0,
+                "purchase_order_id" => $request->purchase_order_id,
+                "product_id" => $request->product_id,
+                "user_id" => Auth::user()->id,
             ]);
         }
-        return redirect()->route('admin.serials.index')->with('success', 'Serial /s Added Successfully');
+//        return redirect()->route('admin.serials.index')->with('success', 'Serial /s Added Successfully');
+        return redirect()->back()->with('success', 'Serial /s Added Successfully');
     }
 
     public function show($id)
@@ -66,4 +75,31 @@ class SerialController extends Controller
             return redirect()->back();
         }
     }
+    public function getProductByOrderId(Request $request)
+    {
+        if ($request->ajax()){
+            $order_id = $_GET['order_id'];
+            $orderProducts = PurchaseOrderProducts::where('purchase_order_id', $order_id)->get();
+            $products = Product::all();
+            foreach ( $products as $product){
+
+                $productP = [];
+                foreach ($orderProducts as $OP){
+                    if (in_array($OP->name,  $productP)){
+                        continue ;
+                    }
+
+                    if ($product->name == $OP->name){
+                        echo "<option value='".$product->id."'>".$product->name."</option>";
+
+                    }
+
+                    $productP [] = $OP->name;
+                }
+
+            }
+
+        }
+    }
+
 }

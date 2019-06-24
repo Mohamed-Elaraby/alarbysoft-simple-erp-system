@@ -45,7 +45,7 @@
             <div class="col-sm-6 invoice-col">
                 To
                 <address>
-                    <strong>{{ $purchaseOrder->supplier->name }}</strong><br>
+                    <strong>{{ $purchaseOrder->client->name }}</strong><br>
                     795 Folsom Ave, Suite 600<br>
                     San Francisco, CA 94107<br>
                     Phone: (555) 539-1037<br>

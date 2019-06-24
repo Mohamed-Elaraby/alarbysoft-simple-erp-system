@@ -24,6 +24,12 @@ class CreateClientTransactionsTable extends Migration
                 ->on('sale_orders')
                 ->onUpdate('CASCADE')
                 ->onUpdate('CASCADE');
+            $table->integer('purchase_order_id')->unsigned()->nullable();
+            $table->foreign('purchase_order_id')
+                ->references('id')
+                ->on('purchase_orders')
+                ->onUpdate('CASCADE')
+                ->onUpdate('CASCADE');
             $table->integer('client_payment_id')->unsigned()->nullable();
             $table->foreign('client_payment_id')
                 ->references('id')

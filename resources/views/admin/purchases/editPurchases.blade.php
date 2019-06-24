@@ -26,11 +26,11 @@
                     <div class="row no-margin">
                         <div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
                             <div class="form-group">
-                                <label for="supplier">Supplier</label>
-                                <select name="supplier_id" id="supplier" class="form-control">
+                                <label for="client">client</label>
+                                <select name="client_id" id="client" class="form-control">
                                     <option value=""></option>
-                                    @foreach ($suppliers as $supplier)
-                                        <option value="{{ $supplier->id }}" {{ $purchaseOrder->supplier_id ==  $supplier->id ? 'selected' :''}}>{{ $supplier->name }}</option>
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}" {{ $purchaseOrder->client_id ==  $client->id ? 'selected' :''}}>{{ $client->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -3,14 +3,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('ajaxTest', function () {
-    if (Request::ajax()){
-//        return "gooooooooooood";
-        dd($_GET['item_id']);
-    }
-});
+/* Ajax Requests */
 Route::get('sales/product_info', 'Admin\SaleOrderController@getProductById')->name('sales.product_info');
+Route::get('serials/getProducts', 'Admin\SerialController@getProductByOrderId')->name('serials.getProducts');
 
 
 /* User Routes */

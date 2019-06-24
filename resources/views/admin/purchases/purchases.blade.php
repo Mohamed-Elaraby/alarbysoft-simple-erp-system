@@ -44,7 +44,7 @@
                                         <th scope="col">Amount Due</th>
                                         <th scope="col">Notes</th>
                                         <th scope="col">Agent</th>
-                                        <th scope="col">Supplier</th>
+                                        <th scope="col">Client</th>
                                         <th scope="col">Related Products</th>
                                         <th scope="col">Created At</th>
                                         <th scope="col">Updated At</th>
@@ -72,7 +72,9 @@
                                             <td>{{ $item->amount_due }}</td>
                                             <td>{{ $item->notes }}</td>
                                             <td>{{ $item->user->name }}</td>
-                                            <td><a href="{{ route('admin.suppliers.show', $item->supplier->id) }}">{{ $item->supplier->name }}</a></td>
+                                            <td>
+                                                <a href="{{ route('admin.clients.show', $item->client->id) }}">{{ $item->client->name }}</a>
+                                            </td>
                                             <td>
                                                 <a href="{{ route('admin.purchases.show', $item->id) }}" class="btn btn-sm btn-warning">Products</a>
                                             </td>

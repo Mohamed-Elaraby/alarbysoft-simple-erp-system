@@ -25,6 +25,11 @@ class Client extends Model
         return $this->hasMany(SaleOrder::class);
     }
 
+    protected function purchaseOrders()
+    {
+        return $this->hasMany(PurchaseOrder::class);
+    }
+
     public function transactions ()
     {
         return $this->hasMany(ClientTransaction::class);

@@ -264,7 +264,7 @@
                     </ul>
                 </li>
 
-                {{-- Suppliers link--}}
+               {{-- --}}{{-- Suppliers link--}}{{--
                 <li class="treeview">
                     <a href="{{ route('admin.suppliers.index') }}" onclick="event.preventDefault();">
                         <i class="fa fa-truck"></i>
@@ -279,7 +279,7 @@
                     </ul>
                 </li>
 
-                {{-- Supplier Payments link--}}
+                --}}{{-- Supplier Payments link--}}{{--
                 <li class="treeview">
                     <a href="{{ route('admin.supplierPayments.index') }}" onclick="event.preventDefault();">
                         <i class="fa fa-money"></i>
@@ -294,7 +294,7 @@
                     </ul>
                 </li>
 
-                {{-- Supplier Collecting link--}}
+                --}}{{-- Supplier Collecting link--}}{{--
                 <li class="treeview">
                     <a href="{{ route('admin.supplierCollecting.index') }}" onclick="event.preventDefault();">
                         <i class="fa fa-money"></i>
@@ -307,7 +307,7 @@
                         <li><a href="{{ route('admin.supplierCollecting.create') }}"><i class="fa fa-plus"></i>Create Collecting</a></li>
                         <li><a href="{{ route('admin.supplierCollecting.index') }}"><i class="fa fa-eye"></i> Show All Collecting</a></li>
                     </ul>
-                </li>
+                </li>--}}
 
             {{-- Users link--}}
                 {{--<li class="treeview">

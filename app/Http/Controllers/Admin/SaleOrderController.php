@@ -29,15 +29,22 @@ class SaleOrderController extends Controller
 
     public function store(Request $request, SaleOrder $saleOrder)
     {
+
 //        dd($request->all());
         $saleOrder = SaleOrder::create($request->all() + ['user_id' => Auth::user()->id]);
         $products_info = $request->data;
         foreach($products_info as $item){
+//            If Dont Find Serial Key Set Push New Serial Index
+            if (!array_key_exists('serial', $item)){
+                $item['serial'] = NULL;
+            }
+
             $saleOrder->saleOrderProducts()->create([
                 'name' => $item['product_name'],
                 'price' => $item['price'],
                 'quantity' => $item['quantity'],
                 'total' => $item['total'],
+                'serial' => $item['serial'],
             ]);
 
             $productExists = Product::where('name', $item['product_name'])->first();
@@ -45,6 +52,16 @@ class SaleOrderController extends Controller
 //                $productExists->purchase_price = $item['price'];
                 $productExists->quantity = ($productExists->quantity - $item['quantity']) ;
                 $productExists->save();
+            }
+
+            /* Update Serial Status To value [1] => [Sold] On Serials Table */
+            $allSerials = Serial::all();
+            foreach ($allSerials as $serial){
+                if ($serial->serial == $item['serial']){
+                    Serial::where('serial', $serial->serial)->update([
+                        'status' => 1,
+                    ]);
+                }
             }
         }
 
@@ -151,17 +168,14 @@ class SaleOrderController extends Controller
         return view('admin.sales.fullOrder', compact('salesOrder', 'total_amount_products'));
     }
 
-    public function getSerials()
-    {
-        //
-    }
 
     public function getProductById(Request $request)
     {
         if ($request->ajax()){
             $item_id = $_GET['item_id'];
             $product = Product::where('id', $item_id)->first();
-            $productSerials = $product->serials;
+            $productSerials = $product->serials->where('status', 0);
+
             return response()->json(['product'=>$product, 'serials'=>$productSerials],200) ;
         }
     }

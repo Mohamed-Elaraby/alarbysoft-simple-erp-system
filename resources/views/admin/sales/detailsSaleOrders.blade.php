@@ -31,6 +31,7 @@
                                         <th scope="col">price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Total</th>
+                                        <th scope="col">Serial</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -41,6 +42,7 @@
                                             <td>{{ $value->price }}</td>
                                             <td>{{ $value->quantity }}</td>
                                             <td>{{ $value->total }}</td>
+                                            <td>{{ $value->serial }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -75,7 +77,7 @@
                 //     heightMatch: 'none'
                 // },
                 "ordering": true,
-                "order": [[ 0, "desc" ]],
+                // "order": [[ 0, "desc" ]],
             })
         })
     </script>

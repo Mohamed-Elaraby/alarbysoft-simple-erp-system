@@ -35,6 +35,11 @@ class SaleOrder extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function serials ()
+    {
+        return $this->hasMany(Serial::class);
+    }
+
     public function clientTransaction ()
     {
         return $this->hasMany(ClientTransaction::class);

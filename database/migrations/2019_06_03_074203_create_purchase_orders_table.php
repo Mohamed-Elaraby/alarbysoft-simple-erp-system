@@ -27,7 +27,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->double('amount_due');
             $table->integer('user_id')->unsigned();
             $table->integer('store_id')->unsigned()->nullable();
-            $table->integer('supplier_id')->unsigned();
+            $table->integer('client_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

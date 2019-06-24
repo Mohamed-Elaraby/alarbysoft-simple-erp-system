@@ -7,21 +7,20 @@
     <div class="row">
         <div class=" col-sm-12">
             @if (session('success'))
-                <div class="alert alert-success">
+                <div class="alert alert-success text-center">
                     {{ session('success') }}
                 </div>
             @endif
             @if (session('delete'))
-                <div class="alert alert-danger">
+                <div class="alert alert-danger text-center">
                     {{ session('delete') }}
                 </div>
             @endif
             <h3 class="text-center"><i class="fa fa-edit"></i> Sale Order</h3>
-                <button id="oks" onclick="CountRows()">Click</button>
                 <form action="{{ route('admin.sales.store') }}" method="POST">
                 @csrf
                 <!-- Logo Area -->
-                <div class='row no-margin'>
+                {{--<div class='row no-margin'>
                     <div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
                         <div class="logo">
                             <img src="img/logo.png" alt="Company Logo">
@@ -32,14 +31,14 @@
                             Tamil Nadu, India - 123456.
                         </p>
                     </div>
-                </div>
+                </div>--}}
                 <!-- End Logo Area -->
                 <hr>
                 <div class="row no-margin">
                     <div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
                         <div class="form-group">
                             <label for="client">Client</label>
-                            <select name="client_id" id="client" class="form-control">
+                            <select name="client_id" id="client" class="form-control" required>
                                 <option value=""></option>
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -48,7 +47,7 @@
                         </div>
                         <div class="form-group">
                             <label for="invoiceNo">Invoice Number</label>
-                            <input type="text" class="form-control" name="invoiceNo" id="invoiceNo">
+                            <input type="text" class="form-control" name="invoiceNo" id="invoiceNo" required>
                         </div>
                         <div class="form-group">
                             <label for="invoiceDate">Invoice Date</label>
@@ -63,7 +62,6 @@
                     <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
                         <div class="well">
                             <h1 class="text-center">Items List</h1>
-                            <div class="show">nosa show</div>
                         </div>
                         <table class="table table-bordered table-hover" id="invoiceTable">
                             <thead>
@@ -81,12 +79,12 @@
                                 <tr>
                                     <td><input class="case" type="checkbox"/></td>
                                     <td><input type="text" data-type="productCode" name="data[0][product_id]" id="itemNo_1" class="form-control autocomplete_txt item_id" autocomplete="off"></td>
-                                    <td><input value="" type="text" data-type="productName" name="data[0][product_name]" id="itemName_1" class="form-control autocomplete_txt item_name" autocomplete="off" ></td>
+                                    <td><input readonly value="" type="text" data-type="productName" name="data[0][product_name]" id="itemName_1" class="form-control autocomplete_txt item_name" autocomplete="off" ></td>
                                     <td><input type="text" name="data[0][quantity]" id="quantity_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                                     <td><input type="text" name="data[0][price]" id="price_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                                     <td><input type="text" name="data[0][total]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                                     <td>
-                                        <select name="serials[]"class="productSerial form-control">
+                                        <select name="data[0][serial]"class="productSerial form-control">
                                             <option value="" disabled selected>Select Serial</option>
                                         </select>
                                     </td>
@@ -208,13 +206,18 @@
                     type: 'get',
                     success:function(data) {
                         that.parent().siblings().find('.productSerial').empty();
-                       console.log(data);
+                        console.log(data);
                        //  $('.item_name').attr('value',data.name);
                        //  var p = that.parent().children('.item_name').val(data.name);
                         var p = that.parent().siblings().find('.item_name').val(data.product.name);
-                        $.each(data.serials, function(index, value){
-                            that.parent().siblings().find('.productSerial').append(`<option value="${value.id}">${value.serial}</option>`);                  // handleData(data);
-                        });
+                        if (data.serials.length == 0) {
+                            that.parent().siblings().find('.productSerial').append(`<option disabled value="">No Serial Available</option>`);
+                        }else{
+                            $.each(data.serials, function(index, value){
+                                that.parent().siblings().find('.productSerial').append(`<option value="${value.serial}">${value.serial}</option>`);
+                            });
+                        }
+
                     }
                 });
             })

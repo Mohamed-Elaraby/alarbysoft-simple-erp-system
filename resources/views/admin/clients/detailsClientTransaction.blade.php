@@ -43,6 +43,8 @@
                                                 <td>
                                                     @if ($transaction->saleOrder)
                                                         <a href="{{ route('admin.sales.order', $transaction->saleOrder->id) }}">Sales Order</a>
+                                                    @elseif($transaction->purchaseOrder)
+                                                        <a href="{{ route('admin.purchases.order', $transaction->purchaseOrder->id) }}">Purchase Order</a>
                                                     @elseif($transaction->clientPayment)
                                                         Payments
                                                     @elseif($transaction->clientCollecting)

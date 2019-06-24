@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ClientTransaction;
+use App\Client;
 use App\Product;
 use App\PurchaseOrder;
 use App\PurchaseOrderProducts;
 use App\Safe;
-use App\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -23,8 +22,8 @@ class PurchaseOrderController extends Controller
     public function create()
     {
         $products = Product::all();
-        $suppliers = Supplier::all();
-        return view('admin.purchases.createPurchases', compact('suppliers', 'products'));
+        $clients = Client::all();
+        return view('admin.purchases.createPurchases', compact('clients', 'products'));
     }
 
     public function store(Request $request)
@@ -55,24 +54,24 @@ class PurchaseOrderController extends Controller
         }
 
 
-        /* Record Transaction On Supplier Transaction Table */
+        /* Record Transaction On Client Transaction Table */
 
-        $purchaseOrder->supplierTransactions()->create([
+        $purchaseOrder->clientTransactions()->create([
             'amount' => $request->invoice_total,
             'transaction_date' => $request->invoiceDate,
             'user_id' => Auth::user()->id,
-            'supplier_id' => $request->supplier_id,
+            'client_id' => $request->client_id,
         ]);
 
-        /* Update Supplier balance */
+        /* Update Client balance */
 
-        $supplier = Supplier::findOrFail($request->supplier_id);
-        if ($supplier->balance < 0) {
+        $client = Client::findOrFail($request->client_id);
+        if ($client->balance < 0) {
             // [ - ] DE
-            $supplier->update(['balance' => ($supplier->balance - ($request->amount_due))]);// -100 - -150
+            $client->update(['balance' => ($client->balance - ($request->amount_due))]);// -100 - -150
         } else {
             // [ + ] CR
-            $supplier->update(['balance' => ($supplier->balance + ($request->amount_due))]); // 50 + -50
+            $client->update(['balance' => ($client->balance + ($request->amount_due))]); // 50 + -50
         }
 
         /* Update The Safe Amount */
@@ -98,14 +97,15 @@ class PurchaseOrderController extends Controller
     public function edit($id)
     {
         $purchaseOrder = PurchaseOrder::findOrFail($id);
-        $suppliers = Supplier::all();
-        return view('admin.purchases.editPurchases', compact('purchaseOrder', 'suppliers'));
+        $clients = Client::all();
+        return view('admin.purchases.editPurchases', compact('purchaseOrder', 'clients'));
     }
 
     public function update(Request $request, $id)
     {
         /* Update Purchase Order */
         $purchaseOrder = PurchaseOrder::findOrFail($id)->update($request->all() + ['user_id' => Auth::user()->id]);
+
         /* Update Purchase Order Products */
         $products_info = $request->data;
         foreach($products_info as $item){
@@ -142,7 +142,7 @@ class PurchaseOrderController extends Controller
     {
         if (isset($request->id)){
             $purchases_id = $request->id;
-            PurchaseInvoice::destroy($purchases_id);
+            PurchaseOrder::destroy($purchases_id);
             return redirect()->route('admin.purchases.index')->with('delete', 'Purchases Invoice /s Delete Successfully');
         }else {
             return redirect()->back();
@@ -151,7 +151,7 @@ class PurchaseOrderController extends Controller
 
     public function fullOrder($id)
     {
-        $purchaseOrder = PurchaseOrder::where('id', $id)->with('supplier')->first();
+        $purchaseOrder = PurchaseOrder::where('id', $id)->with('client')->first();
         $total_amount_products = $purchaseOrder->purchaseOrderProducts->sum('total');
         return view('admin.purchases.fullOrder', compact('purchaseOrder', 'total_amount_products'));
     }

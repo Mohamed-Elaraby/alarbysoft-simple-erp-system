@@ -5,11 +5,11 @@ $("#addmore").on('click',function(){
 	html = '<tr>';
 	html += '<td><input class="case" type="checkbox"/></td>';
 	html += '<td><input type="text" data-type="productCode" name="data['+i+'][product_id]" id="itemNo_'+i+'" class="form-control autocomplete_txt item_id" autocomplete="off"></td>';
-	html += '<td><input value="" type="text" data-type="productName" name="data['+i+'][product_name]" id="itemName_'+i+'" class="form-control autocomplete_txt item_name" autocomplete="off"></td>';
+	html += '<td><input readonly value="" type="text" data-type="productName" name="data['+i+'][product_name]" id="itemName_'+i+'" class="form-control autocomplete_txt item_name" autocomplete="off"></td>';
 	html += '<td><input type="text" name="data['+i+'][quantity]" id="quantity_'+i+'" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
 	html += '<td><input type="text" name="data['+i+'][price]" id="price_'+i+'" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
 	html += '<td><input type="text" name="data['+i+'][total]" id="total_'+i+'" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
-	html += '<td><select name="serials[]"class="productSerial form-control"><option value="" disabled selected>Select Serial</option></select></td>';
+	html += '<td><select name="data['+i+'][serial]"class="productSerial form-control"><option value="" disabled selected>Select Serial</option></select></td>';
 	html += '</tr>';
 	$('table#invoiceTable').append(html);
 	i++;

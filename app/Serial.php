@@ -13,7 +13,7 @@ class Serial extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'serial', 'product_id', 'user_id'
+        'serial', 'status', 'product_id', 'user_id', 'purchase_order_id', 'sale_order_id'
     ];
 
     public function user()
@@ -25,4 +25,15 @@ class Serial extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function purchaseOrder()
+    {
+        return $this->belongsTo(PurchaseOrder::class);
+    }
+
+    public function saleOrder()
+    {
+        return $this->belongsTo(SaleOrder::class);
+    }
+
 }

@@ -17,13 +17,6 @@
         </h1>
     </section>
 
-    <div class="pad margin no-print">
-        <div class="callout callout-info" style="margin-bottom: 0!important;">
-            <h4><i class="fa fa-info"></i> Note:</h4>
-            This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
-        </div>
-    </div>
-
     <!-- Main content -->
     <section class="invoice">
         <!-- title row -->
@@ -31,7 +24,11 @@
             <div class="col-xs-12">
                 <h2 class="page-header">
                     <i class="fa fa-globe"></i> AdminLTE, Inc.
-                    <small class="pull-right">Date: {{ $salesOrder->invoiceDate }}</small>
+                    @php
+                        $myDateTime = DateTime::createFromFormat('Y-m-d', $salesOrder->invoiceDate);
+                        $formattedweddingdate = $myDateTime->format('d/m/Y');
+                    @endphp
+                    <small class="pull-right">Date: {{ $formattedweddingdate }}</small>
                 </h2>
             </div>
             <!-- /.col -->
@@ -66,24 +63,24 @@
         <!-- Table row -->
         <div class="row">
             <div class="col-xs-12 table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped" id="sale_orders">
                     <thead>
                     <tr>
-                        <th>#ID</th>
                         <th>Product</th>
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Subtotal</th>
+                        <th>Serial</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($salesOrder->saleOrderProducts as $order)
                         <tr>
-                            <td>{{ $order->id }}</td>
                             <td>{{ $order->name }}</td>
                             <td>{{ $order->quantity }}</td>
                             <td>{{ $order->price }} EGP</td>
                             <td>{{ $order->total }} EGP</td>
+                            <td>{{ $order->serial }}</td>
                         </tr>
 
                     @endforeach
@@ -94,60 +91,61 @@
         </div>
         <!-- /.row -->
 
-        <div class="row">
-            <!-- accepted payments column -->
-            <div class="col-xs-6">
-                <p class="lead">Payment Methods:</p>
-                <img src="../../dist/img/credit/visa.png" alt="Visa">
-                <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                <img src="../../dist/img/credit/american-express.png" alt="American Express">
-                <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+        <div class="m" style="margin-top: 10px;">
+            <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-xs-6">
+                    <p class="lead">Payment Methods:</p>
+                    <img src="{{ asset('admin/img/credit/visa.png') }}" alt="Visa">
+                    <img src="{{ asset('admin/img/credit/mastercard.png') }}" alt="Mastercard">
+                    <img src="{{ asset('admin/img/credit/american-express.png') }}" alt="American Express">
+                    <img src="{{ asset('admin/img/credit/paypal2.png') }}" alt="Paypal">
 
-                <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
-                    dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                </p>
-            </div>
-            <!-- /.col -->
-            <div class="col-xs-6">
-                <p class="lead">Amount Due 2/22/2014</p>
-
-                <div class="table-responsive">
-                    <table class="table">
-                        <tr>
-                            <th style="width:50%">Subtotal:</th>
-                            <td>{{ $total_amount_products }} EGP</td>
-                        </tr>
-
-                        @if ($salesOrder->tax_percent)
-                            <div class="ttl-amts">
-                                <h5>  Tax : {{ $salesOrder->tax }} EGP ( by {{ $salesOrder->tax_percent }} % on bill ) </h5>
-                            </div>
-                            <hr />
-                            <tr>
-                                <th>Tax ({{ $salesOrder->tax_percent }} %)</th>
-                                <td>{{ $salesOrder->tax }} EGP</td>
-                            </tr>
-                        @endif
-                        <tr>
-                            <th>Total:</th>
-                            <td>{{ $salesOrder->invoice_total }} EGP</td>
-                        </tr>
-
-                        <tr>
-                            <th>Amount Paid:</th>
-                            <td>{{ $salesOrder->amount_paid }} EGP</td>
-                        </tr>
-
-                        <tr>
-                            <th>Amount Due:</th>
-                            <td>{{ $salesOrder->amount_due }} EGP</td>
-                        </tr>
-
-                    </table>
+                    <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
+                        dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                    </p>
                 </div>
+                <!-- /.col -->
+                <div class="col-xs-6">
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th style="width:50%">Subtotal:</th>
+                                <td>{{ $total_amount_products }} EGP</td>
+                            </tr>
+
+                            @if ($salesOrder->tax_percent)
+                                <div class="ttl-amts">
+                                    <h5>  Tax : {{ $salesOrder->tax }} EGP ( by {{ $salesOrder->tax_percent }} % on bill ) </h5>
+                                </div>
+                                <hr />
+                                <tr>
+                                    <th>Tax ({{ $salesOrder->tax_percent }} %)</th>
+                                    <td>{{ $salesOrder->tax }} EGP</td>
+                                </tr>
+                            @endif
+                            <tr>
+                                <th>Total:</th>
+                                <td>{{ $salesOrder->invoice_total }} EGP</td>
+                            </tr>
+
+                            <tr>
+                                <th>Amount Paid:</th>
+                                <td>{{ $salesOrder->amount_paid }} EGP</td>
+                            </tr>
+
+                            <tr>
+                                <th>Amount Due:</th>
+                                <td>{{ $salesOrder->amount_due }} EGP</td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <!-- /.col -->
             </div>
-            <!-- /.col -->
         </div>
         <!-- /.row -->
 
@@ -171,15 +169,15 @@
     <script>
         $(function () {
             $('#sale_orders').DataTable({
-                dom: 'lBfrtip',// dom: 'B<"clear">lfrtip',
+                // dom: 'lBfrtip',// dom: 'B<"clear">lfrtip',
                 // buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                "buttons": [
-                    { "extend": 'copy', "text":'Copy',"className": 'btn btn-default btn-xs' },
-                    { "extend": 'csv', "text":'Csv',"className": 'btn btn-default btn-xs' },
-                    { "extend": 'excel', "text":'Excel',"className": 'btn btn-default btn-xs' },
-                    { "extend": 'pdf', "text":'Pdf',"className": 'btn btn-default btn-xs' },
-                    { "extend": 'print', "text":'Print',"className": 'btn btn-default btn-xs' },
-                ],
+                // "buttons": [
+                //     { "extend": 'copy', "text":'Copy',"className": 'btn btn-default btn-xs' },
+                //     { "extend": 'csv', "text":'Csv',"className": 'btn btn-default btn-xs' },
+                //     { "extend": 'excel', "text":'Excel',"className": 'btn btn-default btn-xs' },
+                //     { "extend": 'pdf', "text":'Pdf',"className": 'btn btn-default btn-xs' },
+                //     { "extend": 'print', "text":'Print',"className": 'btn btn-default btn-xs' },
+                // ],
                 responsive: true,
                 // scrollY:        "300px",
                 // scrollX:        true,
@@ -188,8 +186,11 @@
                 // fixedColumns:   {
                 //     heightMatch: 'none'
                 // },
+                "searching": false,
                 "ordering": true,
-                "order": [[ 0, "desc" ]],
+                // "order": [[ 0, "desc" ]],
+                // "bLengthChange": false,
+                "lengthMenu": [[10, 11, 12, 13, 14, 15, 25, 50, -1], [10, 11, 12, 13, 14, 15, 25, 50, "All"]]
             })
         })
     </script>

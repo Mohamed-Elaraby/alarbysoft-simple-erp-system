@@ -25,6 +25,8 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Serial</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Purchase Order</th>
                                 <th scope="col">Related Product</th>
                                 <th scope="col">Agent</th>
                                 <th scope="col">created_at</th>
@@ -38,6 +40,8 @@
                                 <tr>
                                     <th scope="col">{{ $serial->id }}</th>
                                     <td>#{{ $serial->serial }}</td>
+                                    <td class="{{ $serial->status == 1 ? 'bg-danger' : 'bg-success' }}">{{ $serial->status == 0 ? 'Available' : 'Sold' }}</td>
+                                    <td><a href="{{ route('admin.purchases.order', $serial->purchaseOrder ? $serial->purchaseOrder->id : '') }}">{{ $serial->purchaseOrder ? $serial->purchaseOrder->invoiceNo : ''}}</a></td>
                                     <td>{{ $serial->product->name }}</td>
                                     <td>{{ $serial->user->name }}</td>
                                     <td>{{ $serial->created_at }}</td>

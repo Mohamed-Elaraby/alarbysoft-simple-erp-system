@@ -30,8 +30,9 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Select</th>
-                                            <th scope="col">Action</th>
                                             <th scope="col">ID</th>
+                                            <th scope="col">Invoice</th>
+                                            <th scope="col">Products</th>
                                             <th scope="col">Invoice Number</th>
                                             <th scope="col">Invoice Date</th>
                                             <th scope="col">Products Count</th>
@@ -40,12 +41,12 @@
                                             <th scope="col">Tax Percent</th>
                                             <th scope="col">Tax</th>
                                             <th scope="col">Invoice Total</th>
-                                            <th scope="col">Payment Method</th>
                                             <th scope="col">Amount Paid</th>
                                             <th scope="col">Amount Due</th>
+                                            <th scope="col">Payment Method</th>
                                             <th scope="col">Agent</th>
                                             <th scope="col">Notes</th>
-                                            <th scope="col">Related Products</th>
+                                            <th scope="col">Action</th>
                                             <th scope="col">Created At</th>
                                             <th scope="col">Updated At</th>
                                         </tr>
@@ -56,10 +57,13 @@
                                             <td>
                                                 <input type="checkbox" name="id[]" value="{{ $item->id }}">
                                             </td>
-                                            <td>
-                                                <a href="{{ route('admin.sales.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                            </td>
                                             <th scope="col">{{ $item->id }}</th>
+                                            <td>
+                                                <a href="{{ route('admin.sales.order', $item->id) }}" class="btn btn-sm btn-success">Show Invoice</a>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('admin.sales.show', $item->id) }}" class="btn btn-sm btn-warning">Products</a>
+                                            </td>
                                             <td class="bg-warning">{{ $item->invoiceNo }}</td>
                                             <td>{{ $item->invoiceDate }}</td>
                                             <td>{{ $item->saleOrderProducts->count() }}</td>
@@ -68,13 +72,13 @@
                                             <td>{{ $item->tax_percent == NULL ? 0 : $item->tax_percent }}</td>
                                             <td>{{ $item->tax == NULL ? 0 : $item->tax}}</td>
                                             <td class="bg-primary">{{ $item->invoice_total }}</td>
-                                            <td>{{ $item->payment_method == 1 ? 'Cash':'Due' }}</td>
                                             <td>{{ $item->amount_paid }}</td>
                                             <td>{{ $item->amount_due }}</td>
+                                            <td>{{ $item->payment_method == 1 ? 'Cash':'Due' }}</td>
                                             <td>{{ $item->user->name }}</td>
                                             <td>{{ $item->notes }}</td>
                                             <td>
-                                                <a href="{{ route('admin.sales.show', $item->id) }}" class="btn btn-sm btn-warning">Products</a>
+                                                <a href="{{ route('admin.sales.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                             </td>
                                             <td>{{ $item->created_at }}</td>
                                             <td>{{ $item->updated_at }}</td>
