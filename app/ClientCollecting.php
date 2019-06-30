@@ -12,7 +12,7 @@ class ClientCollecting extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'amount', 'comment', 'payment_date', 'user_id', 'store_id', 'client_id'
+        'amount', 'comment', 'collect_date', 'user_id', 'store_id', 'client_id'
     ];
 
     public function user ()

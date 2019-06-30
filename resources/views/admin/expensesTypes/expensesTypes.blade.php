@@ -16,6 +16,7 @@
                         {{ session('delete') }}
                     </div>
                 @endif
+                <h3 class="text-center">Expenses Types</h3>
                 <div class="expenses_table">
                     <form action="{{ route('admin.expensesTypes.destroy') }}" method="post">
                         @csrf

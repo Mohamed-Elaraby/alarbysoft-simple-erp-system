@@ -31,7 +31,7 @@ class ClientCollectingController extends Controller
 
         $collecting->clientTransaction()->create([
             'amount' => $request->amount,
-            'transaction_date' => $request->payment_date,
+            'transaction_date' => $request->collect_date,
             'user_id' => Auth::user()->id,
             'client_id' => $request->client_id,
         ]);

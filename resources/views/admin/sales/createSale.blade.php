@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-group">
                             <label for="invoiceNo">Invoice Number</label>
-                            <input type="text" class="form-control" name="invoiceNo" id="invoiceNo" required>
+                            <input type="text" class="form-control" name="invoiceNo" id="invoiceNo" value="{{ $invoiceNumber ? ($invoiceNumber->invoiceNo) +1 : 10001 }}" required>
                         </div>
                         <div class="form-group">
                             <label for="invoiceDate">Invoice Date</label>
@@ -61,17 +61,19 @@
                 <div class='row'>
                     <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
                         <div class="well">
-                            <h1 class="text-center">Items List</h1>
+                            <h1 class="text-center">Products List</h1>
                         </div>
                         <table class="table table-bordered table-hover" id="invoiceTable">
                             <thead>
                             <tr>
                                 <th width="2%"><input id="check_all" class="formcontrol" type="checkbox"/></th>
-                                <th width="10%">Item No</th>
-                                <th width="38%">Item Name</th>
+                                <th width="10%">Product No</th>
+                                <th width="28%">Product Name</th>
+                                <th width="10%">Available Quantity</th>
+                                <th width="10%">purchase_price</th>
                                 <th width="10%">Quantity</th>
-                                <th width="10%">Price</th>
-                                <th width="15%">Total</th>
+                                <th width="10%">Selling Price</th>
+                                <th width="10%">Total</th>
                                 <th width="15%">Serial</th>
                             </tr>
                             </thead>
@@ -79,7 +81,9 @@
                                 <tr>
                                     <td><input class="case" type="checkbox"/></td>
                                     <td><input type="text" data-type="productCode" name="data[0][product_id]" id="itemNo_1" class="form-control autocomplete_txt item_id" autocomplete="off"></td>
-                                    <td><input readonly value="" type="text" data-type="productName" name="data[0][product_name]" id="itemName_1" class="form-control autocomplete_txt item_name" autocomplete="off" ></td>
+                                    <td><input readonly type="text" data-type="productName" name="data[0][product_name]" id="itemName_1" class="form-control autocomplete_txt item_name" autocomplete="off" ></td>
+                                    <td><input readonly disabled type="text" name="data[0][availableQuantity]" id="availableQuantity_1" class="form-control availableQuantity" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
+                                    <td><input readonly type="text" name="data[0][purchase_price]" id="purchase_price_1" class="form-control purchase_price" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                                     <td><input type="text" name="data[0][quantity]" id="quantity_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                                     <td><input type="text" name="data[0][price]" id="price_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                                     <td><input type="text" name="data[0][total]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
@@ -109,7 +113,7 @@
                         <div class="form-group">
                             <label>Subtotal: &nbsp;</label>
                             <div class="input-group">
-                                <div class="input-group-addon">$</div>
+                                <div class="input-group-addon">EGP</div>
                                 <input type="text" class="form-control" name="invoice_subtotal" id="subTotal" placeholder="Subtotal" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
                             </div>
                         </div>
@@ -124,13 +128,13 @@
                             <label>Tax Amount: &nbsp;</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="tax" id="taxAmount" placeholder="Tax" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
-                                <div class="input-group-addon">$</div>
+                                <div class="input-group-addon">EGP</div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Total: &nbsp;</label>
                             <div class="input-group">
-                                <div class="input-group-addon">$</div>
+                                <div class="input-group-addon">EGP</div>
                                 <input type="text" class="form-control" name="invoice_total" id="totalAftertax" placeholder="Total" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
                             </div>
                         </div>
@@ -152,14 +156,14 @@
                         <div class="form-group">
                             <label>Amount Paid: &nbsp;</label>
                             <div class="input-group">
-                                <div class="input-group-addon">$</div>
+                                <div class="input-group-addon">EGP</div>
                                 <input type="text" class="form-control" name="amount_paid" id="amountPaid" placeholder="Amount Paid" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Amount Due: &nbsp;</label>
                             <div class="input-group">
-                                <div class="input-group-addon">$</div>
+                                <div class="input-group-addon">EGP</div>
                                 <input type="text" class="form-control amountDue" name="amount_due" id="amountDue" placeholder="Amount Due" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
                             </div>
                         </div>
@@ -171,7 +175,8 @@
                 <div class='row'>
                     <div class="col-xs-12 col-sm-12">
                         <div class="text-center">
-                            <button data-loading-text="Saving Invoice..." type="submit" name="invoice_btn" class="btn btn-success submit_btn invoice-save-bottom form-control"> <i class="fa fa-floppy-o"></i>  Save Invoice </button>
+                            <button data-loading-text="Saving Invoice..." type="submit" name="invoice_btn" class="btn btn-success submit_btn invoice-save-bottom"> <i class="fa fa-floppy-o"></i>  Save Invoice </button>
+                            <button data-loading-text="Saving Invoice..." type="submit" name="invoice_print_btn" class="btn btn-primary submit_btn invoice-save-bottom"> <i class="fa fa-floppy-o"></i>  Save and Print </button>
                         </div>
                     </div>
                 </div>
@@ -206,10 +211,19 @@
                     type: 'get',
                     success:function(data) {
                         that.parent().siblings().find('.productSerial').empty();
-                        console.log(data);
-                       //  $('.item_name').attr('value',data.name);
-                       //  var p = that.parent().children('.item_name').val(data.name);
-                        var p = that.parent().siblings().find('.item_name').val(data.product.name);
+
+                        var productName = that.parent().siblings().find('.item_name');
+                            productName.val(data.product.name);
+
+                        that.parent().siblings().find('.purchase_price').val(data.product.purchase_price);
+                        var AQ = that.parent().siblings().find('.availableQuantity');
+                            AQ.val(data.product.quantity);
+
+                        if (AQ.val() == 0){
+                            alert("[ " + productName.val() + " ] " + "Not Quantity Available");
+                            AQ.css("background-color", "red");
+                        }
+
                         if (data.serials.length == 0) {
                             that.parent().siblings().find('.productSerial').append(`<option disabled value="">No Serial Available</option>`);
                         }else{

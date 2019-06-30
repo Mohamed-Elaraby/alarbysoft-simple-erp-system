@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Client;
 use App\Product;
 use App\PurchaseOrder;
@@ -10,6 +11,7 @@ use App\Safe;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseOrderController extends Controller
 {
@@ -21,9 +23,12 @@ class PurchaseOrderController extends Controller
 
     public function create()
     {
+        $categories = Category::all();
         $products = Product::all();
         $clients = Client::all();
-        return view('admin.purchases.createPurchases', compact('clients', 'products'));
+        $invoiceNumber = DB::table('purchase_orders')->select('invoiceNo')->orderBy('id', 'desc')->first();
+//        dd($invoiceNumber);
+        return view('admin.purchases.createPurchases', compact('clients', 'products', 'categories', 'invoiceNumber'));
     }
 
     public function store(Request $request)
@@ -66,13 +71,8 @@ class PurchaseOrderController extends Controller
         /* Update Client balance */
 
         $client = Client::findOrFail($request->client_id);
-        if ($client->balance < 0) {
-            // [ - ] DE
-            $client->update(['balance' => ($client->balance - ($request->amount_due))]);// -100 - -150
-        } else {
-            // [ + ] CR
-            $client->update(['balance' => ($client->balance + ($request->amount_due))]); // 50 + -50
-        }
+
+        $client->update(['balance' => ($client->balance + ($request->amount_due))]);
 
         /* Update The Safe Amount */
         $last_amount = Safe::all()->last();
@@ -84,8 +84,8 @@ class PurchaseOrderController extends Controller
             'user_id' => Auth::user()->id,
         ]);
 
-        return redirect()->route('admin.purchases.index')->with('success', 'PurchasesOrder Added Successfully');
-//        return redirect()->back();
+//        return redirect()->route('admin.purchases.index')->with('success', 'PurchasesOrder Added Successfully');
+        return redirect()->back();
     }
 
     public function show($id)

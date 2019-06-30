@@ -20,8 +20,28 @@
 {
     border-radius: 20px;
 }
+/* end the safe*/
 @media print {
     ::-webkit-scrollbar {
         display: none;
     }
+}
+
+/* end print media*/
+.reportMain{
+    height: 25vh;
+    border: #ffffff 1px solid;
+    position: relative;
+}
+.reportMain a{
+    color: #ffffff;
+}
+.reportMain a:hover{
+    text-shadow: 2px 2px #5a5a5a;
+}
+.reportSubMain{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

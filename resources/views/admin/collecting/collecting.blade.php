@@ -16,6 +16,7 @@
                         {{ session('delete') }}
                     </div>
                 @endif
+                    <h3 class="text-center">Clients Collecting</h3>
                 <div class="collecting_table">
                     <form action="{{ route('admin.clientCollecting.destroy') }}" method="post">
                         @csrf
@@ -40,7 +41,7 @@
                                 <tr>
                                     <th scope="col">{{ $collect->id }}</th>
                                     <td>{{ $collect->amount }}</td>
-                                    <td>{{ $collect->payment_date }}</td>
+                                    <td>{{ $collect->collect_date }}</td>
                                     <td>{{ $collect->user->name }}</td>
                                     <td>{{ $collect->client->name }}</td>
                                     <td>{{ $collect->comment }}</td>

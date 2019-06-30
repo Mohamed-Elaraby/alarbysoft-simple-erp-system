@@ -36,7 +36,8 @@
             </div>
 
             <div class="form-group has-feedback">
-                <input id="birthDate" type="date" class="form-control{{ $errors->has('birthDate') ? ' is-invalid' : '' }}" name="birthDate" value="{{ old('birthDate') }}" required autofocus>
+                <input id="birthDate" type="text" class="form-control" name="birthDate"  data-date-format='yyyy-mm-dd'>
+{{--                <input id="birthDate" type="text" class="form-control{{ $errors->has('birthDate') ? ' is-invalid' : '' }}" name="birthDate" value="{{ old('birthDate') }}" required autofocus data-date-format='yyyy-mm-dd'>--}}
 
                 @if ($errors->has('birthDate'))
                     <span class="invalid-feedback" role="alert">
@@ -75,7 +76,7 @@
             </div>
 
             <div class="form-group has-feedback">
-                <input id="salary" type="text" class="form-control{{ $errors->has('salary') ? ' is-invalid' : '' }}" name="salary" placeholder="Salary" value="{{ old('salary') }}" required autofocus>
+                <input id="salary" type="text" class="form-control{{ $errors->has('salary') ? ' is-invalid' : '' }}" name="salary" placeholder="Salary" value="{{ old('salary') }}" autofocus>
 
                 @if ($errors->has('salary'))
                     <span class="invalid-feedback" role="alert">
@@ -87,7 +88,7 @@
             </div>
 
             <div class="form-group has-feedback">
-                <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" placeholder="Phone Number" value="{{ old('phone') }}" required autofocus>
+                <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" placeholder="Phone Number" value="{{ old('phone') }}" autofocus>
 
                 @if ($errors->has('phone'))
                     <span class="invalid-feedback" role="alert">
@@ -99,7 +100,7 @@
             </div>
 
             <div class="form-group has-feedback">
-                <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" placeholder="Address" value="{{ old('address') }}" required autofocus>
+                <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" placeholder="Address" value="{{ old('address') }}" autofocus>
 
                 @if ($errors->has('address'))
                     <span class="invalid-feedback" role="alert">
@@ -138,5 +139,9 @@
     </div>
     <!-- /.form-box -->
 
-
+@push('scripts')
+    <script>
+        $("#birthDate").datepicker().datepicker("setDate", new Date());
+    </script>
+@endpush
 @endsection

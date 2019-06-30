@@ -39,6 +39,11 @@
 <script src="{{ asset('admin/assets/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- iCheck -->
 <script src="{{ asset('admin/assets/plugins/iCheck/icheck.min.js') }}"></script>
+{{--<!-- daterangepicker -->--}}
+<script src="{{ asset('admin/assets/bower_components/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('admin/assets/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<!-- datepicker -->
+<script src="{{ asset('admin/assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script>
     $(function () {
         $('input').iCheck({
@@ -48,5 +53,6 @@
         });
     });
 </script>
+@stack('scripts')
 </body>
 </html>

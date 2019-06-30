@@ -11,6 +11,7 @@ use App\Serial;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SaleOrderController extends Controller
 {
@@ -24,14 +25,14 @@ class SaleOrderController extends Controller
     {
         $products = Product::all();
         $clients = Client::all();
-        return view('admin.sales.createSale', compact('clients', 'products'));
+        $invoiceNumber = DB::table('sale_orders')->select('invoiceNo')->orderBy('id', 'desc')->first();
+        return view('admin.sales.createSale', compact('clients', 'products', 'invoiceNumber'));
     }
 
     public function store(Request $request, SaleOrder $saleOrder)
     {
-
-//        dd($request->all());
         $saleOrder = SaleOrder::create($request->all() + ['user_id' => Auth::user()->id]);
+        $saleOrderId = $saleOrder->id;
         $products_info = $request->data;
         foreach($products_info as $item){
 //            If Dont Find Serial Key Set Push New Serial Index
@@ -41,10 +42,13 @@ class SaleOrderController extends Controller
 
             $saleOrder->saleOrderProducts()->create([
                 'name' => $item['product_name'],
+                'purchase_price' => $item['purchase_price'],
                 'price' => $item['price'],
                 'quantity' => $item['quantity'],
                 'total' => $item['total'],
+                'total_purchase_price' => ($item['purchase_price'] * $item['quantity']),
                 'serial' => $item['serial'],
+                'invoiceNo' => $request->invoiceNo,
             ]);
 
             $productExists = Product::where('name', $item['product_name'])->first();
@@ -77,13 +81,8 @@ class SaleOrderController extends Controller
         /* Update Client balance */
 
         $client = Client::findOrFail($request->client_id);
-        if ($client->balance < 0) {
-            // [ - ] DE
-            $client->update(['balance' => ($client->balance - ($request->amount_due))]);//
-        } else {
-            // [ + ] CR
-            $client->update(['balance' => ($client->balance - ($request->amount_due))]); //
-        }
+
+        $client->update(['balance' => ($client->balance - ($request->amount_due))]);
 
         /* Update The Safe Amount */
         $last_amount = Safe::all()->last();
@@ -95,7 +94,11 @@ class SaleOrderController extends Controller
             'user_id' => Auth::user()->id,
         ]);
 
-        return redirect()->back()->with('success', 'Sale Order Added Successfully');
+        if ($request->has('invoice_btn')){
+            return redirect()->back()->with('success', 'Sale Order Added Successfully');
+        }elseif ($request->has('invoice_print_btn')){
+            return redirect()->route('admin.sales.order', $saleOrderId);
+        }
     }
 
     public function show($id)
@@ -127,9 +130,9 @@ class SaleOrderController extends Controller
             $saleOrderProducts = SaleOrderProducts::where(['sale_order_id' => $id, 'id' => $item['product_id']])->get();
 
             foreach ($saleOrderProducts as $orderProduct){
-                $current_quantity = $orderProduct->quantity; //7
-                $new_quantity = $item['quantity'];//9
-                $change_value = ($current_quantity - $new_quantity); //-2
+                $current_quantity = $orderProduct->quantity;
+                $new_quantity = $item['quantity'];
+                $change_value = ($current_quantity - $new_quantity);
 
                 if ($current_quantity > $new_quantity){
                     $product->quantity = ($product->quantity + $change_value) ;

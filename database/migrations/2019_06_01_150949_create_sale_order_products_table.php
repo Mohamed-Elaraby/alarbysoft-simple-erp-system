@@ -16,10 +16,12 @@ class CreateSaleOrderProductsTable extends Migration
         Schema::create('sale_order_products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->double('purchase_price')->nullable();
             $table->double('price');
             $table->string('quantity');
             $table->double('total');
             $table->string('serial')->nullable();
+            $table->string('invoiceNo')->nullable();
             $table->integer('sale_order_id')->unsigned();
             $table->foreign('sale_order_id')
                 ->references('id')

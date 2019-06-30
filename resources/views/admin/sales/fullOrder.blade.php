@@ -15,6 +15,10 @@
             Invoice
             <small>#{{ $salesOrder->invoiceNo }}</small>
         </h1>
+        <h1>
+            Agent
+            <small>{{ $salesOrder->user->name }}</small>
+        </h1>
     </section>
 
     <!-- Main content -->
@@ -23,7 +27,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header">
-                    <i class="fa fa-globe"></i> AdminLTE, Inc.
+                    <i class="fa fa-globe"></i> alaraby, co.
                     @php
                         $myDateTime = DateTime::createFromFormat('Y-m-d', $salesOrder->invoiceDate);
                         $formattedweddingdate = $myDateTime->format('d/m/Y');
@@ -38,11 +42,12 @@
             <div class="col-sm-6 invoice-col">
                 From
                 <address>
-                    <strong>Admin, Inc.</strong><br>
-                    795 Folsom Ave, Suite 600<br>
-                    San Francisco, CA 94107<br>
-                    Phone: (804) 123-5432<br>
-                    Email: info@almasaeedstudio.com
+                    <strong>alaraby, co.</strong><br>
+                    Al-Gomhouria Street, Al-Saqr Mall<br>
+                    Port Said, CA 94107<br>
+                    Phone   : (+20) 120-897-1447<br>
+                    Email   : info@alarabystore.com<br>
+                    Website : www.alarabystore.com
                 </address>
             </div>
             <!-- /.col -->
@@ -50,10 +55,7 @@
                 To
                 <address>
                     <strong>{{ $salesOrder->client->name }}</strong><br>
-                    795 Folsom Ave, Suite 600<br>
-                    San Francisco, CA 94107<br>
-                    Phone: (555) 539-1037<br>
-                    Email: john.doe@example.com
+                    Phone: {{ $salesOrder->client->phones != '' ? $salesOrder->client->phones : '___'  }}
                 </address>
             </div>
             <!-- /.col -->
@@ -101,10 +103,19 @@
                     <img src="{{ asset('admin/img/credit/american-express.png') }}" alt="American Express">
                     <img src="{{ asset('admin/img/credit/paypal2.png') }}" alt="Paypal">
 
-                    <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
-                        dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                    </p>
+                    <div class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                        <strong> Important: </strong>
+                        <ol>
+                            <li>
+                                This is an electronic generated invoice so doesn't require any signature.
+
+                            </li>
+                            <li>
+                                Please read all terms and polices on  www.alarabystore.com/terms for returns, replacement and other issues.
+
+                            </li>
+                        </ol>
+                    </div>
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-6">

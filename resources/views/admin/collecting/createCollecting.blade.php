@@ -16,7 +16,7 @@
 
                 <div class="form-group">
                     <label for="expense_date">Date</label>
-                    <input name="payment_date" type="text" class="form-control" id="expense_date" data-date-format='yyyy-mm-dd'>
+                    <input name="collect_date" type="text" class="form-control" id="expense_date" data-date-format='yyyy-mm-dd'>
                 </div>
 
                 <div class="form-group">

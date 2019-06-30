@@ -9,7 +9,7 @@
             <h3 class="text-center"><i class="fa fa-edit"></i> Purchase Order</h3>
             <form action="{{ route('admin.purchases.store') }}" method="POST">
                 @csrf
-                <div class='row no-margin'>
+{{--                <div class='row no-margin'>
                     <div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
                         <div class="logo">
                             <img src="img/logo.png" alt="Company Logo">
@@ -20,13 +20,13 @@
                             Tamil Nadu, India - 123456.
                         </p>
                     </div>
-                </div>
+                </div>--}}
                 <hr>
                 <div class="row no-margin">
                     <div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
                         <div class="form-group">
-                            <label for="client">client</label>
-                            <select name="client_id" id="client" class="form-control">
+                            <label for="client">Supplier</label>
+                            <select name="client_id" id="client" class="form-control" required>
                                 <option value=""></option>
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -35,7 +35,7 @@
                         </div>
                         <div class="form-group">
                             <label for="invoiceNo">Invoice Number</label>
-                            <input type="text" class="form-control" name="invoiceNo" id="invoiceNo">
+                            <input type="text" class="form-control" name="invoiceNo" id="invoiceNo" value="{{ $invoiceNumber ? ($invoiceNumber->invoiceNo) +1 : 10001 }}" required >
                         </div>
                         <div class="form-group">
                             <label for="invoiceDate">Invoice Date</label>
@@ -49,7 +49,7 @@
                 <div class='row'>
                     <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
                         <div class="well">
-                            <h1 class="text-center">Items List</h1>
+                            <h1 class="text-center">Products List</h1>
                         </div>
                         <table class="table table-bordered table-hover" id="invoiceTable">
                             <thead>
@@ -66,7 +66,7 @@
                             <tr>
                                 <td><input class="case" type="checkbox"/></td>
 {{--                                <td><input type="text" data-type="productCode" name="data[0][product_id]" id="itemNo_1" class="form-control autocomplete_txt" autocomplete="off"></td>--}}
-                                <td><input type="text" data-type="productName" name="data[0][product_name]" id="itemName_1" class="form-control autocomplete_txt" autocomplete="off"></td>
+                                <td><input type="text" data-type="productName" name="data[0][product_name]" id="itemName_1" class="form-control autocomplete_txt" autocomplete="on"></td>
                                 <td><input type="text" name="data[0][quantity]" id="quantity_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                                 <td><input type="text" name="data[0][price]" id="price_1" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>
                                 <td><input type="text" name="data[0][total]" id="total_1" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>

@@ -17,7 +17,7 @@ class CreateClientCollectingsTable extends Migration
             $table->increments('id');
             $table->double('amount');
             $table->text('comment')->nullable();
-            $table->date('payment_date');
+            $table->date('collect_date');
             $table->integer('user_id')->unsigned();
             $table->integer('store_id')->unsigned()->nullable();
             $table->integer('client_id')->unsigned();

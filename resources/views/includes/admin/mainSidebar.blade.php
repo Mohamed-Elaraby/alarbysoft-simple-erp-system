@@ -193,7 +193,7 @@
             <li class="treeview">
                 <a href="{{ route('admin.clientPayments.index') }}" onclick="event.preventDefault();">
                     <i class="fa fa-money"></i>
-                    <span>Clients Payments</span>
+                    <span>Payments</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -208,7 +208,7 @@
             <li class="treeview">
                 <a href="{{ route('admin.clientCollecting.index') }}" onclick="event.preventDefault();">
                     <i class="fa fa-money"></i>
-                    <span>Clients Collecting</span>
+                    <span>Collecting</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -249,14 +249,29 @@
                 </ul>
             </li>
 
+            {{-- Expenses Type link--}}
+            <li class="treeview">
+                <a href="{{ route('admin.expensesTypes.index') }}" onclick="event.preventDefault();">
+                    <i class="fa fa-money"></i>
+                    <span>Expenses Types</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.expensesTypes.create') }}"><i class="fa fa-plus"></i>Create Expense Type</a></li>
+                    <li><a href="{{ route('admin.expensesTypes.index') }}"><i class="fa fa-eye"></i> Show All Expenses</a></li>
+                </ul>
+            </li>
+
                 {{-- Expenses link--}}
                 <li class="treeview">
                     <a href="{{ route('admin.expenses.index') }}" onclick="event.preventDefault();">
                         <i class="fa fa-money"></i>
                         <span>Expenses</span>
                         <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ route('admin.expenses.create') }}"><i class="fa fa-plus"></i>Create Expense</a></li>
@@ -264,8 +279,17 @@
                     </ul>
                 </li>
 
-               {{-- --}}{{-- Suppliers link--}}{{--
-                <li class="treeview">
+
+                {{-- Reports link--}}
+                <li class="">
+                    <a href="{{ route('admin.reports.index') }}">
+                        <i class="fa fa-money"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+
+                {{-- Suppliers link--}}
+{{--                <li class="treeview">
                     <a href="{{ route('admin.suppliers.index') }}" onclick="event.preventDefault();">
                         <i class="fa fa-truck"></i>
                         <span>Suppliers</span>
@@ -277,10 +301,10 @@
                         <li><a href="{{ route('admin.suppliers.create') }}"><i class="fa fa-plus"></i>Create Supplier</a></li>
                         <li><a href="{{ route('admin.suppliers.index') }}"><i class="fa fa-eye"></i> Show All Suppliers</a></li>
                     </ul>
-                </li>
+                </li>--}}
 
-                --}}{{-- Supplier Payments link--}}{{--
-                <li class="treeview">
+                 {{--Supplier Payments link--}}
+{{--                <li class="treeview">
                     <a href="{{ route('admin.supplierPayments.index') }}" onclick="event.preventDefault();">
                         <i class="fa fa-money"></i>
                         <span>Suppliers Payments</span>
@@ -292,10 +316,10 @@
                         <li><a href="{{ route('admin.supplierPayments.create') }}"><i class="fa fa-plus"></i>Create Payment</a></li>
                         <li><a href="{{ route('admin.supplierPayments.index') }}"><i class="fa fa-eye"></i> Show All Payments</a></li>
                     </ul>
-                </li>
+                </li>--}}
 
-                --}}{{-- Supplier Collecting link--}}{{--
-                <li class="treeview">
+                {{-- Supplier Collecting link--}}
+{{--                <li class="treeview">
                     <a href="{{ route('admin.supplierCollecting.index') }}" onclick="event.preventDefault();">
                         <i class="fa fa-money"></i>
                         <span>Suppliers Collecting</span>

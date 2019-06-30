@@ -5,7 +5,9 @@ $("#addmore").on('click',function(){
 	html = '<tr>';
 	html += '<td><input class="case" type="checkbox"/></td>';
 	html += '<td><input type="text" data-type="productCode" name="data['+i+'][product_id]" id="itemNo_'+i+'" class="form-control autocomplete_txt item_id" autocomplete="off"></td>';
-	html += '<td><input readonly value="" type="text" data-type="productName" name="data['+i+'][product_name]" id="itemName_'+i+'" class="form-control autocomplete_txt item_name" autocomplete="off"></td>';
+	html += '<td><input readonly type="text" data-type="productName" name="data['+i+'][product_name]" id="itemName_'+i+'" class="form-control autocomplete_txt item_name" autocomplete="off"></td>';
+	html += '<td><input readonly disabled type="text" name="data['+i+'][availableQuantity]" id="availableQuantity_'+i+'" class="form-control availableQuantity" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
+	html += '<td><input readonly type="text" name="data['+i+'][purchase_price]" id="purchase_price_'+i+'" class="form-control purchase_price" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
 	html += '<td><input type="text" name="data['+i+'][quantity]" id="quantity_'+i+'" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
 	html += '<td><input type="text" name="data['+i+'][price]" id="price_'+i+'" class="form-control changesNo" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
 	html += '<td><input type="text" name="data['+i+'][total]" id="total_'+i+'" class="form-control totalLinePrice" autocomplete="off" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;"></td>';
@@ -83,6 +85,8 @@ $(document).on('change keyup blur','#tax',function(){
 //total price calculation
 function calculateTotal(){
 	subTotal = 0 ; total = 0;
+
+
 	$('.totalLinePrice').each(function(){
 		if($(this).val() != '' )subTotal += parseFloat( $(this).val() );
 	});
@@ -108,6 +112,7 @@ $(document).on('change keyup blur','#amountPaid',function(){
 function calculateAmountDue(){
 	amountPaid = $('#amountPaid').val();
 	total = $('#totalAftertax').val();
+
 	if(amountPaid != '' && typeof(amountPaid) != "undefined" ){
 		amountDue = parseFloat(total) - parseFloat( amountPaid );
 		$('.amountDue').val( amountDue.toFixed(2) );
@@ -141,3 +146,5 @@ $(document).ready(function(){
 		$('.message_div').delay(5000).slideUp();
 	}
 });
+
+

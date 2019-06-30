@@ -17,7 +17,7 @@
 
                     <div class="form-group">
                         <label for="expense_date">Date</label>
-                        <input name="payment_date" type="text" class="form-control" id="expense_date" value="{{ $collect->payment_date }}">
+                        <input name="payment_date" type="text" class="form-control" id="expense_date" value="{{ $collect->collect_date }}">
                     </div>
 
                     <div class="form-group">

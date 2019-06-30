@@ -80,8 +80,8 @@ Route::get('serials/getProducts', 'Admin\SerialController@getProductByOrderId')-
         Route::resource('sales', 'SaleOrderController')->except(['destroy']);
         Route::delete('sales/destroy', 'SaleOrderController@destroy')->name('sales.destroy');
         Route::get('sales/order/{id}', 'SaleOrderController@fullOrder')->name('sales.order');
-//        Route::get('sales/getSerials', 'SaleOrderController@getSerials')->name('sales.getSerials');
-//        Route::get('sales/product_info', 'SaleOrderController@getProductById')->name('sales.product_info');
+//        Route::get('sales/order/{id}/print', 'SaleOrderController@fullOrderPrint')->name('sales.order.print');
+
 
         /* Expenses Routes */
         Route::resource('expenses', 'ExpensesController')->except(['destroy']);
@@ -116,6 +116,18 @@ Route::get('serials/getProducts', 'Admin\SerialController@getProductByOrderId')-
         Route::get('equityCapital', 'EquityCapitalController@index')->name('equityCapital.index');
         Route::get('equityCapital/operations', 'EquityCapitalController@operations')->name('equityCapital.operations');
         Route::post('equityCapital/store', 'EquityCapitalController@store')->name('equityCapital.store');
+
+        /* reports Routes */
+        Route::get('reports', 'ReportsController@index')->name('reports.index');
+        Route::get('reports/dayBook', 'ReportsController@dayBook')->name('reports.dayBook');
+        Route::get('reports/dayBook/ajax', 'ReportsController@dayBookByAjax')->name('reports.dayBook.ajax');
+        Route::get('reports/dayBook/ajax', 'ReportsController@dayBookByAjax')->name('reports.dayBook.ajax');
+        Route::get('reports/reportDay', 'ReportsController@reportDay')->name('reports.reportDay');
+        Route::get('reports/reportDay/ajax', 'ReportsController@reportDayAjax')->name('reports.reportDay.ajax');
+        Route::get('reports/reportMonth', 'ReportsController@reportMonth')->name('reports.reportMonth');
+        Route::get('reports/reportMonth/ajax', 'ReportsController@reportMonthAjax')->name('reports.reportMonth.ajax');
+        Route::get('reports/reportYear', 'ReportsController@reportYear')->name('reports.reportYear');
+        Route::get('reports/reportYear/ajax', 'ReportsController@reportYearAjax')->name('reports.reportYear.ajax');
     });
 
     Auth::routes();

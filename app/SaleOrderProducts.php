@@ -12,7 +12,7 @@ class SaleOrderProducts extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'price', 'quantity', 'total', 'serial'
+        'name', 'purchase_price', 'price', 'quantity', 'total', 'total_purchase_price', 'serial', 'invoiceNo'
     ];
 
     public function user ()

@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->double('selling_price')->nullable();
             $table->string('quantity');
             $table->integer('invoiceNo')->unsigned();
-            $table->integer('purchase_invoice_id')->unsigned();
+            $table->integer('purchase_order_id')->unsigned();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('category_id')->unsigned()->nullable();
             $table->integer('store_id')->unsigned()->nullable();
