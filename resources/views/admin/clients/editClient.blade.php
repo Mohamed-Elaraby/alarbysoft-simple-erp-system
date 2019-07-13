@@ -21,8 +21,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="phones">Phones</label>
-                        <input name="phones" type="text" class="form-control" id="phones" value="{{ $client->phones }}">
+                        <label for="phone">Phone</label>
+                        <input name="phone" type="text" class="form-control" id="phone" value="{{ $client->phone->number }}">
                     </div>
 
                     <div class="form-group">

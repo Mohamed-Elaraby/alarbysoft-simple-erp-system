@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title','Admin Purchases Order Details')
+@section('title','Admin Sales Order Details')
 
 @section('content')
     <div class="">
@@ -16,42 +16,71 @@
                         {{ session('delete') }}
                     </div>
                 @endif
-                    @if ($sale_orders)
-                        <div class="box">
-                            <div class="box-header">
-                                <h3 class="box-title">Purchases Order Number {{ $sale_orders->invoiceNo }} Products Details</h3>
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body">
-                                <table id="sale_orders" class="table table-bordered table-hover row-border">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Product</th>
-                                        <th scope="col">price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Serial</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach ($sale_orders->saleOrderProducts as $value)
+                    <form action="{{ route('admin.sales.destroy') }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        @if ($sale_orders)
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Sales Order Number {{ $sale_orders->invoiceNo }} Products Details</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <table id="sale_orders" class="table table-bordered table-hover row-border">
+                                        <thead>
                                         <tr>
-                                            <td>{{ $value->id }}</td>
-                                            <td>{{ $value->name }}</td>
-                                            <td>{{ $value->price }}</td>
-                                            <td>{{ $value->quantity }}</td>
-                                            <td>{{ $value->total }}</td>
-                                            <td>{{ $value->serial }}</td>
+                                            <th scope="col">Select</th>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">price</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col">Serial</th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($sale_orders->saleOrderProducts as $value)
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="id[]" value="{{ $value->id }}">
+                                                </td>
+                                                <td>{{ $value->id }}</td>
+                                                <td>{{ $value->name }}</td>
+                                                <td>{{ $value->price }}</td>
+                                                <td>{{ $value->quantity }}</td>
+                                                <td>{{ $value->total }}</td>
+                                                <td>{{ $value->serial }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
                             </div>
-                            <!-- /.box-body -->
-                        </div>
-                    @endif
+                        @endif
+                            <div class="col-md-4">
+                                <p>
+                                    <button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#{{ 'product_'.$value->id }}" aria-expanded="false" aria-controls="{{ 'product_'.$value->id }}">
+                                        RECALL
+                                    </button>
+                                </p>
+                                <div class="collapse" id="{{ 'product_'.$value->id }}">
+                                    <div class="card card-body">
+                                        {{--                                    @if ($value->quantity > 1)--}}
+                                        <label class="control-label" for="quantity">quantity</label>
+                                        <input class="form-control" id="quantity" type="text" name="quantity"><br>
+                                        {{--                                    @endif--}}
 
+
+                                        <label class="control-label" for="safeAmount">Out From The Safe</label>
+                                        <input class="form-control" id="safeAmount" type="text" name="safeAmount"><br>
+                                        <label class="control-label" for="orderAmount">Discount From Order Total Amount</label>
+                                        <input class="form-control" id="orderAmount" type="text" name="orderAmount"><br>
+                                        <input type="submit" value="EXECUTE" name="Recall" class="btn btn-danger">
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
             </div>
         </div>
     </div>

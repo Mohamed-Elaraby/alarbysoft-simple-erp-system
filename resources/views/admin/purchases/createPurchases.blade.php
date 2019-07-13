@@ -9,18 +9,6 @@
             <h3 class="text-center"><i class="fa fa-edit"></i> Purchase Order</h3>
             <form action="{{ route('admin.purchases.store') }}" method="POST">
                 @csrf
-{{--                <div class='row no-margin'>
-                    <div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>
-                        <div class="logo">
-                            <img src="img/logo.png" alt="Company Logo">
-                        </div>
-                        <h4><b>A</b>larby<b>S</b>oft</h4>
-                        <p>
-                            No: 13, Kamban Street, Krishnagiri
-                            Tamil Nadu, India - 123456.
-                        </p>
-                    </div>
-                </div>--}}
                 <hr>
                 <div class="row no-margin">
                     <div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>

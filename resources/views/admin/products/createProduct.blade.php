@@ -5,6 +5,11 @@
 @section('content')
 <div class="container">
     <div class="row">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="col-sm-offset-3 col-sm-6">
             <h3 class="text-center"><i class="fa fa-edit"></i> Create Product</h3>
             <form action="{{ route('admin.products.store') }}" method="POST">

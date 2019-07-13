@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Client;
+use App\ClientTransaction;
 use App\Product;
 use App\Safe;
 use App\SaleOrder;
@@ -88,6 +89,7 @@ class SaleOrderController extends Controller
         $last_amount = Safe::all()->last();
 //        dd($last_amount);
 
+        /* Update The Safe */
         $saleOrder->theSafe()->create([
             'amount_paid' => $request->amount_paid,
             'final_amount' => ($last_amount == null ? 0 : $last_amount->final_amount + ($request->amount_paid)),
@@ -126,7 +128,6 @@ class SaleOrderController extends Controller
         foreach($products_info as $item){
             /* Update Products Quantity On Products Table*/
             $product = Product::where('name', $item['product_name'])->first();
-//            dd($product);
             $saleOrderProducts = SaleOrderProducts::where(['sale_order_id' => $id, 'id' => $item['product_id']])->get();
 
             foreach ($saleOrderProducts as $orderProduct){
@@ -148,17 +149,106 @@ class SaleOrderController extends Controller
                 'quantity' => $item['quantity'],
                 'total' => $item['total'],
             ]);
-//            $product->save();
         }
-        return redirect()->route('admin.sales.index')->with('success', 'Purchase Invoice Edit Successfully');
+        return redirect()->route('admin.sales.index')->with('success', 'Sales Order Edit Successfully');
     }
 
     public function destroy(Request $request)
     {
         if (isset($request->id)){
-            $sales_id = $request->id;
-            SaleOrder::destroy($sales_id);
-            return redirect()->route('admin.sales.index')->with('delete', 'Sale Invoice /s Delete Successfully');
+            if ($request->has('softDelete')){
+                $sales_id = $request->id;
+                SaleOrder::destroy($sales_id);
+                return redirect()->route('admin.sales.index')->with('delete', 'Sale Invoice /s Delete Successfully');
+
+            }elseif ($request->has('Recall')){
+
+//                dd($request->all());
+                $product_id = $request->id ; // sale order product table >> product_id
+                $productSelected = SaleOrderProducts::whereIn('id', $product_id)->first();
+//                dd($product_id);
+
+                if ($productSelected->quantity < 2){
+                    SaleOrderProducts::whereIn('id', $product_id)->forceDelete();
+                }else{
+//                    dd($productSelected);
+                    $price = $productSelected->price;
+                    $quantity = $productSelected->quantity - $request->quantity;
+                    SaleOrderProducts::whereIn('id', $product_id)->update([
+                        'quantity' => $quantity,
+                        'total' => $price * $quantity,
+                    ]);
+                }
+                $sale_order_id = $productSelected->sale_order_id;
+                $sO = SaleOrder::where('id', $sale_order_id)->first();
+                if ($request->orderAmount != null){
+//                    dd($productSelected);
+//                    dd($sO->invoice_total);
+                    $sub = $sO->invoice_subtotal - $request->orderAmount;
+                    $tax = $sub * $sO->tax_percent/100;
+                    $total = $sub + $tax;
+                    $itemPercent = $request->orderAmount * $sO->tax_percent/100;
+                    $paid = $sO->amount_paid - $request->orderAmount - $itemPercent;
+//                    dd($paid);
+                    $sO->update([
+                        'invoice_subtotal' => $sub,
+                        'tax' => $tax,
+                        'invoice_total' => $total,
+                        'amount_paid' => $paid,
+                        'amount_due' => $total - $paid,
+                    ]);
+                }
+
+//                dd($productSelected->quantity);
+                /* Delete Sale Order If product count Less than 1 and delete client transaction  */
+                $allSaleOrders = SaleOrder::all();
+                foreach ($allSaleOrders as $saleOrder) {
+                    if ($saleOrder->saleOrderProducts->count() < 1){
+                        // check in all sale orders if no products related
+                        //-> delete order from sale order table
+                        //-> delete transaction from client transaction table
+                        foreach ($saleOrder->clientTransaction as $clientTransaction) {
+                            $clientTransaction->forceDelete();
+                        }
+                        $saleOrder->forceDelete();
+                    }// else
+                }
+                if ($request->safeAmount != null){
+                    /* Update The Safe Amount */
+                    $last_amount = Safe::all()->last();
+                    //        dd($last_amount);
+                    /* Update The Safe */
+                    Safe::create([
+                        'amount_paid' => $request->safeAmount,
+                        'final_amount' => ($last_amount == null ? 0 : $last_amount->final_amount - ($request->safeAmount)),
+                        'user_id' => Auth::user()->id,
+                        'recall' => 1,
+                    ]);
+                }
+//
+//                /* Update product count On products table  */
+                $onProductTable = Product::where('name', $productSelected->name)->first();
+                $onProductTable->update([
+                    'quantity' => $onProductTable->quantity + $request->quantity,
+                ]);
+
+                /* Update client balance  */
+                $client_id = $sO->client_id;
+
+                $client = Client::where('id', $client_id)->first();
+                $client->update([
+                    'balance' => $client->balance + $request->orderAmount,
+                ]);
+                /* Update Serial Status  */
+
+                $productSerial = $productSelected->serial;
+                Serial::where('serial', $productSerial)->update([
+                    'status' => 0
+                ]);
+                return redirect()->back();
+//                return redirect()->route('admin.sales.index')->with('success', 'Product Recall Successfully');
+
+            }
         }else {
             return redirect()->back();
         }
@@ -178,7 +268,6 @@ class SaleOrderController extends Controller
             $item_id = $_GET['item_id'];
             $product = Product::where('id', $item_id)->first();
             $productSerials = $product->serials->where('status', 0);
-
             return response()->json(['product'=>$product, 'serials'=>$productSerials],200) ;
         }
     }

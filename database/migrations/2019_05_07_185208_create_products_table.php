@@ -16,12 +16,12 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->double('purchase_price');
+            $table->double('purchase_price')->nullable();
             $table->double('dealer_price')->nullable();
             $table->double('selling_price')->nullable();
-            $table->string('quantity');
-            $table->integer('invoiceNo')->unsigned();
-            $table->integer('purchase_order_id')->unsigned();
+            $table->string('quantity')->nullable();
+            $table->integer('invoiceNo')->unsigned()->nullable();
+            $table->integer('purchase_order_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('category_id')->unsigned()->nullable();
             $table->integer('store_id')->unsigned()->nullable();

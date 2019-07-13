@@ -40,6 +40,15 @@ Route::get('serials/getProducts', 'Admin\SerialController@getProductByOrderId')-
 //
 //});
 
+    /* Multi Authentication From Client Table Routes*/
+    Route::get('client/login','Auth\LoginClientController@login')->name('client.login');
+    Route::post('client/loginPost','Auth\LoginClientController@loginPost')->name('client.loginPost');
+
+    Route::prefix('client')->middleware('AuthClient:client')->name('client.')->group(function (){
+        Route::get('index','Auth\LoginClientController@index')->name('index');
+    });
+    /* Multi Authentication From Client Table Routes*/
+
     /* Admin Routes */
     Route::prefix('admin')->middleware(['auth', 'CheckRole:admin'])->namespace('Admin')->name('admin.')->group(function (){
 
@@ -80,7 +89,6 @@ Route::get('serials/getProducts', 'Admin\SerialController@getProductByOrderId')-
         Route::resource('sales', 'SaleOrderController')->except(['destroy']);
         Route::delete('sales/destroy', 'SaleOrderController@destroy')->name('sales.destroy');
         Route::get('sales/order/{id}', 'SaleOrderController@fullOrder')->name('sales.order');
-//        Route::get('sales/order/{id}/print', 'SaleOrderController@fullOrderPrint')->name('sales.order.print');
 
 
         /* Expenses Routes */

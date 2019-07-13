@@ -88,18 +88,6 @@
             </div>
 
             <div class="form-group has-feedback">
-                <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" placeholder="Phone Number" value="{{ old('phone') }}" autofocus>
-
-                @if ($errors->has('phone'))
-                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('phone') }}</strong>
-                                    </span>
-                @endif
-
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            </div>
-
-            <div class="form-group has-feedback">
                 <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" placeholder="Address" value="{{ old('address') }}" autofocus>
 
                 @if ($errors->has('address'))

@@ -24,4 +24,9 @@ class Expenses extends Model
     {
         return $this->belongsTo(ExpensesType::class);
     }
+
+    public function theSafe()
+    {
+        return $this->hasMany(Safe::class);
+    }
 }

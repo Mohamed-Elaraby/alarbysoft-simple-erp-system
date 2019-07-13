@@ -22,12 +22,32 @@ class ClientController extends Controller
         return view('admin.clients.createClient');
     }
 
-    public function store(Request $request, Client $client)
+    public function store(Request $request)
     {
-        $client->name = $request->name;
-        $client->phones = $request->phones;
-        $client->user_id = Auth::user()->id;
-        $client->save();
+        $username = str_replace(' ','',$request->name);
+        $usernameSplitToArray = str_split($username);
+        $firstLetterFromArray = array_first($usernameSplitToArray);
+        $lastLetterFromArray = array_last($usernameSplitToArray);
+        $password = $firstLetterFromArray.$lastLetterFromArray."_".random_int(5000,1000000);
+//        dd($password);
+
+         $client = Client::create([
+             'name' => $request->name,
+             'password' => bcrypt($password),
+             'password_text' => $password,
+             'email' => $username."@".$username.".com",
+             'client_type' => $request->client_type,
+             'user_id' => Auth::user()->id,
+         ]);
+
+         /* Create Phone Number For The Client */
+
+        $client->phone()->create([
+            'number' => $request->phone,
+        ]);
+
+//        dd($password);
+
         return redirect()->route('admin.clients.index')->with('success', 'Client Added Successfully');
     }
 
@@ -46,11 +66,13 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         $client = Client::findOrFail($id);
-        $client->name = $request->name;
-        $client->balance = $request->balance;
-        $client->phones = $request->phones;
-        $client->user_id = Auth::user()->id;
-        $client->save();
+        $client->update([
+            'name' => $request->name,
+            'balance' => $request->balance
+        ]);
+        $client->phone()->update([
+            'number' => $request->phone
+        ]);
         return redirect()->route('admin.clients.index')->with('success', 'Client Edit Successfully');
     }
 

@@ -23,9 +23,11 @@ class CreateSavesTable extends Migration
             $table->integer('sale_order_id')->unsigned()->nullable();
             $table->integer('client_payment_id')->unsigned()->nullable();
             $table->integer('client_collecting_id')->unsigned()->nullable();
+            $table->integer('expenses_id')->unsigned()->nullable();
             $table->integer('purchase_order_id')->unsigned()->nullable();
             $table->integer('supplier_payment_id')->unsigned()->nullable();
             $table->integer('supplier_collecting_id')->unsigned()->nullable();
+            $table->integer('recall')->nullable();
             $table->integer('equity_capital_id')->unsigned()->nullable();
             $table->timestamps();
         });

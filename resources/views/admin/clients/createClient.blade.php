@@ -15,9 +15,19 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="phones">Phones</label>
-                    <input name="phones" type="text" class="form-control" id="phones" placeholder="Enter Client Phones">
+                    <label for="client_type">Client Type</label>
+                    <select name="client_type" id="client_type" class="form-control" required>
+                        <option value="" readonly="">Choose Client Type</option>
+                        <option value="0">Client</option>
+                        <option value="1">Customer</option>
+                    </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="phones">Phones</label>
+                    <input name="phone" type="text" class="form-control" id="phones" placeholder="Enter Client Phones">
+                </div>
+
 
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-success">

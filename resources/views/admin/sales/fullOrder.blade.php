@@ -40,22 +40,21 @@
         <!-- info row -->
         <div class="row invoice-info">
             <div class="col-sm-6 invoice-col">
-                From
+                => From
                 <address>
-                    <strong>alaraby, co.</strong><br>
-                    Al-Gomhouria Street, Al-Saqr Mall<br>
-                    Port Said, CA 94107<br>
-                    Phone   : (+20) 120-897-1447<br>
-                    Email   : info@alarabystore.com<br>
-                    Website : www.alarabystore.com
+                    Company Name: <strong>alaraby, co.</strong><br>
+                    Company Address: Port Said, Al-Gomhouria Street, Al-Saqr Mall<br>
+                    Company Phone: (+20) 120-897-1447<br>
+                    Company Email   : info@alarabystore.com<br>
+                    Company Website : www.alarabystore.com
                 </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-6 invoice-col">
-                To
+                => To
                 <address>
-                    <strong>{{ $salesOrder->client->name }}</strong><br>
-                    Phone: {{ $salesOrder->client->phones != '' ? $salesOrder->client->phones : '___'  }}
+                    Company Name: <strong>{{ $salesOrder->client->name }}</strong><br>
+                    Company Phone: {{ $salesOrder->client->phone->number != '' ? $salesOrder->client->phone->number : '_____'  }}
                 </address>
             </div>
             <!-- /.col -->

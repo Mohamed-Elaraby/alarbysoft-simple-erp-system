@@ -27,8 +27,11 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Client</th>
                                 <th scope="col">Balance</th>
-                                <th scope="col">phones</th>
-                                <th scope="col">Created_by</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Agent</th>
                                 <th scope="col">created_at</th>
                                 <th scope="col">updated_at</th>
                                 <th scope="col">Action</th>
@@ -42,7 +45,10 @@
                                     <th scope="col">{{ $client->id }}</th>
                                     <td>{{ $client->name }}</td>
                                     <td class="bg-primary">{{ $client->balance }}</td>
-                                    <td>{{ $client->phones }}</td>
+                                    <td>{{ $client->phone->number }}</td>
+                                    <td>{{ $client->email }}</td>
+                                    <td>{{ $client->password_text }}</td>
+                                    <td>{{ $client->client_type == 0 ? 'Client': 'Customer' }}</td>
                                     <td>{{ $client->user->name }}</td>
                                     <td>{{ $client->created_at }}</td>
                                     <td>{{ $client->updated_at }}</td>
@@ -50,7 +56,7 @@
                                         <a href="{{ route('admin.clients.edit', $client->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.clients.show', $client->id) }}" class="btn btn-sm btn-warning">Details</a></td>
+                                        <a href="{{ route('admin.clients.show', $client->id) }}" class="btn btn-sm btn-warning">Transactions</a></td>
                                     </td>
                                     <td>
                                         <input type="checkbox" name="id[]" value="{{ $client->id }}">
@@ -60,12 +66,11 @@
                             </tbody>
                             <tfoot>
                                 <th>Total</th>
-                                <td></td>
                                 <td>
                                     @if ( $totalClientsAccountsBalance > 0 )
-                                        {{ $totalClientsAccountsBalance }} CR
-                                    @elseif( $totalClientsAccountsBalance < 0 )
                                         {{ $totalClientsAccountsBalance }} DE
+                                    @elseif( $totalClientsAccountsBalance < 0 )
+                                        {{ $totalClientsAccountsBalance }} CR
                                     @else
                                         {{ $totalClientsAccountsBalance }}
                                     @endif
@@ -92,9 +97,9 @@
                         { "extend": 'print', "text":'Print',"className": 'btn btn-default btn-xs' },
                     ],
                     responsive: true,
-                    // scrollY:        "400vh",
-                    // scrollX:        true,
-                    // scrollCollapse: true,
+                    scrollY:        "400vh",
+                    scrollX:        true,
+                    scrollCollapse: true,
                     paging:         true,
                     fixedColumns:   {
                         heightMatch: 'none'

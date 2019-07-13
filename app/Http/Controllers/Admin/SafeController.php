@@ -30,7 +30,7 @@ class SafeController extends Controller
             if ($last_amount == null  || $last_amount->final_amount == 0){
                 return redirect()->route('admin.safe.index')->with('danger', 'Sorry no money can be withdrawn');
             }else {
-                $safe->amount_paid = $request->amount;
+                $safe->amount_paid = $request->amount_paid;
                 $safe->final_amount = $last_amount->final_amount - $request->amount_paid;
                 $safe->comment = $request->comment;
                 $safe->processType = $request->processType;

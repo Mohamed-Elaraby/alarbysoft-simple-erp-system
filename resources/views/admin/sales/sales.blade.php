@@ -63,7 +63,7 @@
                                                 <a href="{{ route('admin.sales.order', $item->id) }}" class="btn btn-sm btn-success">Show Invoice</a>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.sales.show', $item->id) }}" class="btn btn-sm btn-warning">Products</a>
+                                                <a href="{{ route('admin.sales.show', $item->id) }}" class="btn btn-sm btn-primary">Products</a>
                                             </td>
                                             <td class="bg-warning">{{ $item->invoiceNo }}</td>
                                             <td>{{ $item->invoiceDate }}</td>
@@ -122,7 +122,7 @@
                     heightMatch: 'none'
                 },
                 "ordering": true,
-                "order": [[ 2, "desc" ]],
+                "order": [[ 1, "desc" ]],
             })
         })
     </script>

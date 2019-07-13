@@ -33,7 +33,7 @@ class ReportsController extends Controller
             $date = $_GET['dateSearch'];
             $saleOrder = SaleOrder::where('invoiceDate', $date)->first();
             $saleOrderIds = SaleOrder::where('invoiceDate', $date)->pluck('id')->toArray();
-            $dayBook = SaleOrderProducts::whereIn('sale_order_id', $saleOrderIds)->get();
+            $dayBook = SaleOrderProducts::whereIn('sale_order_id', $saleOrderIds)->orderBy('id', 'desc')->get();
             return response()->json(['dayBook' => $dayBook, 'saleOrder' => $saleOrder], 200);
         }
     }

@@ -21,7 +21,7 @@
                     <form action="{{ route('admin.products.destroy') }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <table class="table table-dark" id="products_table">
+                        <table class="table table-dark table-striped table-hover" id="products_table">
                             <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -75,9 +75,9 @@
                         { "extend": 'print', "text":'Print',"className": 'btn btn-default btn-xs' },
                     ],
                     responsive: true,
-                    scrollY:        "400vh",
-                    scrollX:        true,
-                    scrollCollapse: true,
+                    // scrollY:        "400vh",
+                    // scrollX:        true,
+                    // scrollCollapse: true,
                     paging:         true,
                     fixedColumns:   {
                         heightMatch: 'none'

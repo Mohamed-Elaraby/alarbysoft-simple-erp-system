@@ -20,8 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('salary');
-            $table->date('birthDate');
+            $table->string('salary')->nullable();
+            $table->date('birthDate')->nullable();
+            $table->string('address')->nullable();
             $table->boolean('admin')->default(false);
             $table->boolean('moderator')->default(false);
             $table->boolean('seller')->default(true);

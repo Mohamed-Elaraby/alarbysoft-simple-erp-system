@@ -39,7 +39,7 @@ class ProductController extends Controller
         $product->store_id = $request->store;
         $product->supplier_id = $request->supplier;
         $product->save();
-        return redirect()->route('admin.products.index')->with('success', 'Product Added Successfully');
+        return redirect()->back()->with('success', 'Product Added Successfully');
     }
 
     public function show($id)

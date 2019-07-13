@@ -26,6 +26,14 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="status">Status</label>
+                        <select name="status" id="status" class="form-control">
+                            <option value="0" {{ $serial->status == 0 ? 'selected' : '' }}>Available</option>
+                            <option value="1" {{ $serial->status == 1 ? 'selected' : '' }}>Sold</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <input type="submit" value="Update" class="btn btn-primary">
                     </div>
                 </form>

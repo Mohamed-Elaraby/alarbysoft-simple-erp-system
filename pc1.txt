@@ -1,0 +1,9 @@
+Case : Tiger EX3 - 550
+MB : MB Gigabyte H110 M-S2PT DDR4 - 1200
+Ram : Ram 4G/2400 DDR4 Crucial - 550
+CPU : CPU 2.8G/2M G3900 Celeron LGA 1151 950
+HDD : HDD 500 Western Digital Blue Refurbish 400
+Total : 3650
+LED : Monitor LED 22 Samsung China - 1700
+
+Total : 5350

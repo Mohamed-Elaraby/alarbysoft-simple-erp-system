@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Expenses;
 use App\ExpensesType;
+use App\Safe;
 use App\Store;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,7 +28,17 @@ class ExpensesController extends Controller
     public function store(Request $request)
     {
 //        dd($request->all());
-        Expenses::create($request->all() + ['user_id' => Auth::user()->id]);
+        $expenses = Expenses::create($request->all() + ['user_id' => Auth::user()->id]);
+        /* Update The Safe Amount */
+        $last_amount = Safe::all()->last();
+//        dd($last_amount);
+
+        /* Update The Safe */
+        $expenses->theSafe()->create([
+            'amount_paid' => $request->amount,
+            'final_amount' => ($last_amount == null ? 0 : $last_amount->final_amount - ($request->amount)),
+            'user_id' => Auth::user()->id,
+        ]);
         return redirect()->route('admin.expenses.index')->with('success', 'Expenses Added Successfully');
     }
 

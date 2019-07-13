@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'nickName', 'email', 'password', 'salary', 'birthDate', 'admin', 'moderator', 'seller'
+        'name', 'nickName', 'email', 'password', 'salary', 'address', 'birthDate', 'admin', 'moderator', 'seller'
     ];
 
     /**
@@ -40,15 +40,6 @@ class User extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
-    public function phone ()
-    {
-        return $this->hasOne(Phone::class);
-    }
-
-    public function address ()
-    {
-        return $this->hasOne(Address::class);
-    }
 
     public function media ()
     {

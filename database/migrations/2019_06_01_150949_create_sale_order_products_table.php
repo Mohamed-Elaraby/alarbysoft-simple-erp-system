@@ -20,6 +20,7 @@ class CreateSaleOrderProductsTable extends Migration
             $table->double('price');
             $table->string('quantity');
             $table->double('total');
+            $table->double('total_purchase_price');
             $table->string('serial')->nullable();
             $table->string('invoiceNo')->nullable();
             $table->integer('sale_order_id')->unsigned();

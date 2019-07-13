@@ -61,11 +61,5 @@ class AdminController extends Controller
         //
     }
 
-    public function get_quantity_Available ()
-    {
-        $id = $_GET['productId'];
-        $quantity_Available = Product::where('id', $id)->first();
-        echo $quantity_Available->quantity;
-    }
 
 }
