@@ -25,6 +25,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">ID</th>
+                                <th scope="col">Details</th>
                                 <th scope="col">Client</th>
                                 <th scope="col">Balance</th>
                                 <th scope="col">Phone</th>
@@ -35,7 +36,6 @@
                                 <th scope="col">created_at</th>
                                 <th scope="col">updated_at</th>
                                 <th scope="col">Action</th>
-                                <th scope="col">Details</th>
                                 <th scope="col">Select</th>
                             </tr>
                             </thead>
@@ -43,6 +43,9 @@
                             @foreach($clients as $client)
                                 <tr>
                                     <th scope="col">{{ $client->id }}</th>
+                                    <td>
+                                        <a href="{{ route('admin.clients.show', $client->id) }}" class="btn btn-sm btn-warning">Transactions</a></td>
+                                    </td>
                                     <td>{{ $client->name }}</td>
                                     <td class="bg-primary">{{ $client->balance }}</td>
                                     <td>{{ $client->phone->number }}</td>
@@ -53,10 +56,7 @@
                                     <td>{{ $client->created_at }}</td>
                                     <td>{{ $client->updated_at }}</td>
                                     <td>
-                                        <a href="{{ route('admin.clients.edit', $client->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.clients.show', $client->id) }}" class="btn btn-sm btn-warning">Transactions</a></td>
+                                    <a href="{{ route('admin.clients.edit', $client->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                     </td>
                                     <td>
                                         <input type="checkbox" name="id[]" value="{{ $client->id }}">

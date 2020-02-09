@@ -17,6 +17,7 @@
                     </div>
                 @endif
                 <h3 class="text-center">Products</h3>
+
                 <div class="products_table">
                     <form action="{{ route('admin.products.destroy') }}" method="post">
                         @csrf
@@ -28,8 +29,9 @@
                                 <th scope="col">Product</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">purchasing_price</th>
-                                <th scope="col">dealer_price</th>
-                                <th scope="col">selling_price</th>
+{{--                                <th scope="col">dealer_price</th>--}}
+{{--                                <th scope="col">selling_price</th>--}}
+                                <th scope="col">Total_purchasing_price</th>
                                 <th scope="col">created_at</th>
                                 <th scope="col">updated_at</th>
                                 <th scope="col">Action</th>
@@ -43,8 +45,10 @@
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->quantity }}</td>
                                     <td>{{ $product->purchase_price }}</td>
-                                    <td>{{ $product->dealer_price }}</td>
-                                    <td>{{ $product->selling_price }}</td>
+{{--                                    <td>{{ $product->dealer_price }}</td>--}}
+{{--                                    <td>{{ $product->selling_price }}</td>--}}
+
+                                    <td>{{ $product->purchase_price * $product->quantity }}</td>
                                     <td>{{ $product->created_at }}</td>
                                     <td>{{ $product->updated_at }}</td>
                                     <td><a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-sm btn-primary">Edit</a></td>
@@ -54,6 +58,12 @@
                                 </tr>
                             @endforeach
                             </tbody>
+{{--                            <tfoot>--}}
+{{--                            <th>Total</th>--}}
+{{--                            <td>--}}
+{{--                                55555555555555--}}
+{{--                            </td>--}}
+{{--                            </tfoot>--}}
                         </table>
                         <input type="submit" value="DELETE" name="softDelete" class="btn btn-danger">
                     </form>
@@ -84,6 +94,7 @@
                     },
                     "ordering": true,
                     "order": [[ 0, "desc" ]],
+                    "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
                 })
             })
         </script>

@@ -121,10 +121,10 @@
 
                     <div class="table-responsive">
                         <table class="table">
-                            <tr>
-                                <th style="width:50%">Subtotal:</th>
-                                <td>{{ $total_amount_products }} EGP</td>
-                            </tr>
+{{--                            <tr>--}}
+{{--                                <th style="width:50%">Subtotal:</th>--}}
+{{--                                <td>{{ $total_amount_products }} EGP</td>--}}
+{{--                            </tr>--}}
 
                             @if ($salesOrder->tax_percent)
                                 <div class="ttl-amts">

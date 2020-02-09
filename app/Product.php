@@ -19,8 +19,8 @@ class Product extends Model
 
 //    public function getProfitPercentAttribute()
 //    {
-//        $profit = $this->selling_price - $this->purchasing_price;
-//        $profit_percent = $profit * 100 / $this->purchasing_price;
+//        $sumQ = $this->quantity - $this->purchasing_price;
+//        $total =
 //
 //        return number_format($profit_percent,2);
 //    }

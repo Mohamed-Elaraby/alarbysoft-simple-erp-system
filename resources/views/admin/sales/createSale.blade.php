@@ -175,8 +175,8 @@
                 <div class='row'>
                     <div class="col-xs-12 col-sm-12">
                         <div class="text-center">
-                            <button data-loading-text="Saving Invoice..." type="submit" name="invoice_btn" class="btn btn-success submit_btn invoice-save-bottom"> <i class="fa fa-floppy-o"></i>  Save Invoice </button>
                             <button data-loading-text="Saving Invoice..." type="submit" name="invoice_print_btn" class="btn btn-primary submit_btn invoice-save-bottom"> <i class="fa fa-print"></i>  Save and Print </button>
+                            <button data-loading-text="Saving Invoice..." type="submit" name="invoice_btn" class="btn btn-success submit_btn invoice-save-bottom"> <i class="fa fa-floppy-o"></i>  Save Invoice </button>
                         </div>
                     </div>
                 </div>

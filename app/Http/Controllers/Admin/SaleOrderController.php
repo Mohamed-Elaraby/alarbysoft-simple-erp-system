@@ -165,31 +165,34 @@ class SaleOrderController extends Controller
 
 //                dd($request->all());
                 $product_id = $request->id ; // sale order product table >> product_id
-                $productSelected = SaleOrderProducts::whereIn('id', $product_id)->first();
+                $productSelected = SaleOrderProducts::where('id', $product_id)->first();
 //                dd($product_id);
-
+                /* Update Sale Order Product*/
                 if ($productSelected->quantity < 2){
-                    SaleOrderProducts::whereIn('id', $product_id)->forceDelete();
+                    /* If Product Count Less than 2 Force Delete product from sale order product table */
+                    SaleOrderProducts::where('id', $product_id)->forceDelete();
                 }else{
-//                    dd($productSelected);
+                    /* If Product Count Larger than Or Equal 2 update price and Quantity from sale order product table */
                     $price = $productSelected->price;
                     $quantity = $productSelected->quantity - $request->quantity;
-                    SaleOrderProducts::whereIn('id', $product_id)->update([
+                    SaleOrderProducts::where('id', $product_id)->update([
                         'quantity' => $quantity,
                         'total' => $price * $quantity,
                     ]);
+//                    dd($request->quantity);
                 }
-                $sale_order_id = $productSelected->sale_order_id;
+
+                /* Update Sale Orders */
+                $sale_order_id = $productSelected->sale_order_id; // sale order product table >> sale_order_id
                 $sO = SaleOrder::where('id', $sale_order_id)->first();
-                if ($request->orderAmount != null){
+                if ($request->orderAmount != null){ // Update Sale Order Amount
 //                    dd($productSelected);
-//                    dd($sO->invoice_total);
                     $sub = $sO->invoice_subtotal - $request->orderAmount;
                     $tax = $sub * $sO->tax_percent/100;
                     $total = $sub + $tax;
                     $itemPercent = $request->orderAmount * $sO->tax_percent/100;
                     $paid = $sO->amount_paid - $request->orderAmount - $itemPercent;
-//                    dd($paid);
+//                    dd($total);
                     $sO->update([
                         'invoice_subtotal' => $sub,
                         'tax' => $tax,
@@ -199,21 +202,8 @@ class SaleOrderController extends Controller
                     ]);
                 }
 
-//                dd($productSelected->quantity);
-                /* Delete Sale Order If product count Less than 1 and delete client transaction  */
-                $allSaleOrders = SaleOrder::all();
-                foreach ($allSaleOrders as $saleOrder) {
-                    if ($saleOrder->saleOrderProducts->count() < 1){
-                        // check in all sale orders if no products related
-                        //-> delete order from sale order table
-                        //-> delete transaction from client transaction table
-                        foreach ($saleOrder->clientTransaction as $clientTransaction) {
-                            $clientTransaction->forceDelete();
-                        }
-                        $saleOrder->forceDelete();
-                    }// else
-                }
-                if ($request->safeAmount != null){
+                /*  Update The Safe */
+                if ($request->safeAmount != null){  // Update The Safe Amount
                     /* Update The Safe Amount */
                     $last_amount = Safe::all()->last();
                     //        dd($last_amount);
@@ -225,12 +215,19 @@ class SaleOrderController extends Controller
                         'recall' => 1,
                     ]);
                 }
-//
+
 //                /* Update product count On products table  */
                 $onProductTable = Product::where('name', $productSelected->name)->first();
                 $onProductTable->update([
                     'quantity' => $onProductTable->quantity + $request->quantity,
                 ]);
+
+                /* Update Transaction On Clint Transaction Table */
+//dd($total);
+                ClientTransaction::where('sale_order_id', $sale_order_id)->update([
+                    'amount' => $total,
+                ]);
+
 
                 /* Update client balance  */
                 $client_id = $sO->client_id;
@@ -240,13 +237,26 @@ class SaleOrderController extends Controller
                     'balance' => $client->balance + $request->orderAmount,
                 ]);
                 /* Update Serial Status  */
-
                 $productSerial = $productSelected->serial;
                 Serial::where('serial', $productSerial)->update([
                     'status' => 0
                 ]);
+
+                /* Delete Sale Order If product count Less than 1 and delete client transaction  */
+                $allSaleOrders = SaleOrder::all();
+                foreach ($allSaleOrders as $saleOrder) {
+                    if ($saleOrder->saleOrderProducts->count() < 1){
+                        // check in all sale orders if no products related
+                        //-> delete transaction from client transaction table
+                        //-> delete order from sale order table
+                        foreach ($saleOrder->clientTransaction as $clientTransaction) {
+                            $clientTransaction->forceDelete();
+                        }
+                        $saleOrder->forceDelete();
+                        return redirect()->route('admin.sales.index')->with('success', 'Product Recall Successfully');
+                    }
+                }
                 return redirect()->back();
-//                return redirect()->route('admin.sales.index')->with('success', 'Product Recall Successfully');
 
             }
         }else {
